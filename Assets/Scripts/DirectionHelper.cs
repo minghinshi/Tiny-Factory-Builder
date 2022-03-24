@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Direction { north, east, south, west }
+public enum Direction {north, east, south, west };
+
 public static class DirectionHelper
 {
     public static float GetRotationInDegrees(Direction direction) {
@@ -34,8 +35,10 @@ public static class DirectionHelper
     public static Vector2Int TransformSize(Direction direction, Vector2Int size) {
         return direction switch
         {
-            Direction.north or Direction.south => size,
-            Direction.east or Direction.west => new Vector2Int(size.y, size.x),
+            Direction.north => size,
+            Direction.south => size,
+            Direction.east => new Vector2Int(size.y, size.x),
+            Direction.west => new Vector2Int(size.y, size.x),
             _ => throw new System.Exception("Direction does not exist!"),
         };
     }

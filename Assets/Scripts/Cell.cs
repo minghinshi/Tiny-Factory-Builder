@@ -12,15 +12,25 @@ public class Cell
         position = new Vector2Int(x, y);
     }
 
+    public Vector2Int GetGridPosition() {
+        return position;
+    }
+
+    public CellObject GetContainedObject() {
+        return containedObject;
+    }
+
     public bool isOccupied() {
         return occupied;    
     }
 
-    public void OccupyCell() {
+    public void OccupyCell(CellObject cellObject) {
         occupied = true;
+        containedObject = cellObject;
     }
 
     public void EmptyCell() {
         occupied = false;
+        containedObject = null;
     }
 }

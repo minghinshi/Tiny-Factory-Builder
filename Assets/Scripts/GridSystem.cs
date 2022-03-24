@@ -31,6 +31,22 @@ public class GridSystem
         return new Vector3(gridPosition.x * cellSize, gridPosition.y * cellSize);
     }
 
+
+    public Cell GetCellAt(Vector2Int gridPosition) {
+        return gridOfCells[gridPosition.x, gridPosition.y];
+    }
+
+    public List<Cell> GetCellsInCellObject(CellObject cellObject) {
+        List<Cell> cells = new List<Cell>();
+        Vector2Int size = cellObject.GetSize();
+        Vector2Int gridPosition = cellObject.GetGridPosition();
+        for (int i = gridPosition.x; i < gridPosition.x + size.x; i++)
+            for (int j = gridPosition.y; j < gridPosition.y + size.y; j++)
+                cells.Add(gridOfCells[i, j]);
+        return cells;
+    }
+
+
     public Vector3 SnapWorldPosition(Vector3 worldPosition) {
         return GetWorldPosition(GetGridPosition(worldPosition));
     }
@@ -62,22 +78,30 @@ public class GridSystem
         return true;
     }
 
-    public void OccupyCells(Vector2Int position, Direction direction, BuildingType buildingType) {
-        Vector2Int size = DirectionHelper.TransformSize(direction, buildingType.GetSize());
-        for (int i = position.x; i < position.x + size.x; i++)
-            for (int j = position.y; j < position.y + size.y; j++)
-                gridOfCells[i, j].OccupyCell();
+    public void OccupyCells(Building building) {
+        GetCellsInCellObject(building).ForEach(cell => cell.OccupyCell(building));
     }
 
     public void PlaceBuilding(Vector2Int position, Direction direction, BuildingType buildingType) {
         if (CanPlace(position, direction, buildingType))
         {
-            OccupyCells(position, direction, buildingType);
-            buildingType.CreateBuildingObject(position, direction);
-            Debug.Log("Placed building at " + position.ToString() + " with size " + buildingType.GetSize().ToString());
+            Building building = buildingType.CreateBuilding(GetCellAt(position), direction);
+            OccupyCells(building);
+            
+            AudioHandler.instance.PlayPlacement();
         }
-        else {
-            Debug.Log("Cannot place building!");
+    }
+
+    public void DestroyBuilding(Vector2Int gridPosition) {
+        if (IsWithinBounds(gridPosition)) {
+            CellObject cellObject = GetCellAt(gridPosition).GetContainedObject();
+            if (cellObject != null) {
+                List<Cell> cells = GetCellsInCellObject(cellObject);
+                foreach (Cell cell in cells)
+                    cell.EmptyCell();
+                cellObject.Destroy();
+                AudioHandler.instance.PlayDestroy();
+            }
         }
     }
 

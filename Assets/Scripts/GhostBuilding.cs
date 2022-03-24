@@ -17,18 +17,14 @@ public class GhostBuilding
 
     private Color canPlaceColor = new Color(46 / 255f, 204 / 255f, 113 / 255f, .5f);
     private Color cannotPlaceColor = new Color(231 / 255f, 76 / 255f, 60 / 255f, .5f);
+    private Color invisibleColor = new Color(0f, 0f, 0f, 0f);
 
-    public GhostBuilding(Vector2Int position, Direction direction, BuildingType buildingType) {
+    public GhostBuilding(Vector2Int position, Direction direction) {
         actualPosition = position;
         displayedPosition = new Vector3(position.x, position.y);
         this.direction = direction;
         actualRotation = DirectionHelper.GetRotationInDegrees(direction);
         displayedRotation = actualRotation;
-        this.buildingType = buildingType;
-
-        buildingTransform = buildingType.CreateBuildingObject(position, direction);
-        spriteRenderer = buildingTransform.GetComponent<SpriteRenderer>();
-        SetCanPlaceColor();
     }
 
     public void UpdateVisuals() {
@@ -66,11 +62,16 @@ public class GhostBuilding
     }
 
     public void ChangeBuildingType(BuildingType buildingType) {
-        Object.Destroy(buildingTransform.gameObject);
+        if(buildingTransform != null)
+            Object.Destroy(buildingTransform.gameObject);
 
         this.buildingType = buildingType;
-        buildingTransform = buildingType.CreateBuildingObject(actualPosition, direction);
+        buildingTransform = buildingType.CreateBuildingTransform(actualPosition, direction);
         spriteRenderer = buildingTransform.GetComponent<SpriteRenderer>();
         SetColor();
+    }
+
+    public void SetInvisible() {
+        spriteRenderer.color = invisibleColor;
     }
 }

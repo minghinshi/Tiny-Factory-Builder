@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CellObject
+public abstract class CellObject
 {
-    private Cell primaryCell;
+    protected Cell primaryCell;
 
-    public CellObject(Cell primaryCell) {
-        this.primaryCell = primaryCell;
+    public Vector2Int GetGridPosition() {
+        return primaryCell.GetGridPosition();
     }
+
+    public abstract Vector2Int GetSize();
+    public abstract void Destroy();
 }

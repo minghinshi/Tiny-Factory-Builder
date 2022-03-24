@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Building", menuName = "Building")]
@@ -24,20 +22,32 @@ public class BuildingType : ScriptableObject
         return size.y;
     }
 
-    public Vector3 GetWorldPosition(Vector2Int gridPosition, Direction direction) {
-        Vector2Int transformedSize = DirectionHelper.TransformSize(direction, size);
+    public Transform GetBuildingPrefab() {
+        return buildingPrefab;
+    }
+
+    public Vector2Int GetTransformedSize(Direction direction) {
+        return DirectionHelper.TransformSize(direction, size);
+    }
+
+    public Vector3 GetWorldPosition(Vector2Int gridPosition, Direction direction)
+    {
+        Vector2Int transformedSize = GetTransformedSize(direction);
         float cellSize = GridManager.buildingGrid.GetCellSize();
-        Vector3 position = new(
+        Vector3 position = new Vector3(
             gridPosition.x + transformedSize.x * cellSize * 0.5f,
             gridPosition.y + transformedSize.y * cellSize * 0.5f
             );
         return position;
     }
 
-    public Transform CreateBuildingObject(Vector2Int cornerPosition, Direction direction) {
-        Vector3 position = GetWorldPosition(cornerPosition, direction);
-        Quaternion rotation = DirectionHelper.GetRotationQuaternion(direction);
-        Transform buildingObject = Instantiate(buildingPrefab, position, rotation);
-        return buildingObject;
+    public Transform CreateBuildingTransform(Vector2Int gridPosition, Direction direction) {
+        Vector3 worldPosition = GetWorldPosition(gridPosition, direction);
+        Quaternion rotationQuaternion = DirectionHelper.GetRotationQuaternion(direction);
+        return Instantiate(buildingPrefab, worldPosition, rotationQuaternion);
+    }
+
+    public Building CreateBuilding(Cell primaryCell, Direction direction) {
+        return new Building(primaryCell, direction, this);
     }
 }
