@@ -9,7 +9,7 @@ public class InputHandler : MonoBehaviour
     [SerializeField]
     private BuildingType selectedBuildingType = null;
     private Vector2Int gridPosition = new Vector2Int();
-    private Direction currentDirection = Direction.north;
+    private Direction currentDirection = Direction.North;
     private GhostBuilding ghostBuilding;
     private bool movedGhost = false;
     private bool placedBuilding = false;
@@ -44,7 +44,7 @@ public class InputHandler : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.R))
             {
-                currentDirection = DirectionHelper.RotateClockwise(currentDirection);
+                currentDirection = currentDirection.RotateClockwise();
                 ghostBuilding.SetDirection(currentDirection);
             }
             if (Input.GetKeyDown(KeyCode.Q))

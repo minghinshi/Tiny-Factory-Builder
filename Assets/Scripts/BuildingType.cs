@@ -4,11 +4,7 @@ using UnityEngine;
 public class BuildingType : ScriptableObject
 {
     [SerializeField] private Vector2Int size;
-    [SerializeField] private Transform buildingPrefab; 
-
-    public BuildingType(int width, int height) {
-        size = new Vector2Int(width, height);
-    }
+    [SerializeField] private Transform buildingPrefab;
 
     public Vector2Int GetSize() {
         return size;
@@ -27,7 +23,7 @@ public class BuildingType : ScriptableObject
     }
 
     public Vector2Int GetTransformedSize(Direction direction) {
-        return DirectionHelper.TransformSize(direction, size);
+        return direction.TransformSize(size);
     }
 
     public Vector3 GetWorldPosition(Vector2Int gridPosition, Direction direction)
@@ -43,11 +39,11 @@ public class BuildingType : ScriptableObject
 
     public Transform CreateBuildingTransform(Vector2Int gridPosition, Direction direction) {
         Vector3 worldPosition = GetWorldPosition(gridPosition, direction);
-        Quaternion rotationQuaternion = DirectionHelper.GetRotationQuaternion(direction);
+        Quaternion rotationQuaternion = direction.GetRotationQuaternion();
         return Instantiate(buildingPrefab, worldPosition, rotationQuaternion);
     }
 
-    public Building CreateBuilding(Cell primaryCell, Direction direction) {
+    public virtual Building CreateBuilding(Cell primaryCell, Direction direction) {
         return new Building(primaryCell, direction, this);
     }
 }

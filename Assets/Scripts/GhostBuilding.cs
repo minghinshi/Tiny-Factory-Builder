@@ -23,7 +23,7 @@ public class GhostBuilding
         actualPosition = position;
         displayedPosition = new Vector3(position.x, position.y);
         this.direction = direction;
-        actualRotation = DirectionHelper.GetRotationInDegrees(direction);
+        actualRotation = direction.GetRotationInDegrees();
         displayedRotation = actualRotation;
     }
 
@@ -43,7 +43,7 @@ public class GhostBuilding
 
     public void SetDirection(Direction direction) {
         this.direction = direction;
-        actualRotation = DirectionHelper.GetRotationInDegrees(direction);
+        actualRotation = direction.GetRotationInDegrees();
         SetColor();
     }
 

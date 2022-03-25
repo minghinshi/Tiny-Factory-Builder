@@ -16,7 +16,7 @@ public class GridSystem
         {
             for (int j = 0; j < height; j++)
             {
-                gridOfCells[i, j] = new Cell(i, j);
+                gridOfCells[i, j] = new Cell(i, j, this);
             }
         }
     }
@@ -27,10 +27,13 @@ public class GridSystem
         return new Vector2Int(x, y);
     }
 
-    public Vector3 GetWorldPosition(Vector2Int gridPosition) {
+    public Vector3 GetCornerWorldPosition(Vector2Int gridPosition) {
         return new Vector3(gridPosition.x * cellSize, gridPosition.y * cellSize);
     }
 
+    public Vector3 GetCentreWorldPosition(Vector2Int gridPosition) { 
+        return new Vector3((gridPosition.x + 0.5f) * cellSize, (gridPosition.y + 0.5f) * cellSize);
+    }
 
     public Cell GetCellAt(Vector2Int gridPosition) {
         return gridOfCells[gridPosition.x, gridPosition.y];
@@ -48,7 +51,7 @@ public class GridSystem
 
 
     public Vector3 SnapWorldPosition(Vector3 worldPosition) {
-        return GetWorldPosition(GetGridPosition(worldPosition));
+        return GetCornerWorldPosition(GetGridPosition(worldPosition));
     }
 
     public bool IsWithinBounds(int x, int y)
@@ -70,7 +73,7 @@ public class GridSystem
     }
 
     public bool CanPlace(Vector2Int position, Direction direction, BuildingType buildingType) {
-        Vector2Int size = DirectionHelper.TransformSize(direction, buildingType.GetSize());
+        Vector2Int size = direction.TransformSize(buildingType.GetSize());
         for (int i = position.x; i < position.x + size.x; i++)
             for (int j = position.y; j < position.y + size.y; j++)
                 if (!IsWithinBounds(i, j) || IsPositionOccupied(i, j))

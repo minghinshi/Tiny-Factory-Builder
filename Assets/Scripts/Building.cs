@@ -6,14 +6,13 @@ public class Building : CellObject
 {
     private Direction direction;
     private BuildingType buildingType;
-    private Transform buildingTransform;
 
     public Building(Cell primaryCell, Direction direction, BuildingType buildingType)
     {
         this.primaryCell = primaryCell;
         this.direction = direction;
         this.buildingType = buildingType;
-        buildingTransform = buildingType.CreateBuildingTransform(primaryCell.GetGridPosition(), direction);
+        transform = buildingType.CreateBuildingTransform(primaryCell.GetGridPosition(), direction);
     }
 
     public Direction GetDirection() {
@@ -26,6 +25,6 @@ public class Building : CellObject
 
     public override void Destroy()
     {
-        Object.Destroy(buildingTransform.gameObject);
+        Object.Destroy(transform.gameObject);
     }
 }
