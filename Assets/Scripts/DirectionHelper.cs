@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public enum Direction {North, East, South, West };
+public enum Direction { North, East, South, West };
 
 public static class DirectionHelper
 {
-    public static float GetRotationInDegrees(this Direction direction) {
+    public static float GetRotationInDegrees(this Direction direction)
+    {
         return direction switch
         {
             Direction.North => 0f,
@@ -17,7 +16,8 @@ public static class DirectionHelper
         };
     }
 
-    public static Direction RotateClockwise(this Direction direction) {
+    public static Direction RotateClockwise(this Direction direction)
+    {
         return direction switch
         {
             Direction.North => Direction.East,
@@ -28,11 +28,13 @@ public static class DirectionHelper
         };
     }
 
-    public static Quaternion GetRotationQuaternion(this Direction direction) {
+    public static Quaternion GetRotationQuaternion(this Direction direction)
+    {
         return Quaternion.Euler(0f, 0f, direction.GetRotationInDegrees());
     }
 
-    public static Vector2Int TransformSize(this Direction direction, Vector2Int size) {
+    public static Vector2Int TransformSize(this Direction direction, Vector2Int size)
+    {
         return direction switch
         {
             Direction.North => size,
@@ -53,5 +55,10 @@ public static class DirectionHelper
             Direction.West => new Vector2Int(-vector.y, vector.x),
             _ => throw new System.Exception("Direction does not exist!"),
         };
+    }
+
+    public static Vector2Int GetUnitVector(this Direction direction)
+    {
+        return direction.RotateVector(new Vector2Int(0, 1));
     }
 }

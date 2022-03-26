@@ -1,14 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 public class GridSystem
 {
     private Vector2Int size;
     private Cell[,] gridOfCells;
     private float cellSize;
 
-    public GridSystem(int width, int height, float gridSize) {
+    public GridSystem(int width, int height, float gridSize, bool blocked)
+    {
         size = new Vector2Int(width, height);
         gridOfCells = new Cell[width, height];
         this.cellSize = gridSize;
@@ -16,30 +15,42 @@ public class GridSystem
         {
             for (int j = 0; j < height; j++)
             {
-                gridOfCells[i, j] = new Cell(i, j, this);
+                gridOfCells[i, j] = new Cell(i, j, this, blocked);
             }
         }
     }
 
-    public Vector2Int GetGridPosition(Vector3 worldPosition) {
+    public GridSystem(int width, int height, float gridSize) : this(width, height, gridSize, false) { }
+
+    public Vector2Int GetGridPosition(Vector3 worldPosition)
+    {
         int x = Mathf.FloorToInt(worldPosition.x / cellSize);
         int y = Mathf.FloorToInt(worldPosition.y / cellSize);
         return new Vector2Int(x, y);
     }
 
-    public Vector3 GetCornerWorldPosition(Vector2Int gridPosition) {
+    public Vector3 GetCornerWorldPosition(Vector2Int gridPosition)
+    {
         return new Vector3(gridPosition.x * cellSize, gridPosition.y * cellSize);
     }
 
-    public Vector3 GetCentreWorldPosition(Vector2Int gridPosition) { 
+    public Vector3 GetCentreWorldPosition(Vector2Int gridPosition)
+    {
         return new Vector3((gridPosition.x + 0.5f) * cellSize, (gridPosition.y + 0.5f) * cellSize);
     }
 
-    public Cell GetCellAt(Vector2Int gridPosition) {
+    public Vector3 GetCentreWorldPosition(Vector2Int gridPosition, Vector2Int size)
+    {
+        return new Vector3((gridPosition.x + 0.5f) * size.x * cellSize, (gridPosition.y + 0.5f) * size.y * cellSize);
+    }
+
+    public Cell GetCellAt(Vector2Int gridPosition)
+    {
         return gridOfCells[gridPosition.x, gridPosition.y];
     }
 
-    public List<Cell> GetCellsInCellObject(CellObject cellObject) {
+    public List<Cell> GetCellsInCellObject(CellObject cellObject)
+    {
         List<Cell> cells = new List<Cell>();
         Vector2Int size = cellObject.GetSize();
         Vector2Int gridPosition = cellObject.GetGridPosition();
@@ -49,8 +60,8 @@ public class GridSystem
         return cells;
     }
 
-
-    public Vector3 SnapWorldPosition(Vector3 worldPosition) {
+    public Vector3 SnapWorldPosition(Vector3 worldPosition)
+    {
         return GetCornerWorldPosition(GetGridPosition(worldPosition));
     }
 
@@ -59,20 +70,23 @@ public class GridSystem
         return (x >= 0 && y >= 0 && x < size.x && y < size.y);
     }
 
-    public bool IsWithinBounds(Vector2Int position) {
+    public bool IsWithinBounds(Vector2Int position)
+    {
         return IsWithinBounds(position.x, position.y);
     }
 
     public bool IsPositionOccupied(int x, int y)
     {
-        return gridOfCells[x, y].isOccupied();
+        return gridOfCells[x, y].IsOccupied();
     }
 
-    public bool IsPositionOccupied(Vector2Int position) {
+    public bool IsPositionOccupied(Vector2Int position)
+    {
         return IsPositionOccupied(position.x, position.y);
     }
 
-    public bool CanPlace(Vector2Int position, Direction direction, BuildingType buildingType) {
+    public bool CanPlace(Vector2Int position, Direction direction, BuildingType buildingType)
+    {
         Vector2Int size = direction.TransformSize(buildingType.GetSize());
         for (int i = position.x; i < position.x + size.x; i++)
             for (int j = position.y; j < position.y + size.y; j++)
@@ -81,24 +95,27 @@ public class GridSystem
         return true;
     }
 
-    public void OccupyCells(Building building) {
+    public void OccupyCells(Building building)
+    {
         GetCellsInCellObject(building).ForEach(cell => cell.OccupyCell(building));
     }
 
-    public void PlaceBuilding(Vector2Int position, Direction direction, BuildingType buildingType) {
+    public void PlaceBuilding(Vector2Int position, Direction direction, BuildingType buildingType)
+    {
         if (CanPlace(position, direction, buildingType))
         {
-            Building building = buildingType.CreateBuilding(GetCellAt(position), direction);
-            OccupyCells(building);
-            
+            buildingType.CreateBuilding(GetCellAt(position), direction);
             AudioHandler.instance.PlayPlacement();
         }
     }
 
-    public void DestroyBuilding(Vector2Int gridPosition) {
-        if (IsWithinBounds(gridPosition)) {
+    public void DestroyBuilding(Vector2Int gridPosition)
+    {
+        if (IsWithinBounds(gridPosition))
+        {
             CellObject cellObject = GetCellAt(gridPosition).GetContainedObject();
-            if (cellObject != null) {
+            if (cellObject != null)
+            {
                 List<Cell> cells = GetCellsInCellObject(cellObject);
                 foreach (Cell cell in cells)
                     cell.EmptyCell();
@@ -108,7 +125,8 @@ public class GridSystem
         }
     }
 
-    public float GetCellSize() {
+    public float GetCellSize()
+    {
         return cellSize;
     }
 }

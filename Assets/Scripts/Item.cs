@@ -1,18 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+public class Item : CellObject
 {
-    // Start is called before the first frame update
-    void Start()
+    private ItemType itemType;
+
+    /// <summary>
+    /// Creates an item and places it at the location of the primaryCell.
+    /// </summary>
+    /// <param name="primaryCell">The cell that the item occupies.</param>
+    /// <param name="itemType">The item type.</param>
+    public Item(Cell primaryCell, ItemType itemType)
     {
-        
+        this.primaryCell = primaryCell;
+        this.itemType = itemType;
+        primaryCell.OccupyCell(this);
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Destroy()
     {
-        
+        Object.Destroy(transform.gameObject);
+    }
+
+    public override Vector2Int GetSize()
+    {
+        return new Vector2Int(1, 1);
     }
 }

@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Building : CellObject
 {
-    private Direction direction;
-    private BuildingType buildingType;
+    protected Direction direction;
+    protected BuildingType buildingType;
 
     public Building(Cell primaryCell, Direction direction, BuildingType buildingType)
     {
@@ -13,13 +11,17 @@ public class Building : CellObject
         this.direction = direction;
         this.buildingType = buildingType;
         transform = buildingType.CreateBuildingTransform(primaryCell.GetGridPosition(), direction);
+
+        GridManager.buildingGrid.OccupyCells(this);
     }
 
-    public Direction GetDirection() {
+    public Direction GetDirection()
+    {
         return direction;
     }
 
-    public override Vector2Int GetSize() {
+    public override Vector2Int GetSize()
+    {
         return buildingType.GetTransformedSize(direction);
     }
 

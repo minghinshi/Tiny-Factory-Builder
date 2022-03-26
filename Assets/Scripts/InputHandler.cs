@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -55,7 +53,8 @@ public class InputHandler : MonoBehaviour
         }
     }
 
-    public void UpdateGridPosition() {
+    public void UpdateGridPosition()
+    {
         Vector3 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2Int newGridPosition = buildingGrid.GetGridPosition(worldPoint);
         if (!newGridPosition.Equals(gridPosition))
@@ -66,13 +65,15 @@ public class InputHandler : MonoBehaviour
         }
     }
 
-    public void ChangeBuildingType(BuildingType buildingType) {
+    public void ChangeBuildingType(BuildingType buildingType)
+    {
         if (buildingType.Equals(selectedBuildingType)) return;
         ghostBuilding.ChangeBuildingType(buildingType);
         selectedBuildingType = buildingType;
     }
 
-    public void StopPlacing() {
+    public void StopPlacing()
+    {
         selectedBuildingType = null;
         ghostBuilding.SetInvisible();
     }

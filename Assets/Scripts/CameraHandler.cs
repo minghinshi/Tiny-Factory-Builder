@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraHandler : MonoBehaviour
@@ -16,7 +14,8 @@ public class CameraHandler : MonoBehaviour
         camera = GetComponent<Camera>();
     }
 
-    float GetMovementVelocity() {
+    float GetMovementVelocity()
+    {
         return Time.deltaTime * movementVelocityFactor * camera.orthographicSize;
     }
 

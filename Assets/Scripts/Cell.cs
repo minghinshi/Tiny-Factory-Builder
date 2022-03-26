@@ -1,51 +1,88 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Cell
 {
     private Vector2Int position;
+    private bool blocked = false;
     private bool occupied = false;
     private CellObject containedObject;
     private GridSystem gridSystem;
 
-    public Cell(int x, int y, GridSystem gridSystem) {
+    public Cell(int x, int y, GridSystem gridSystem, bool blocked)
+    {
         position = new Vector2Int(x, y);
         this.gridSystem = gridSystem;
+        this.blocked = blocked;
     }
 
-    public Vector2Int GetGridPosition() {
+
+    public Vector2Int GetGridPosition()
+    {
         return position;
     }
 
-    public Vector3 GetCornerWorldPosition() {
+    public Vector3 GetCornerWorldPosition()
+    {
         return gridSystem.GetCornerWorldPosition(position);
     }
 
-    public Vector3 GetCentreWorldPosition() {
+    public Vector3 GetCentreWorldPosition()
+    {
         return gridSystem.GetCentreWorldPosition(position);
     }
 
-    public CellObject GetContainedObject() {
+    public CellObject GetContainedObject()
+    {
         return containedObject;
     }
 
-    public bool isOccupied() {
-        return occupied;    
+    public bool IsOccupied()
+    {
+        return occupied;
     }
 
-    public void OccupyCell(CellObject cellObject) {
+    public bool IsBlocked()
+    {
+        return blocked;
+    }
+
+    public bool CanInsert() {
+        return !(occupied || blocked);
+    }
+
+    public void OccupyCell(CellObject cellObject)
+    {
+        if (blocked) return;
         occupied = true;
         containedObject = cellObject;
     }
 
-    public void EmptyCell() {
+    public void EmptyCell()
+    {
         occupied = false;
         containedObject = null;
     }
 
-    public void MoveCellObjectTo(Cell destination) {
-        if (destination.isOccupied()) return;
+    public void DestroyCellObject() {
+        if (occupied) {
+            containedObject.Destroy();
+            EmptyCell();
+        }
+    }
+
+    public void BlockCell()
+    {
+        blocked = true;
+    }
+
+    public void UnblockCell()
+    {
+        blocked = false;
+    }
+
+    public void MoveCellObjectTo(Cell destination)
+    {
+        if (destination.IsOccupied() && destination.IsBlocked()) return;
 
         containedObject.MoveTo(destination);
         destination.OccupyCell(containedObject);
