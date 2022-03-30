@@ -6,6 +6,7 @@ public class Producer : Building
     private ItemType producedItem;
     private int ticksLeft = 50;
 
+    //Creates a producer (e.g. drill).
     public Producer(Cell primaryCell, Direction direction, ProducerType producerType) : base(primaryCell, direction, producerType)
     {
         //TEMPORARY
@@ -15,13 +16,11 @@ public class Producer : Building
         Vector2Int gridPosition = GetGridPositionFromOffset(outputPosition);
         outputCell = GridManager.itemGrid.GetCellAt(gridPosition);
 
-        TickHandler.instance.TickMachines += TickProducer;
+        TickHandler.instance.TickMachines += OnTick;
     }
 
-    /// <summary>
-    /// Called when the producer receives a tick.
-    /// </summary>
-    public void TickProducer()
+    //Called when the producer receives a tick.
+    private void OnTick()
     {
         ticksLeft--;
         if (ticksLeft <= 0)
@@ -30,20 +29,20 @@ public class Producer : Building
         }
     }
 
-    /// <summary>
-    /// Produces an item, if possible.
-    /// </summary>
+    //Produces an item, if possible.
     public void ProduceItem()
     {
-        if (outputCell.CanInsert()) {
+        if (outputCell.CanInsert())
+        {
             _ = new Item(outputCell, producedItem);
             ticksLeft = 50;
         }
     }
 
+    //Destroys the producer, removing it from the world.
     public override void Destroy()
     {
-        TickHandler.instance.TickMachines -= TickProducer;
+        TickHandler.instance.TickMachines -= OnTick;
 
         base.Destroy();
     }

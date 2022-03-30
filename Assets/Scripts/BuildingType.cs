@@ -35,6 +35,7 @@ public class BuildingType : ScriptableObject
         return GridManager.buildingGrid.GetCentreWorldPosition(gridPosition, GetTransformedSize(direction));
     }
 
+    //Creates a building in the world.
     public Transform CreateBuildingTransform(Vector2Int gridPosition, Direction direction)
     {
         Vector3 worldPosition = GetWorldPosition(gridPosition, direction);
@@ -42,6 +43,7 @@ public class BuildingType : ScriptableObject
         return Instantiate(buildingPrefab, worldPosition, rotationQuaternion);
     }
 
+    //Creates a building object.
     public virtual Building CreateBuilding(Cell primaryCell, Direction direction)
     {
         return new Building(primaryCell, direction, this);

@@ -18,7 +18,8 @@ public abstract class CellObject
         isMovedThisTick = true;
     }
 
-    public bool IsMovedThisTick() {
+    public bool IsMovedThisTick()
+    {
         return isMovedThisTick;
     }
 

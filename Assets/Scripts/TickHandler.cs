@@ -22,7 +22,8 @@ public class TickHandler : MonoBehaviour
         TickMachines?.Invoke();
 
         stepsLeftUntilConveyorTick--;
-        if (stepsLeftUntilConveyorTick == 0) {
+        if (stepsLeftUntilConveyorTick == 0)
+        {
             stepsLeftUntilConveyorTick = 5;
             TickConveyors?.Invoke();
         }

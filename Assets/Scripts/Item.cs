@@ -19,7 +19,8 @@ public class Item : CellObject
         TickHandler.instance.TickItems += Tick;
     }
 
-    public void Tick() {
+    public void Tick()
+    {
         isMovedThisTick = false;
     }
 

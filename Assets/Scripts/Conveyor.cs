@@ -9,23 +9,23 @@ public class Conveyor : Building
 
     public Conveyor(Cell primaryCell, Direction direction, ConveyorType conveyorType) : base(primaryCell, direction, conveyorType)
     {
-        Vector2Int gridPosition = primaryCell.GetGridPosition();
+        Vector2Int primaryCellPosition = primaryCell.GetGridPosition();
         GridSystem itemGrid = GridManager.itemGrid;
-        thisCell = itemGrid.GetCellAt(gridPosition);
+        thisCell = itemGrid.GetCellAt(primaryCellPosition);
         thisCell.UnblockCell();
 
         Vector2Int[] outputPositions = conveyorType.GetOutputPositions();
         outputCells = new Cell[outputPositions.Length];
         for (int i = 0; i < outputPositions.Length; i++)
         {
-            Vector2Int outputGridPosition = GetGridPositionFromOffset(outputPositions[i]);
-            outputCells[i] = itemGrid.GetCellAt(outputGridPosition);
+            Vector2Int position = GetGridPositionFromOffset(outputPositions[i]);
+            outputCells[i] = itemGrid.GetCellAt(position);
         }
 
         TickHandler.instance.TickConveyors += MoveItem;
     }
 
-    public void MoveItem()
+    private void MoveItem()
     {
         thisCell.MoveCellObjectTo(outputCells[currentOutput]);
         currentOutput = (currentOutput + 1) % outputCells.Length;

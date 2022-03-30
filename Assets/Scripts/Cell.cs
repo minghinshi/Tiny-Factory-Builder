@@ -2,11 +2,16 @@ using UnityEngine;
 
 public class Cell
 {
-    private Vector2Int position;
     private bool blocked = false;
     private bool occupied = false;
+
+    private Vector2Int position;
+
     private CellObject containedObject;
     private GridSystem gridSystem;
+
+    public delegate void CellOccupiedHandler(Cell cell);
+    public event CellOccupiedHandler CellOccupied;
 
     public Cell(int x, int y, GridSystem gridSystem, bool blocked)
     {
@@ -46,7 +51,8 @@ public class Cell
         return blocked;
     }
 
-    public bool CanInsert() {
+    public bool CanInsert()
+    {
         return !(occupied || blocked);
     }
 
@@ -55,6 +61,7 @@ public class Cell
         if (blocked) return;
         occupied = true;
         containedObject = cellObject;
+        CellOccupied?.Invoke(this);
     }
 
     public void EmptyCell()
@@ -63,8 +70,10 @@ public class Cell
         containedObject = null;
     }
 
-    public void DestroyCellObject() {
-        if (occupied) {
+    public void DestroyCellObject()
+    {
+        if (occupied)
+        {
             containedObject.Destroy();
             EmptyCell();
         }

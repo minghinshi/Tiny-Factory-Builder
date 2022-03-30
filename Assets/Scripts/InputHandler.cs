@@ -22,7 +22,7 @@ public class InputHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateGridPosition();
+        UpdateGhostPosition();
         if (Input.GetMouseButton(1) && !EventSystem.current.IsPointerOverGameObject())
         {
             buildingGrid.DestroyBuilding(gridPosition);
@@ -53,7 +53,8 @@ public class InputHandler : MonoBehaviour
         }
     }
 
-    public void UpdateGridPosition()
+    //Updates the position of the ghost building.
+    public void UpdateGhostPosition()
     {
         Vector3 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2Int newGridPosition = buildingGrid.GetGridPosition(worldPoint);
@@ -65,6 +66,8 @@ public class InputHandler : MonoBehaviour
         }
     }
 
+
+    //Change the building type that the player is going to place.
     public void ChangeBuildingType(BuildingType buildingType)
     {
         if (buildingType.Equals(selectedBuildingType)) return;
@@ -72,6 +75,7 @@ public class InputHandler : MonoBehaviour
         selectedBuildingType = buildingType;
     }
 
+    //Stop placing buildings.
     public void StopPlacing()
     {
         selectedBuildingType = null;
