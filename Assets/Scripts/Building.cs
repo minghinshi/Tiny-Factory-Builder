@@ -7,7 +7,7 @@ public class Building : CellObject
 
     public Building(Cell primaryCell, Direction direction, BuildingType buildingType)
     {
-        this.primaryCell = primaryCell;
+        gridPosition = primaryCell.GetGridPosition();
         this.direction = direction;
         this.buildingType = buildingType;
         transform = buildingType.CreateBuildingTransform(primaryCell.GetGridPosition(), direction);
@@ -41,7 +41,7 @@ public class Building : CellObject
                 actualOffset.x += buildingType.GetSize().y - 1;
                 break;
         }
-        return primaryCell.GetGridPosition() + actualOffset;
+        return gridPosition + actualOffset;
     }
 
     public override void Destroy()

@@ -11,7 +11,7 @@ public class Item : CellObject
     /// <param name="itemType">The item type.</param>
     public Item(Cell primaryCell, ItemType itemType)
     {
-        this.primaryCell = primaryCell;
+        gridPosition = primaryCell.GetGridPosition();
         this.itemType = itemType;
         primaryCell.OccupyCell(this);
         transform = itemType.GetItemTransform(primaryCell.GetGridPosition());

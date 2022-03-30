@@ -2,19 +2,18 @@ using UnityEngine;
 
 public abstract class CellObject
 {
-    protected Cell primaryCell;
+    protected Vector2Int gridPosition;
     protected Transform transform;
     protected bool isMovedThisTick;
 
     public Vector2Int GetGridPosition()
     {
-        return primaryCell.GetGridPosition();
+        return gridPosition;
     }
 
-    public void MoveTo(Cell cell)
+    public void MoveTo(Vector3 position)
     {
-        primaryCell = cell;
-        transform.position = cell.GetCentreWorldPosition();
+        transform.position = position;
         isMovedThisTick = true;
     }
 

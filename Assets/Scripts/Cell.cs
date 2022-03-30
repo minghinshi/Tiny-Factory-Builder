@@ -1,14 +1,15 @@
 using UnityEngine;
 
+//A cell on a grid. Can be used to contain objects.
 public class Cell
 {
     private bool blocked = false;
     private bool occupied = false;
 
     private Vector2Int position;
+    public Vector3 CentreWorldPosition { get; set; }
 
     private CellObject containedObject;
-    private GridSystem gridSystem;
 
     public delegate void CellOccupiedHandler(Cell cell);
     public event CellOccupiedHandler CellOccupied;
@@ -16,24 +17,14 @@ public class Cell
     public Cell(int x, int y, GridSystem gridSystem, bool blocked)
     {
         position = new Vector2Int(x, y);
-        this.gridSystem = gridSystem;
+        CentreWorldPosition = gridSystem.GetCentreWorldPosition(position);
         this.blocked = blocked;
     }
 
-
+    //Returns the position of the cell.
     public Vector2Int GetGridPosition()
     {
         return position;
-    }
-
-    public Vector3 GetCornerWorldPosition()
-    {
-        return gridSystem.GetCornerWorldPosition(position);
-    }
-
-    public Vector3 GetCentreWorldPosition()
-    {
-        return gridSystem.GetCentreWorldPosition(position);
     }
 
     public CellObject GetContainedObject()
@@ -95,7 +86,7 @@ public class Cell
         if (!occupied) return;
         if (containedObject.IsMovedThisTick()) return;
 
-        containedObject.MoveTo(destination);
+        containedObject.MoveTo(destination.CentreWorldPosition);
         destination.OccupyCell(containedObject);
         EmptyCell();
     }
