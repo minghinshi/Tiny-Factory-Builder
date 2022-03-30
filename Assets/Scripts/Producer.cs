@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class Producer : Building
 {
     private Cell outputCell;
@@ -9,7 +11,11 @@ public class Producer : Building
         //TEMPORARY
         //Later on, the producer will check for the resource type below it.
         producedItem = producerType.producedItem;
-        outputCell = GridManager.itemGrid.GetCellAt(primaryCell.GetGridPosition() + direction.GetUnitVector());
+        Vector2Int outputPosition = producerType.GetOutputPosition();
+        Vector2Int gridPosition = GetGridPositionFromOffset(outputPosition);
+        outputCell = GridManager.itemGrid.GetCellAt(gridPosition);
+
+        TickHandler.instance.TickMachines += TickProducer;
     }
 
     /// <summary>
@@ -18,9 +24,8 @@ public class Producer : Building
     public void TickProducer()
     {
         ticksLeft--;
-        if (ticksLeft == 0)
+        if (ticksLeft <= 0)
         {
-            ticksLeft = 50;
             ProduceItem();
         }
     }
@@ -31,7 +36,15 @@ public class Producer : Building
     public void ProduceItem()
     {
         if (outputCell.CanInsert()) {
-            Item product = new Item(outputCell, producedItem);
+            _ = new Item(outputCell, producedItem);
+            ticksLeft = 50;
         }
+    }
+
+    public override void Destroy()
+    {
+        TickHandler.instance.TickMachines -= TickProducer;
+
+        base.Destroy();
     }
 }

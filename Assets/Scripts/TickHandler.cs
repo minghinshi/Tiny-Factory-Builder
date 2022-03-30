@@ -1,11 +1,15 @@
 using UnityEngine;
 
-public delegate void TickMachines();
+public delegate void Tick();
 public class TickHandler : MonoBehaviour
 {
     public static TickHandler instance;
 
-    public event TickMachines Tick;
+    public event Tick TickItems;
+    public event Tick TickMachines;
+    public event Tick TickConveyors;
+
+    private int stepsLeftUntilConveyorTick = 5;
 
     private void Awake()
     {
@@ -14,6 +18,13 @@ public class TickHandler : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Tick?.Invoke();
+        TickItems?.Invoke();
+        TickMachines?.Invoke();
+
+        stepsLeftUntilConveyorTick--;
+        if (stepsLeftUntilConveyorTick == 0) {
+            stepsLeftUntilConveyorTick = 5;
+            TickConveyors?.Invoke();
+        }
     }
 }

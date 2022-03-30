@@ -2,9 +2,9 @@ using UnityEngine;
 
 public enum ItemTag { }
 
+[CreateAssetMenu(fileName = "New Item", menuName = "Item")]
 public class ItemType : ScriptableObject
 {
-    [SerializeField] private string itemName;
     [SerializeField] private Transform itemPrefab;
     [SerializeField] private ItemTag[] itemTags;
 

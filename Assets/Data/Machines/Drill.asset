@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: {x: 3, y: 3}
   buildingPrefab: {fileID: 8708670894175068345, guid: c56f75d7cbecabf449c7658f37993cbf, type: 3}
-  outputPosition: {x: 0, y: 0}
-  producedItem: {fileID: 0}
+  outputPosition: {x: 1, y: 3}
+  producedItem: {fileID: 11400000, guid: 7174a4c26a286f3488d3a9e4845c824b, type: 2}

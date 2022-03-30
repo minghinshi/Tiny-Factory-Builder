@@ -82,7 +82,9 @@ public class Cell
 
     public void MoveCellObjectTo(Cell destination)
     {
-        if (destination.IsOccupied() && destination.IsBlocked()) return;
+        if (!destination.CanInsert()) return;
+        if (!occupied) return;
+        if (containedObject.IsMovedThisTick()) return;
 
         containedObject.MoveTo(destination);
         destination.OccupyCell(containedObject);

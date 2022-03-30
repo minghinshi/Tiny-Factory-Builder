@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class Conveyor : Building
 {
+    //TODO: Conveyor Optimization
     private Cell thisCell;
     private Cell[] outputCells;
+    private int currentOutput = 0;
 
     public Conveyor(Cell primaryCell, Direction direction, ConveyorType conveyorType) : base(primaryCell, direction, conveyorType)
     {
@@ -13,24 +15,28 @@ public class Conveyor : Building
         thisCell.UnblockCell();
 
         Vector2Int[] outputPositions = conveyorType.GetOutputPositions();
+        outputCells = new Cell[outputPositions.Length];
         for (int i = 0; i < outputPositions.Length; i++)
         {
-            outputCells[i] = itemGrid.GetCellAt(gridPosition + direction.RotateVector(outputPositions[i]));
+            Vector2Int outputGridPosition = GetGridPositionFromOffset(outputPositions[i]);
+            outputCells[i] = itemGrid.GetCellAt(outputGridPosition);
         }
 
-        TickHandler.instance.Tick += MoveItem;
+        TickHandler.instance.TickConveyors += MoveItem;
     }
 
     public void MoveItem()
     {
-        //TEMPORARY
-        Debug.Log("Moving item!");
+        thisCell.MoveCellObjectTo(outputCells[currentOutput]);
+        currentOutput = (currentOutput + 1) % outputCells.Length;
     }
 
     public override void Destroy()
     {
         thisCell.BlockCell();
         thisCell.DestroyCellObject();
+        TickHandler.instance.TickConveyors -= MoveItem;
+
         base.Destroy();
     }
 }

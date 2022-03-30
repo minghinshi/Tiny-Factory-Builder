@@ -4,6 +4,7 @@ public abstract class CellObject
 {
     protected Cell primaryCell;
     protected Transform transform;
+    protected bool isMovedThisTick;
 
     public Vector2Int GetGridPosition()
     {
@@ -14,6 +15,11 @@ public abstract class CellObject
     {
         primaryCell = cell;
         transform.position = cell.GetCentreWorldPosition();
+        isMovedThisTick = true;
+    }
+
+    public bool IsMovedThisTick() {
+        return isMovedThisTick;
     }
 
     public abstract Vector2Int GetSize();

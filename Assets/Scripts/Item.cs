@@ -14,6 +14,13 @@ public class Item : CellObject
         this.primaryCell = primaryCell;
         this.itemType = itemType;
         primaryCell.OccupyCell(this);
+        transform = itemType.GetItemTransform(primaryCell.GetGridPosition());
+
+        TickHandler.instance.TickItems += Tick;
+    }
+
+    public void Tick() {
+        isMovedThisTick = false;
     }
 
     public override void Destroy()

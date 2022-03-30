@@ -25,6 +25,25 @@ public class Building : CellObject
         return buildingType.GetTransformedSize(direction);
     }
 
+    //Returns a grid position based on the position of the building, the offset from the building and the direction the building is facing.
+    public Vector2Int GetGridPositionFromOffset(Vector2Int originalOffset)
+    {
+        Vector2Int actualOffset = direction.RotateVector(originalOffset);
+        switch (direction)
+        {
+            case Direction.East:
+                actualOffset.y += buildingType.GetSize().x - 1;
+                break;
+            case Direction.South:
+                actualOffset += buildingType.GetSize() - new Vector2Int(1, 1);
+                break;
+            case Direction.West:
+                actualOffset.x += buildingType.GetSize().y - 1;
+                break;
+        }
+        return primaryCell.GetGridPosition() + actualOffset;
+    }
+
     public override void Destroy()
     {
         Object.Destroy(transform.gameObject);
