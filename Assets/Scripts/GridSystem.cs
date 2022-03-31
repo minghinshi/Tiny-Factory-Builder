@@ -1,26 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
-public class GridSystem
+public abstract class GridSystem
 {
     private Vector2Int size;
-    private Cell[,] gridOfCells;
     private float cellSize;
 
-    public GridSystem(int width, int height, float gridSize, bool blocked)
+    public GridSystem(int width, int height, float cellSize)
     {
         size = new Vector2Int(width, height);
-        gridOfCells = new Cell[width, height];
-        this.cellSize = gridSize;
-        for (int i = 0; i < width; i++)
-        {
-            for (int j = 0; j < height; j++)
-            {
-                gridOfCells[i, j] = new Cell(i, j, this, blocked);
-            }
-        }
+        this.cellSize = cellSize;
     }
 
-    public GridSystem(int width, int height, float gridSize) : this(width, height, gridSize, false) { }
+    public abstract Cell[,] GridOfCells { get; }
 
     public Vector2Int GetGridPosition(Vector3 worldPosition)
     {
@@ -46,7 +37,7 @@ public class GridSystem
 
     public Cell GetCellAt(Vector2Int gridPosition)
     {
-        return gridOfCells[gridPosition.x, gridPosition.y];
+        return GridOfCells[gridPosition.x, gridPosition.y];
     }
 
     public List<Cell> GetCellsInCellObject(CellObject cellObject)
@@ -56,13 +47,8 @@ public class GridSystem
         Vector2Int gridPosition = cellObject.GetGridPosition();
         for (int i = gridPosition.x; i < gridPosition.x + size.x; i++)
             for (int j = gridPosition.y; j < gridPosition.y + size.y; j++)
-                cells.Add(gridOfCells[i, j]);
+                cells.Add(GridOfCells[i, j]);
         return cells;
-    }
-
-    public Vector3 SnapWorldPosition(Vector3 worldPosition)
-    {
-        return GetCornerWorldPosition(GetGridPosition(worldPosition));
     }
 
     public bool IsWithinBounds(int x, int y)
@@ -77,56 +63,11 @@ public class GridSystem
 
     public bool IsPositionOccupied(int x, int y)
     {
-        return gridOfCells[x, y].IsOccupied();
+        return GridOfCells[x, y].IsOccupied();
     }
 
     public bool IsPositionOccupied(Vector2Int position)
     {
         return IsPositionOccupied(position.x, position.y);
-    }
-
-    public bool CanPlace(Vector2Int position, Direction direction, BuildingType buildingType)
-    {
-        Vector2Int size = direction.TransformSize(buildingType.GetSize());
-        for (int i = position.x; i < position.x + size.x; i++)
-            for (int j = position.y; j < position.y + size.y; j++)
-                if (!IsWithinBounds(i, j) || IsPositionOccupied(i, j))
-                    return false;
-        return true;
-    }
-
-    public void OccupyCells(Building building)
-    {
-        GetCellsInCellObject(building).ForEach(cell => cell.OccupyCell(building));
-    }
-
-    public void PlaceBuilding(Vector2Int position, Direction direction, BuildingType buildingType)
-    {
-        if (CanPlace(position, direction, buildingType))
-        {
-            buildingType.CreateBuilding(GetCellAt(position), direction);
-            AudioHandler.instance.PlayPlacement();
-        }
-    }
-
-    public void DestroyBuilding(Vector2Int gridPosition)
-    {
-        if (IsWithinBounds(gridPosition))
-        {
-            CellObject cellObject = GetCellAt(gridPosition).GetContainedObject();
-            if (cellObject != null)
-            {
-                List<Cell> cells = GetCellsInCellObject(cellObject);
-                foreach (Cell cell in cells)
-                    cell.EmptyCell();
-                cellObject.Destroy();
-                AudioHandler.instance.PlayDestroy();
-            }
-        }
-    }
-
-    public float GetCellSize()
-    {
-        return cellSize;
     }
 }

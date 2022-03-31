@@ -7,9 +7,9 @@ public class ProducerType : BuildingType
     //TEMPORARY
     public ItemType producedItem;
 
-    public override Building CreateBuilding(Cell primaryCell, Direction direction)
+    public override Building CreateBuilding(Vector2Int gridPosition, Direction direction)
     {
-        return new Producer(primaryCell, direction, this);
+        return new Producer(gridPosition, direction, this);
     }
 
     public Vector2Int GetOutputPosition()

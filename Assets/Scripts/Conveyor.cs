@@ -3,19 +3,18 @@ using UnityEngine;
 public class Conveyor : Building
 {
     //TODO: Conveyor Optimization
-    private Cell thisCell;
-    private Cell[] outputCells;
+    private ItemCell thisCell;
+    private ItemCell[] outputCells;
     private int currentOutput = 0;
 
-    public Conveyor(Cell primaryCell, Direction direction, ConveyorType conveyorType) : base(primaryCell, direction, conveyorType)
+    public Conveyor(Vector2Int gridPosition, Direction direction, ConveyorType conveyorType) : base(gridPosition, direction, conveyorType)
     {
-        Vector2Int primaryCellPosition = primaryCell.GetGridPosition();
-        GridSystem itemGrid = GridManager.itemGrid;
-        thisCell = itemGrid.GetCellAt(primaryCellPosition);
+        ItemGridSystem itemGrid = GridManager.itemGrid;
+        thisCell = itemGrid.GetCellAt(gridPosition);
         thisCell.UnblockCell();
 
         Vector2Int[] outputPositions = conveyorType.GetOutputPositions();
-        outputCells = new Cell[outputPositions.Length];
+        outputCells = new ItemCell[outputPositions.Length];
         for (int i = 0; i < outputPositions.Length; i++)
         {
             Vector2Int position = GetGridPositionFromOffset(outputPositions[i]);

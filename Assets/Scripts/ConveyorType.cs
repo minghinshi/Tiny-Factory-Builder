@@ -5,9 +5,9 @@ public class ConveyorType : BuildingType
 {
     [SerializeField] private Vector2Int[] outputPositions;
 
-    public override Building CreateBuilding(Cell primaryCell, Direction direction)
+    public override Building CreateBuilding(Vector2Int gridPosition, Direction direction)
     {
-        return new Conveyor(primaryCell, direction, this);
+        return new Conveyor(gridPosition, direction, this);
     }
 
     public Vector2Int[] GetOutputPositions()

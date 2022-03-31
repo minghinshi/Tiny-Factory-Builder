@@ -8,12 +8,12 @@ public class Machine : Building
 
     private Dictionary<string, int> storedInputsItems;
 
-    private Cell[] inputCells;
-    private Cell outputCell;
+    private ItemCell[] inputCells;
+    private ItemCell outputCell;
     private Recipe currentRecipe;
 
     //Creates a machine object.
-    public Machine(Cell primaryCell, Direction direction, MachineType machineType) : base(primaryCell, direction, machineType)
+    public Machine(Vector2Int gridPosition, Direction direction, MachineType machineType) : base(gridPosition, direction, machineType)
     {
         Vector2Int[] inputPositions = machineType.GetInputPositions();
         for (int i = 0; i < inputPositions.Length; i++)

@@ -44,8 +44,8 @@ public class BuildingType : ScriptableObject
     }
 
     //Creates a building object.
-    public virtual Building CreateBuilding(Cell primaryCell, Direction direction)
+    public virtual Building CreateBuilding(Vector2Int gridPosition, Direction direction)
     {
-        return new Building(primaryCell, direction, this);
+        return new Building(gridPosition, direction, this);
     }
 }

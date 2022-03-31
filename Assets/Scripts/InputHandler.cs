@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 public class InputHandler : MonoBehaviour
 {
-    private GridSystem buildingGrid;
+    private BuildingGridSystem buildingGrid;
     [SerializeField]
     private BuildingType selectedBuildingType = null;
     private Vector2Int gridPosition = new Vector2Int();

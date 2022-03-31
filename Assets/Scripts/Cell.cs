@@ -3,23 +3,17 @@ using UnityEngine;
 //A cell on a grid. Can be used to contain objects.
 public class Cell
 {
-    private bool blocked = false;
-    private bool occupied = false;
+    protected bool occupied = false;
+    protected Vector2Int position;
+    protected CellObject containedObject;
 
-    private Vector2Int position;
-    public Vector3 CentreWorldPosition { get; set; }
-
-    private CellObject containedObject;
-
-    public delegate void CellOccupiedHandler(Cell cell);
-    public event CellOccupiedHandler CellOccupied;
-
-    public Cell(int x, int y, GridSystem gridSystem, bool blocked)
+    public Cell(Vector2Int position, GridSystem gridSystem)
     {
-        position = new Vector2Int(x, y);
+        this.position = position;
         CentreWorldPosition = gridSystem.GetCentreWorldPosition(position);
-        this.blocked = blocked;
     }
+
+    public Vector3 CentreWorldPosition { get; set; }
 
     //Returns the position of the cell.
     public Vector2Int GetGridPosition()
@@ -37,22 +31,20 @@ public class Cell
         return occupied;
     }
 
-    public bool IsBlocked()
+    public virtual bool CanInsert()
     {
-        return blocked;
+        return !occupied;
     }
 
-    public bool CanInsert()
+    public virtual void OccupyCell(CellObject cellObject)
     {
-        return !(occupied || blocked);
-    }
-
-    public void OccupyCell(CellObject cellObject)
-    {
-        if (blocked) return;
         occupied = true;
         containedObject = cellObject;
-        CellOccupied?.Invoke(this);
+    }
+
+    public void TryOccupyCell(CellObject cellObject)
+    {
+        if (CanInsert()) OccupyCell(cellObject);
     }
 
     public void EmptyCell()
@@ -68,26 +60,5 @@ public class Cell
             containedObject.Destroy();
             EmptyCell();
         }
-    }
-
-    public void BlockCell()
-    {
-        blocked = true;
-    }
-
-    public void UnblockCell()
-    {
-        blocked = false;
-    }
-
-    public void MoveCellObjectTo(Cell destination)
-    {
-        if (!destination.CanInsert()) return;
-        if (!occupied) return;
-        if (containedObject.IsMovedThisTick()) return;
-
-        containedObject.MoveTo(destination.CentreWorldPosition);
-        destination.OccupyCell(containedObject);
-        EmptyCell();
     }
 }

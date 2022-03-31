@@ -13,7 +13,7 @@ public class Item : CellObject
     {
         gridPosition = primaryCell.GetGridPosition();
         this.itemType = itemType;
-        primaryCell.OccupyCell(this);
+        primaryCell.TryOccupyCell(this);
         transform = itemType.GetItemTransform(primaryCell.GetGridPosition());
 
         TickHandler.instance.TickItems += Tick;

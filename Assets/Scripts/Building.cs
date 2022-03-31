@@ -5,12 +5,12 @@ public class Building : CellObject
     protected Direction direction;
     protected BuildingType buildingType;
 
-    public Building(Cell primaryCell, Direction direction, BuildingType buildingType)
+    public Building(Vector2Int gridPosition, Direction direction, BuildingType buildingType)
     {
-        gridPosition = primaryCell.GetGridPosition();
+        this.gridPosition = gridPosition;
         this.direction = direction;
         this.buildingType = buildingType;
-        transform = buildingType.CreateBuildingTransform(primaryCell.GetGridPosition(), direction);
+        transform = buildingType.CreateBuildingTransform(gridPosition, direction);
 
         GridManager.buildingGrid.OccupyCells(this);
     }
