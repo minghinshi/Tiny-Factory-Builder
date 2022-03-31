@@ -19,12 +19,17 @@ public class TickHandler : MonoBehaviour
     private void FixedUpdate()
     {
         TickItems?.Invoke();
+        StepConveyors();
+        TickMachines?.Invoke();
+    }
+
+    private void StepConveyors()
+    {
         stepsLeftUntilConveyorTick--;
         if (stepsLeftUntilConveyorTick == 0)
         {
             stepsLeftUntilConveyorTick = 5;
             TickConveyors?.Invoke();
         }
-        TickMachines?.Invoke();
     }
 }

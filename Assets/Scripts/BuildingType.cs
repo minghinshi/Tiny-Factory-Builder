@@ -4,6 +4,7 @@ public class BuildingType : ScriptableObject
 {
     [SerializeField] private Vector2Int size;
     [SerializeField] private Transform buildingPrefab;
+    private GridSystem<Building> buildingGrid = GridManager.buildingGrid;
 
     public Vector2Int GetSize()
     {
@@ -47,5 +48,15 @@ public class BuildingType : ScriptableObject
     public virtual Building CreateBuilding(Vector2Int gridPosition, Direction direction)
     {
         return new Building(gridPosition, direction, this);
+    }
+
+    public void PlaceBuilding(Vector2Int position, Direction direction)
+    {
+        if (buildingGrid.CanPlace(position, direction.TransformSize(GetSize())))
+        {
+            Building building = CreateBuilding(position, direction);
+            buildingGrid.OccupyCells(building);
+            AudioHandler.instance.PlayPlacement();
+        }
     }
 }

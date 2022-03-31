@@ -6,10 +6,8 @@ public class AudioHandler : MonoBehaviour
 
     private AudioSource audioSource;
 
-    [SerializeField]
-    private AudioClip placementSound;
-    [SerializeField]
-    private AudioClip destroySound;
+    [SerializeField] private AudioClip placementSound;
+    [SerializeField] private AudioClip destroySound;
 
     private void Awake()
     {

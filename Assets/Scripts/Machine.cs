@@ -30,7 +30,7 @@ public class Machine : Building
     }
 
     //Puts an item delivered to the input cell to the storage.
-    private void StoreInput(Cell<Item> cell)
+    private void StoreInput(Item item)
     {
 
     }

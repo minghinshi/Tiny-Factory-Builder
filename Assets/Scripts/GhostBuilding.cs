@@ -31,7 +31,6 @@ public class GhostBuilding
         displayedPosition.x = Mathf.Lerp(displayedPosition.x, targetPosition.x, Time.deltaTime * 20f);
         displayedPosition.y = Mathf.Lerp(displayedPosition.y, targetPosition.y, Time.deltaTime * 20f);
         displayedRotation = Mathf.LerpAngle(displayedRotation, actualRotation, Time.deltaTime * 20f);
-
         buildingTransform.SetPositionAndRotation(displayedPosition, Quaternion.Euler(0, 0, displayedRotation));
     }
 

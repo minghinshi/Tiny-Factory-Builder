@@ -6,17 +6,22 @@ public class GridSystem<TCellObject> where TCellObject : CellObject
     private float cellSize;
     private Cell<TCellObject>[,] gridOfCells;
 
-    public GridSystem(int width, int height, float cellSize)
+    public GridSystem(int width, int height, float cellSize, bool startBlocked)
     {
         size = new Vector2Int(width, height);
         this.cellSize = cellSize;
         gridOfCells = new Cell<TCellObject>[width, height];
+        CreateGridOfCells(width, height, startBlocked);
+    }
+
+    private void CreateGridOfCells(int width, int height, bool startBlocked)
+    {
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
                 Vector2Int gridPosition = new Vector2Int(i, j);
-                gridOfCells[i, j] = new Cell<TCellObject>(gridPosition, GetCentreWorldPosition(gridPosition));
+                gridOfCells[i, j] = new Cell<TCellObject>(gridPosition, GetCentreWorldPosition(gridPosition), startBlocked);
             }
         }
     }
@@ -93,29 +98,23 @@ public class GridSystem<TCellObject> where TCellObject : CellObject
         GetCellsInCellObject(cellObject).ForEach(cell => cell.TryOccupyCell(cellObject));
     }
 
-    public void PlaceBuilding(Vector2Int position, Direction direction, BuildingType buildingType)
+    public TCellObject GetCellObjectAt(Vector2Int gridPosition)
     {
-        if (CanPlace(position, buildingType.GetSize()))
-        {
-            buildingType.CreateBuilding(position, direction);
-            AudioHandler.instance.PlayPlacement();
-        }
+        if (!IsWithinBounds(gridPosition)) return null;
+        return GetCellAt(gridPosition).GetContainedObject();
     }
 
-    public void DestroyCellObject(Vector2Int gridPosition)
+    public void TryDestroyCellObject(Vector2Int gridPosition)
     {
-        if (IsWithinBounds(gridPosition))
-        {
-            TCellObject cellObject = GetCellAt(gridPosition).GetContainedObject();
-            Debug.Log(cellObject);
-            if (cellObject != null)
-            {
-                List<Cell<TCellObject>> cells = GetCellsInCellObject(cellObject);
-                foreach (Cell<TCellObject> cell in cells)
-                    cell.EmptyCell();
-                cellObject.Destroy();
-                AudioHandler.instance.PlayDestroy();
-            }
-        }
+        TCellObject cellObject = GetCellObjectAt(gridPosition);
+        if (cellObject != null) DestroyCellObject(cellObject);
+    }
+
+    private void DestroyCellObject(TCellObject cellObject)
+    {
+        foreach (Cell<TCellObject> cell in GetCellsInCellObject(cellObject))
+            cell.EmptyCell();
+        cellObject.Destroy();
+        AudioHandler.instance.PlayDestroy();
     }
 }

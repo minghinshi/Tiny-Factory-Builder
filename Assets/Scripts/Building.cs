@@ -11,8 +11,6 @@ public class Building : CellObject
         this.direction = direction;
         this.buildingType = buildingType;
         transform = buildingType.CreateBuildingTransform(gridPosition, direction);
-
-        GridManager.buildingGrid.OccupyCells(this);
     }
 
     public Direction GetDirection()

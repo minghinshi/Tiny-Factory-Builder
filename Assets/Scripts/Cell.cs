@@ -4,18 +4,19 @@ using UnityEngine;
 public class Cell<TCellObject> where TCellObject : CellObject
 {
     protected bool occupied = false;
-    private bool blocked = true;
+    private bool blocked;
 
     protected Vector2Int gridPosition;
     protected TCellObject containedObject;
 
-    public delegate void CellOccupiedHandler(Cell<TCellObject> thisCell);
+    public delegate void CellOccupiedHandler(TCellObject cellObject);
     public event CellOccupiedHandler CellOccupied;
 
-    public Cell(Vector2Int gridPosition, Vector3 worldPosition)
+    public Cell(Vector2Int gridPosition, Vector3 worldPosition, bool startBlocked)
     {
         this.gridPosition = gridPosition;
         CentreWorldPosition = worldPosition;
+        blocked = startBlocked;
     }
 
     public Vector3 CentreWorldPosition { get; set; }
@@ -50,7 +51,7 @@ public class Cell<TCellObject> where TCellObject : CellObject
     {
         occupied = true;
         containedObject = cellObject;
-        CellOccupied?.Invoke(this);
+        CellOccupied?.Invoke(cellObject);
     }
 
     public void TryOccupyCell(TCellObject cellObject)
@@ -83,12 +84,21 @@ public class Cell<TCellObject> where TCellObject : CellObject
         blocked = false;
     }
 
-    public void MoveCellObjectTo(Cell<TCellObject> destination)
+    private bool CanMoveCellObjectTo(Cell<TCellObject> destination)
     {
-        if (!destination.CanInsert()) return;
-        if (!occupied) return;
-        if (containedObject.IsMovedThisTick()) return;
+        if (!destination.CanInsert()) return false;
+        if (!occupied) return false;
+        if (containedObject.IsMovedThisTick()) return false;
+        return true;
+    }
 
+    public void TryMoveCellObjectTo(Cell<TCellObject> destination)
+    {
+        if (CanMoveCellObjectTo(destination)) MoveCellObjectTo(destination);
+    }
+
+    private void MoveCellObjectTo(Cell<TCellObject> destination)
+    {
         containedObject.MoveTo(destination.CentreWorldPosition);
         destination.TryOccupyCell(containedObject);
         EmptyCell();
