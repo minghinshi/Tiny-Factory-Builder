@@ -9,7 +9,7 @@ public class Item : CellObject
     /// </summary>
     /// <param name="primaryCell">The cell that the item occupies.</param>
     /// <param name="itemType">The item type.</param>
-    public Item(Cell primaryCell, ItemType itemType)
+    public Item(Cell<Item> primaryCell, ItemType itemType)
     {
         gridPosition = primaryCell.GetGridPosition();
         this.itemType = itemType;

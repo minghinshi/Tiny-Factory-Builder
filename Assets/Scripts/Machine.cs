@@ -8,8 +8,8 @@ public class Machine : Building
 
     private Dictionary<string, int> storedInputsItems;
 
-    private ItemCell[] inputCells;
-    private ItemCell outputCell;
+    private Cell<Item>[] inputCells;
+    private Cell<Item> outputCell;
     private Recipe currentRecipe;
 
     //Creates a machine object.
@@ -30,7 +30,7 @@ public class Machine : Building
     }
 
     //Puts an item delivered to the input cell to the storage.
-    private void StoreInput(Cell cell)
+    private void StoreInput(Cell<Item> cell)
     {
 
     }

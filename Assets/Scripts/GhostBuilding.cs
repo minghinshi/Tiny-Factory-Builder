@@ -61,7 +61,7 @@ public class GhostBuilding
 
     public void SetColor()
     {
-        bool canPlace = GridManager.buildingGrid.CanPlace(actualPosition, direction, buildingType);
+        bool canPlace = GridManager.buildingGrid.CanPlace(actualPosition, direction.TransformSize(buildingType.GetSize()));
         if (canPlace) SetCanPlaceColor();
         else SetCannotPlaceColor();
     }

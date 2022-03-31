@@ -1,17 +1,25 @@
 using System.Collections.Generic;
 using UnityEngine;
-public abstract class GridSystem
+public class GridSystem<TCellObject> where TCellObject : CellObject
 {
     private Vector2Int size;
     private float cellSize;
+    private Cell<TCellObject>[,] gridOfCells;
 
     public GridSystem(int width, int height, float cellSize)
     {
         size = new Vector2Int(width, height);
         this.cellSize = cellSize;
+        gridOfCells = new Cell<TCellObject>[width, height];
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                Vector2Int gridPosition = new Vector2Int(i, j);
+                gridOfCells[i, j] = new Cell<TCellObject>(gridPosition, GetCentreWorldPosition(gridPosition));
+            }
+        }
     }
-
-    public abstract Cell[,] GridOfCells { get; }
 
     public Vector2Int GetGridPosition(Vector3 worldPosition)
     {
@@ -35,19 +43,19 @@ public abstract class GridSystem
         return new Vector3((gridPosition.x + 0.5f * size.x) * cellSize, (gridPosition.y + 0.5f * size.y) * cellSize);
     }
 
-    public Cell GetCellAt(Vector2Int gridPosition)
+    public Cell<TCellObject> GetCellAt(Vector2Int gridPosition)
     {
-        return GridOfCells[gridPosition.x, gridPosition.y];
+        return gridOfCells[gridPosition.x, gridPosition.y];
     }
 
-    public List<Cell> GetCellsInCellObject(CellObject cellObject)
+    public List<Cell<TCellObject>> GetCellsInCellObject(TCellObject cellObject)
     {
-        List<Cell> cells = new List<Cell>();
+        List<Cell<TCellObject>> cells = new List<Cell<TCellObject>>();
         Vector2Int size = cellObject.GetSize();
         Vector2Int gridPosition = cellObject.GetGridPosition();
         for (int i = gridPosition.x; i < gridPosition.x + size.x; i++)
             for (int j = gridPosition.y; j < gridPosition.y + size.y; j++)
-                cells.Add(GridOfCells[i, j]);
+                cells.Add(gridOfCells[i, j]);
         return cells;
     }
 
@@ -63,11 +71,51 @@ public abstract class GridSystem
 
     public bool IsPositionOccupied(int x, int y)
     {
-        return GridOfCells[x, y].IsOccupied();
+        return gridOfCells[x, y].IsOccupied();
     }
 
     public bool IsPositionOccupied(Vector2Int position)
     {
         return IsPositionOccupied(position.x, position.y);
+    }
+
+    public bool CanPlace(Vector2Int position, Vector2Int size)
+    {
+        for (int i = position.x; i < position.x + size.x; i++)
+            for (int j = position.y; j < position.y + size.y; j++)
+                if (!IsWithinBounds(i, j) || IsPositionOccupied(i, j))
+                    return false;
+        return true;
+    }
+
+    public void OccupyCells(TCellObject cellObject)
+    {
+        GetCellsInCellObject(cellObject).ForEach(cell => cell.TryOccupyCell(cellObject));
+    }
+
+    public void PlaceBuilding(Vector2Int position, Direction direction, BuildingType buildingType)
+    {
+        if (CanPlace(position, buildingType.GetSize()))
+        {
+            buildingType.CreateBuilding(position, direction);
+            AudioHandler.instance.PlayPlacement();
+        }
+    }
+
+    public void DestroyCellObject(Vector2Int gridPosition)
+    {
+        if (IsWithinBounds(gridPosition))
+        {
+            TCellObject cellObject = GetCellAt(gridPosition).GetContainedObject();
+            Debug.Log(cellObject);
+            if (cellObject != null)
+            {
+                List<Cell<TCellObject>> cells = GetCellsInCellObject(cellObject);
+                foreach (Cell<TCellObject> cell in cells)
+                    cell.EmptyCell();
+                cellObject.Destroy();
+                AudioHandler.instance.PlayDestroy();
+            }
+        }
     }
 }

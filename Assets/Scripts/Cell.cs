@@ -1,16 +1,21 @@
 using UnityEngine;
 
 //A cell on a grid. Can be used to contain objects.
-public class Cell
+public class Cell<TCellObject> where TCellObject : CellObject
 {
     protected bool occupied = false;
-    protected Vector2Int position;
-    protected CellObject containedObject;
+    private bool blocked = true;
 
-    public Cell(Vector2Int position, GridSystem gridSystem)
+    protected Vector2Int gridPosition;
+    protected TCellObject containedObject;
+
+    public delegate void CellOccupiedHandler(Cell<TCellObject> thisCell);
+    public event CellOccupiedHandler CellOccupied;
+
+    public Cell(Vector2Int gridPosition, Vector3 worldPosition)
     {
-        this.position = position;
-        CentreWorldPosition = gridSystem.GetCentreWorldPosition(position);
+        this.gridPosition = gridPosition;
+        CentreWorldPosition = worldPosition;
     }
 
     public Vector3 CentreWorldPosition { get; set; }
@@ -18,10 +23,10 @@ public class Cell
     //Returns the position of the cell.
     public Vector2Int GetGridPosition()
     {
-        return position;
+        return gridPosition;
     }
 
-    public CellObject GetContainedObject()
+    public TCellObject GetContainedObject()
     {
         return containedObject;
     }
@@ -31,18 +36,24 @@ public class Cell
         return occupied;
     }
 
-    public virtual bool CanInsert()
+    public bool IsBlocked()
     {
-        return !occupied;
+        return blocked;
     }
 
-    public virtual void OccupyCell(CellObject cellObject)
+    public bool CanInsert()
+    {
+        return !(occupied || blocked);
+    }
+
+    public void OccupyCell(TCellObject cellObject)
     {
         occupied = true;
         containedObject = cellObject;
+        CellOccupied?.Invoke(this);
     }
 
-    public void TryOccupyCell(CellObject cellObject)
+    public void TryOccupyCell(TCellObject cellObject)
     {
         if (CanInsert()) OccupyCell(cellObject);
     }
@@ -60,5 +71,26 @@ public class Cell
             containedObject.Destroy();
             EmptyCell();
         }
+    }
+
+    public void BlockCell()
+    {
+        blocked = true;
+    }
+
+    public void UnblockCell()
+    {
+        blocked = false;
+    }
+
+    public void MoveCellObjectTo(Cell<TCellObject> destination)
+    {
+        if (!destination.CanInsert()) return;
+        if (!occupied) return;
+        if (containedObject.IsMovedThisTick()) return;
+
+        containedObject.MoveTo(destination.CentreWorldPosition);
+        destination.TryOccupyCell(containedObject);
+        EmptyCell();
     }
 }

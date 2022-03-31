@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 public class InputHandler : MonoBehaviour
 {
-    private BuildingGridSystem buildingGrid;
+    private GridSystem<Building> buildingGrid;
     [SerializeField]
     private BuildingType selectedBuildingType = null;
     private Vector2Int gridPosition = new Vector2Int();
@@ -25,7 +25,7 @@ public class InputHandler : MonoBehaviour
         UpdateGhostPosition();
         if (Input.GetMouseButton(1) && !EventSystem.current.IsPointerOverGameObject())
         {
-            buildingGrid.DestroyBuilding(gridPosition);
+            buildingGrid.DestroyCellObject(gridPosition);
             placedBuilding = false;
         }
         if (selectedBuildingType != null)

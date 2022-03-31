@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Producer : Building
 {
-    private Cell outputCell;
+    private Cell<Item> outputCell;
     private ItemType producedItem;
     private int ticksLeft = 50;
 
