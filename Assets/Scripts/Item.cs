@@ -33,4 +33,9 @@ public class Item : CellObject
     {
         return new Vector2Int(1, 1);
     }
+
+    public ItemType GetItemType()
+    {
+        return itemType;
+    }
 }

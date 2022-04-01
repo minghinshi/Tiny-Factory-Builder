@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "New Recipe", menuName = "Recipe")]
 public class Recipe : ScriptableObject
 {
-    private Dictionary<string, int> inputs;
-    private Dictionary<string, int> outputs;
+    [SerializeField] public Dictionary<ItemType, int> inputs;
+    [SerializeField] private Dictionary<ItemType, int> outputs;
 
-    public Dictionary<string, int> GetInputs()
+    public Dictionary<ItemType, int> GetInputs()
     {
         return inputs;
     }

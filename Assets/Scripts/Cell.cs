@@ -9,7 +9,7 @@ public class Cell<TCellObject> where TCellObject : CellObject
     protected Vector2Int gridPosition;
     protected TCellObject containedObject;
 
-    public delegate void CellOccupiedHandler(TCellObject cellObject);
+    public delegate void CellOccupiedHandler(Cell<TCellObject> thisCell);
     public event CellOccupiedHandler CellOccupied;
 
     public Cell(Vector2Int gridPosition, Vector3 worldPosition, bool startBlocked)
@@ -51,7 +51,7 @@ public class Cell<TCellObject> where TCellObject : CellObject
     {
         occupied = true;
         containedObject = cellObject;
-        CellOccupied?.Invoke(cellObject);
+        CellOccupied?.Invoke(this);
     }
 
     public void TryOccupyCell(TCellObject cellObject)
@@ -100,7 +100,7 @@ public class Cell<TCellObject> where TCellObject : CellObject
     private void MoveCellObjectTo(Cell<TCellObject> destination)
     {
         containedObject.MoveTo(destination.CentreWorldPosition);
-        destination.TryOccupyCell(containedObject);
+        destination.OccupyCell(containedObject);
         EmptyCell();
     }
 }

@@ -3,10 +3,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Machine", menuName = "Machine")]
 public class MachineType : BuildingType
 {
-    private Vector2Int[] inputPositions;
-    private Vector2Int outputPosition;
+    [SerializeField] private Vector2Int[] inputPositions;
+    [SerializeField] private Vector2Int outputPosition;
 
     private Recipe[] recipes;
+
+    public override Building CreateBuilding(Vector2Int gridPosition, Direction direction)
+    {
+        return new Machine(gridPosition, direction, this);
+    }
 
     public Vector2Int[] GetInputPositions()
     {

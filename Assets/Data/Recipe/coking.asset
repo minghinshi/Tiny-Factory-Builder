@@ -9,11 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83076e94c4af77849a4412bf505b7233, type: 3}
-  m_Name: BlastFurnace
+  m_Script: {fileID: 11500000, guid: 176c6a98500671842bd2137bf487fcca, type: 3}
+  m_Name: coking
   m_EditorClassIdentifier: 
-  size: {x: 3, y: 3}
-  buildingPrefab: {fileID: 8708670894175068345, guid: 510b42c996fdb3d4581a3f6e1b8b04ea, type: 3}
-  inputPositions:
-  - {x: 0, y: 1}
-  outputPosition: {x: 3, y: 1}
