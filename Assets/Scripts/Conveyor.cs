@@ -21,13 +21,13 @@ public class Conveyor : Building
         for (int i = 0; i < outputPositions.Length; i++)
         {
             Vector2Int position = GetGridPositionFromOffset(outputPositions[i]);
-            outputCells[i] = GridManager.itemGrid.GetCellAt(position);
+            outputCells[i] = AllGrids.itemGrid.GetCellAt(position);
         }
     }
 
     private void SetItemCellAbove()
     {
-        itemCellAbove = GridManager.itemGrid.GetCellAt(gridPosition);
+        itemCellAbove = AllGrids.itemGrid.GetCellAt(gridPosition);
         itemCellAbove.UnblockCell();
     }
 

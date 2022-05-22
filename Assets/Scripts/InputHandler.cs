@@ -16,7 +16,7 @@ public class InputHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        buildingGrid = GridManager.buildingGrid;
+        buildingGrid = AllGrids.buildingGrid;
         ghostBuilding = new GhostBuilding(gridPosition, currentDirection);
     }
 
@@ -26,13 +26,15 @@ public class InputHandler : MonoBehaviour
         UpdatePointerPosition();
         DetectDestroy();
         if (selectedBuildingType != null)
-        {
-            UpdateGhostPosition();
-            DetectPlacement();
-            DetectRotation();
-            DetectExitPlacement();
-            ghostBuilding.UpdateVisuals();
-        }
+            PlacingBuilding();
+    }
+
+    private void PlacingBuilding() {
+        UpdateGhostPosition();
+        DetectPlacement();
+        DetectRotation();
+        DetectExitPlacement();
+        ghostBuilding.UpdateVisuals();
     }
 
     private void DetectDestroy()

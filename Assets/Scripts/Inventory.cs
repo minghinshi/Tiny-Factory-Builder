@@ -1,40 +1,57 @@
+using System;
 using System.Collections.Generic;
 
 public class Inventory
 {
-    private Dictionary<ItemType, int> storedItems = new Dictionary<ItemType, int>();
+    private List<ItemStack> itemStacks = new List<ItemStack>();
 
-    public int GetItemCountOf(ItemType itemName)
+    public void Store(ItemType itemType, uint count)
     {
-        if (!storedItems.ContainsKey(itemName))
-            storedItems[itemName] = 0;
-        return storedItems[itemName];
+
+        ItemStack itemStack = GetItemStack(itemType) ?? AddItemStack(itemType);
+        itemStack.Store(count);
     }
 
-    public void SetItemCountOf(ItemType itemName, int count)
+    public void StoreOne(ItemType itemType)
     {
-        storedItems[itemName] = count;
+        Store(itemType, 1);
     }
 
-    public void Store(ItemType itemName, int count)
+    public void Remove(ItemType itemType, uint count)
     {
-        SetItemCountOf(itemName, GetItemCountOf(itemName) + count);
+        if (count > GetItemCount(itemType))
+            throw new InvalidOperationException();
+        ItemStack itemStack = GetItemStack(itemType);
+        itemStack.Remove(count);
+        if (itemStack.GetCount() == 0)
+            itemStacks.Remove(itemStack);
     }
 
-    public void StoreOne(ItemType itemName)
+    public void RemoveOne(ItemType itemType)
     {
-        Store(itemName, 1);
+        Remove(itemType, 1);
     }
 
-    public bool Remove(ItemType itemName, int count)
+    public void RemoveCopyOf(ItemStack itemStack)
     {
-        if (GetItemCountOf(itemName) < count) return false;
-        SetItemCountOf(itemName, GetItemCountOf(itemName) - count);
-        return true;
+        Remove(itemStack.GetItemType(), itemStack.GetCount());
     }
 
-    public bool RemoveOne(ItemType itemName)
+    public uint GetItemCount(ItemType itemType)
     {
-        return Remove(itemName, 1);
+        ItemStack itemStack = GetItemStack(itemType);
+        return itemStack == null ? 0 : itemStack.GetCount();
+    }
+
+    private ItemStack AddItemStack(ItemType itemType)
+    {
+        ItemStack itemStack = new ItemStack(itemType);
+        itemStacks.Add(itemStack);
+        return itemStack;
+    }
+
+    private ItemStack GetItemStack(ItemType itemType)
+    {
+        return itemStacks.Find(x => x.GetItemType() == itemType);
     }
 }

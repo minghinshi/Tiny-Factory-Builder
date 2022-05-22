@@ -13,7 +13,7 @@ public class Producer : Building
         //Later on, the producer will check for the resource type below it.
         producedItem = producerType.producedItem;
         Vector2Int outputPosition = producerType.GetOutputPosition();
-        outputCell = GridManager.itemGrid.GetCellAt(GetGridPositionFromOffset(outputPosition));
+        outputCell = AllGrids.itemGrid.GetCellAt(GetGridPositionFromOffset(outputPosition));
 
         TickHandler.instance.TickMachines += OnTick;
     }

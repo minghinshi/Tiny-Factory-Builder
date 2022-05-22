@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Machine : Building
@@ -29,7 +28,7 @@ public class Machine : Building
         for (int i = 0; i < inputPositions.Length; i++)
         {
             Vector2Int position = GetGridPositionFromOffset(inputPositions[i]);
-            inputCells[i] = GridManager.itemGrid.GetCellAt(position);
+            inputCells[i] = AllGrids.itemGrid.GetCellAt(position);
             inputCells[i].CellOccupied += StoreInput;
             inputCells[i].UnblockCell();
         }
@@ -37,7 +36,7 @@ public class Machine : Building
 
     private void SetOutputCell(Vector2Int outputPosition)
     {
-        outputCell = GridManager.itemGrid.GetCellAt(GetGridPositionFromOffset(outputPosition));
+        outputCell = AllGrids.itemGrid.GetCellAt(GetGridPositionFromOffset(outputPosition));
     }
 
     //Puts an item delivered to the input cell to the storage.
@@ -52,9 +51,9 @@ public class Machine : Building
     //Returns if the machine can process a recipe with the stored items.
     public bool CanProcess()
     {
-        Dictionary<ItemType, int> inputs = currentRecipe.GetInputs();
-        foreach (ItemType item in inputs.Keys)
-            if (inputInventory.GetItemCountOf(item) < inputs[item]) return false;
+        ItemStack[] inputs = currentRecipe.GetInputs();
+        foreach (ItemStack input in inputs)
+            if (inputInventory.GetItemCount(input.GetItemType()) < input.GetCount()) return false;
         return true;
     }
 
@@ -66,23 +65,24 @@ public class Machine : Building
 
     public void ConsumeInputs()
     {
-        Dictionary<ItemType, int> inputs = currentRecipe.GetInputs();
-        foreach (ItemType item in inputs.Keys)
-        {
-            bool enoughItems = inputInventory.Remove(item, inputs[item]);
-            if (!enoughItems) throw new System.Exception("Attempted to consume items while there is not enough of them!");
-        }
+        ItemStack[] inputs = currentRecipe.GetInputs();
+        foreach (ItemStack input in inputs)
+            inputInventory.RemoveCopyOf(input);
     }
 
     private void OnTick()
     {
-        if (isProcessing)
-        {
-            ticksLeft--;
-            if (ticksLeft <= 0)
-            {
-                ticksLeft = 500;
-            }
-        }
+        if (isProcessing) TickRecipe();
+    }
+
+    private void TickRecipe()
+    {
+        ticksLeft--;
+        if (ticksLeft <= 0) CompleteRecipe();
+    }
+
+    private void CompleteRecipe()
+    {
+        ticksLeft = 500;
     }
 }

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 176c6a98500671842bd2137bf487fcca, type: 3}
+  m_Name: RockHeating
+  m_EditorClassIdentifier: 
+  inputs:
+  - itemType: {fileID: 11400000, guid: 03af7e846f974f44f8556f5ebf9eeb95, type: 2}
+    count: 1
+  - itemType: {fileID: 11400000, guid: 2f32fb8086d3bb74683ef1d3b8589bb6, type: 2}
+    count: 1
+  outputs:
+  - itemType: {fileID: 11400000, guid: 6351a090d91dcc547bdc9a96dca991ac, type: 2}
+    count: 2

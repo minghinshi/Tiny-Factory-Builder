@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8708670894175068345}
   - component: {fileID: 7957849998910118050}
   m_Layer: 0
-  m_Name: BlastFurnace
+  m_Name: Melter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

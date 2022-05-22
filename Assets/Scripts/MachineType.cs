@@ -5,8 +5,7 @@ public class MachineType : BuildingType
 {
     [SerializeField] private Vector2Int[] inputPositions;
     [SerializeField] private Vector2Int outputPosition;
-
-    private Recipe[] recipes;
+    [SerializeField] private Recipe[] recipes;
 
     public override Building CreateBuilding(Vector2Int gridPosition, Direction direction)
     {

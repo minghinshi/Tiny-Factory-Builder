@@ -4,11 +4,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Recipe", menuName = "Recipe")]
 public class Recipe : ScriptableObject
 {
-    [SerializeField] public Dictionary<ItemType, int> inputs;
-    [SerializeField] private Dictionary<ItemType, int> outputs;
+    [SerializeField] private ItemStack[] inputs;
+    [SerializeField] private ItemStack[] outputs;
 
-    public Dictionary<ItemType, int> GetInputs()
-    {
+    public ItemStack[] GetInputs() {
         return inputs;
     }
 }

@@ -14,7 +14,7 @@ public class Item : CellObject
         gridPosition = primaryCell.GetGridPosition();
         this.itemType = itemType;
         primaryCell.TryOccupyCell(this);
-        transform = itemType.GetItemTransform(primaryCell.GetGridPosition());
+        transform = itemType.GetNewItemTransform(primaryCell.GetGridPosition());
 
         TickHandler.instance.TickItems += Tick;
     }

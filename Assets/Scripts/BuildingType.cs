@@ -4,7 +4,7 @@ public class BuildingType : ScriptableObject
 {
     [SerializeField] private Vector2Int size;
     [SerializeField] private Transform buildingPrefab;
-    private GridSystem<Building> buildingGrid = GridManager.buildingGrid;
+    private GridSystem<Building> buildingGrid = AllGrids.buildingGrid;
 
     public Vector2Int GetSize()
     {
@@ -33,7 +33,7 @@ public class BuildingType : ScriptableObject
 
     public Vector3 GetWorldPosition(Vector2Int gridPosition, Direction direction)
     {
-        return GridManager.buildingGrid.GetCentreWorldPosition(gridPosition, GetTransformedSize(direction));
+        return AllGrids.buildingGrid.GetCentreWorldPosition(gridPosition, GetTransformedSize(direction));
     }
 
     //Creates a building in the world.
