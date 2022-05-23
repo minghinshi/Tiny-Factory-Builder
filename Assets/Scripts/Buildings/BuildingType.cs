@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BuildingType : ScriptableObject
+public abstract class BuildingType : ScriptableObject
 {
     [SerializeField] private Vector2Int size;
     [SerializeField] private Transform buildingPrefab;
@@ -45,10 +45,7 @@ public class BuildingType : ScriptableObject
     }
 
     //Creates a building object.
-    public virtual Building CreateBuilding(Vector2Int gridPosition, Direction direction)
-    {
-        return new Building(gridPosition, direction, this);
-    }
+    public abstract Building CreateBuilding(Vector2Int gridPosition, Direction direction);
 
     public void PlaceBuilding(Vector2Int position, Direction direction)
     {

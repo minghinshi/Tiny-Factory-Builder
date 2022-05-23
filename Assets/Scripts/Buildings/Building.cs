@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Building : CellObject
+public abstract class Building : CellObject
 {
     protected Direction direction;
     protected BuildingType buildingType;

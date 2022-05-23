@@ -12,9 +12,8 @@ public class Inventory
         itemStack.Store(count);
     }
 
-    public void StoreOne(ItemType itemType)
-    {
-        Store(itemType, 1);
+    public void StoreCopyOf(ItemStack itemStack) {
+        Store(itemStack.GetItemType(), itemStack.GetCount());
     }
 
     public void Remove(ItemType itemType, uint count)
@@ -27,11 +26,6 @@ public class Inventory
             itemStacks.Remove(itemStack);
     }
 
-    public void RemoveOne(ItemType itemType)
-    {
-        Remove(itemType, 1);
-    }
-
     public void RemoveCopyOf(ItemStack itemStack)
     {
         Remove(itemStack.GetItemType(), itemStack.GetCount());
@@ -41,6 +35,15 @@ public class Inventory
     {
         ItemStack itemStack = GetItemStack(itemType);
         return itemStack == null ? 0 : itemStack.GetCount();
+    }
+
+    public bool HasItems() {
+        return itemStacks.Count != 0;
+    }
+
+    public ItemType GetFirstItemType() {
+        if (HasItems()) return itemStacks[0].GetItemType();
+        else return null;
     }
 
     private ItemStack AddItemStack(ItemType itemType)

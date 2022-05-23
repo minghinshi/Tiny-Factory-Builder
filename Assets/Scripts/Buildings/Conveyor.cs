@@ -10,13 +10,12 @@ public class Conveyor : Building
     public Conveyor(Vector2Int gridPosition, Direction direction, ConveyorType conveyorType) : base(gridPosition, direction, conveyorType)
     {
         SetItemCellAbove();
-        SetOutputCells(conveyorType);
+        SetOutputCells(conveyorType.GetOutputPositions());
         TickHandler.instance.TickConveyors += MoveItem;
     }
 
-    private void SetOutputCells(ConveyorType conveyorType)
+    private void SetOutputCells(Vector2Int[] outputPositions)
     {
-        Vector2Int[] outputPositions = conveyorType.GetOutputPositions();
         outputCells = new Cell<Item>[outputPositions.Length];
         for (int i = 0; i < outputPositions.Length; i++)
         {

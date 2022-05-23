@@ -10,4 +10,8 @@ public class Recipe : ScriptableObject
     public ItemStack[] GetInputs() {
         return inputs;
     }
+
+    public ItemStack[] GetOutputs() {
+        return outputs;
+    }
 }

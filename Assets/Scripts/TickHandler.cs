@@ -5,31 +5,34 @@ public class TickHandler : MonoBehaviour
 {
     public static TickHandler instance;
 
-    public event Tick TickItems;
-    public event Tick TickMachines;
-    public event Tick TickConveyors;
+    private Timer conveyorTimer;
 
-    private int stepsLeftUntilConveyorTick = 5;
+    public event Tick TickItems;
+    public event Tick TickConveyors;
+    public event Tick TickTimers;
+    public event Tick TickMachines;
 
     private void Awake()
     {
         instance = this;
     }
 
+    private void Start()
+    {
+        conveyorTimer = new Timer(5, true);
+        conveyorTimer.TimerEnded += OnConveyorTimerEnded;
+    }
+
     private void FixedUpdate()
     {
         TickItems?.Invoke();
-        StepConveyors();
+        TickTimers?.Invoke();
         TickMachines?.Invoke();
     }
 
-    private void StepConveyors()
+    private void OnConveyorTimerEnded()
     {
-        stepsLeftUntilConveyorTick--;
-        if (stepsLeftUntilConveyorTick == 0)
-        {
-            stepsLeftUntilConveyorTick = 5;
-            TickConveyors?.Invoke();
-        }
+        TickConveyors?.Invoke();
+        conveyorTimer.Reset();
     }
 }
