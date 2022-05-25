@@ -10,9 +10,13 @@ public class ItemType : ScriptableObject
     public Transform GetNewItemTransform(Vector2Int gridPosition)
     {
         Transform itemTransform = new GameObject(itemName, typeof(SpriteRenderer)).transform;
-        itemTransform.position = AllGrids.itemGrid.GetCentreWorldPosition(gridPosition);
+        itemTransform.position = Grids.itemGrid.GetCentreWorldPosition(gridPosition);
         InitializeSpriteRenderer(itemTransform.GetComponent<SpriteRenderer>());
         return itemTransform;
+    }
+
+    public Sprite GetSprite() {
+        return itemSprite;
     }
 
     private void InitializeSpriteRenderer(SpriteRenderer spriteRenderer) {

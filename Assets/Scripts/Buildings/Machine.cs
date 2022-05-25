@@ -44,7 +44,7 @@ public class Machine : Producer
 
     private void SetInputCell(Vector2Int inputPosition, Cell<Item> inputCell) {
         Vector2Int position = GetGridPositionFromOffset(inputPosition);
-        inputCell = AllGrids.itemGrid.GetCellAt(position);
+        inputCell = Grids.itemGrid.GetCellAt(position);
         inputCell.CellOccupied += OnInputCellOccupied;
         inputCell.UnblockCell();
     }

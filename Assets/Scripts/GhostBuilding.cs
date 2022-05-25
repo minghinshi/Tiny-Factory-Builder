@@ -60,16 +60,14 @@ public class GhostBuilding
 
     public void SetColor()
     {
-        bool canPlace = AllGrids.buildingGrid.CanPlace(actualPosition, direction.TransformSize(buildingType.GetSize()));
+        bool canPlace = Grids.buildingGrid.CanPlace(actualPosition, direction.TransformSize(buildingType.GetSize()));
         if (canPlace) SetCanPlaceColor();
         else SetCannotPlaceColor();
     }
 
     public void ChangeBuildingType(BuildingType buildingType)
     {
-        if (buildingTransform != null)
-            Object.Destroy(buildingTransform.gameObject);
-
+        DestroyTransform();
         this.buildingType = buildingType;
         buildingTransform = buildingType.CreateBuildingTransform(actualPosition, direction);
         spriteRenderer = buildingTransform.GetComponent<SpriteRenderer>();
@@ -79,5 +77,10 @@ public class GhostBuilding
     public void SetInvisible()
     {
         spriteRenderer.color = invisibleColor;
+    }
+
+    private void DestroyTransform() {
+        if (buildingTransform != null)
+            Object.Destroy(buildingTransform.gameObject);
     }
 }

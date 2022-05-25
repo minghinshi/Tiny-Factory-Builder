@@ -5,11 +5,14 @@ public class Inventory
 {
     private List<ItemStack> itemStacks = new List<ItemStack>();
 
+    public delegate void InventoryUpdatedHandler();
+    public event InventoryUpdatedHandler InventoryUpdated;
+
     public void Store(ItemType itemType, uint count)
     {
-
         ItemStack itemStack = GetItemStack(itemType) ?? AddItemStack(itemType);
         itemStack.Store(count);
+        NotifyUpdate();
     }
 
     public void StoreCopyOf(ItemStack itemStack) {
@@ -24,6 +27,7 @@ public class Inventory
         itemStack.Remove(count);
         if (itemStack.GetCount() == 0)
             itemStacks.Remove(itemStack);
+        NotifyUpdate();
     }
 
     public void RemoveCopyOf(ItemStack itemStack)
@@ -46,6 +50,10 @@ public class Inventory
         else return null;
     }
 
+    public ItemStack[] GetAllItemStacks() {
+        return itemStacks.ToArray();
+    }
+
     private ItemStack AddItemStack(ItemType itemType)
     {
         ItemStack itemStack = new ItemStack(itemType);
@@ -56,5 +64,9 @@ public class Inventory
     private ItemStack GetItemStack(ItemType itemType)
     {
         return itemStacks.Find(x => x.GetItemType() == itemType);
+    }
+
+    private void NotifyUpdate() {
+        InventoryUpdated?.Invoke();
     }
 }

@@ -4,7 +4,6 @@ public abstract class BuildingType : ScriptableObject
 {
     [SerializeField] private Vector2Int size;
     [SerializeField] private Transform buildingPrefab;
-    private GridSystem<Building> buildingGrid = AllGrids.buildingGrid;
 
     public Vector2Int GetSize()
     {
@@ -33,7 +32,7 @@ public abstract class BuildingType : ScriptableObject
 
     public Vector3 GetWorldPosition(Vector2Int gridPosition, Direction direction)
     {
-        return AllGrids.buildingGrid.GetCentreWorldPosition(gridPosition, GetTransformedSize(direction));
+        return Grids.buildingGrid.GetCentreWorldPosition(gridPosition, GetTransformedSize(direction));
     }
 
     //Creates a building in the world.
@@ -49,10 +48,10 @@ public abstract class BuildingType : ScriptableObject
 
     public void PlaceBuilding(Vector2Int position, Direction direction)
     {
-        if (buildingGrid.CanPlace(position, direction.TransformSize(GetSize())))
+        if (Grids.buildingGrid.CanPlace(position, direction.TransformSize(GetSize())))
         {
             Building building = CreateBuilding(position, direction);
-            buildingGrid.OccupyCells(building);
+            Grids.buildingGrid.OccupyCells(building);
             AudioHandler.instance.PlayPlacement();
         }
     }

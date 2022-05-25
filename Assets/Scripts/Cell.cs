@@ -86,10 +86,7 @@ public class Cell<TCellObject> where TCellObject : CellObject
 
     private bool CanMoveCellObjectTo(Cell<TCellObject> destination)
     {
-        if (!destination.CanInsert()) return false;
-        if (!occupied) return false;
-        if (containedObject.IsMovedThisTick()) return false;
-        return true;
+        return destination.CanInsert() && occupied && !containedObject.IsMovedThisTick();
     }
 
     public void TryMoveCellObjectTo(Cell<TCellObject> destination)
