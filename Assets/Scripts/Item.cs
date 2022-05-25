@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Item : CellObject
 {
-    private ItemType itemType;
+    private readonly ItemType itemType;
 
     /// <summary>
     /// Creates an item and places it at the location of the primaryCell.

@@ -1,9 +1,8 @@
 using UnityEngine;
 
-public abstract class BuildingType : ScriptableObject
+public abstract class BuildingType : ItemType
 {
     [SerializeField] private Vector2Int size;
-    [SerializeField] private Transform buildingPrefab;
 
     public Vector2Int GetSize()
     {
@@ -20,11 +19,6 @@ public abstract class BuildingType : ScriptableObject
         return size.y;
     }
 
-    public Transform GetBuildingPrefab()
-    {
-        return buildingPrefab;
-    }
-
     public Vector2Int GetTransformedSize(Direction direction)
     {
         return direction.TransformSize(size);
@@ -35,24 +29,24 @@ public abstract class BuildingType : ScriptableObject
         return Grids.buildingGrid.GetCentreWorldPosition(gridPosition, GetTransformedSize(direction));
     }
 
-    //Creates a building in the world.
-    public Transform CreateBuildingTransform(Vector2Int gridPosition, Direction direction)
-    {
-        Vector3 worldPosition = GetWorldPosition(gridPosition, direction);
-        Quaternion rotationQuaternion = direction.GetRotationQuaternion();
-        return Instantiate(buildingPrefab, worldPosition, rotationQuaternion);
-    }
-
     //Creates a building object.
     public abstract Building CreateBuilding(Vector2Int gridPosition, Direction direction);
 
     public void PlaceBuilding(Vector2Int position, Direction direction)
     {
-        if (Grids.buildingGrid.CanPlace(position, direction.TransformSize(GetSize())))
+        if (Grids.buildingGrid.CanPlace(position, GetTransformedSize(direction)))
         {
             Building building = CreateBuilding(position, direction);
             Grids.buildingGrid.OccupyCells(building);
             AudioHandler.instance.PlayPlacement();
         }
+    }
+
+    public Transform GetNewBuildingTransform(Vector2Int gridPosition, Direction direction) {
+        Transform transform = CreateTransform();
+        InitializeSpriteRenderer(transform.GetComponent<SpriteRenderer>(), 0);
+        transform.SetPositionAndRotation(GetWorldPosition(gridPosition, direction), direction.GetRotationQuaternion());
+        transform.localScale = new Vector3(size.x, size.y, 1);
+        return transform;
     }
 }

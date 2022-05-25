@@ -69,7 +69,7 @@ public class GhostBuilding
     {
         DestroyTransform();
         this.buildingType = buildingType;
-        buildingTransform = buildingType.CreateBuildingTransform(actualPosition, direction);
+        buildingTransform = buildingType.GetNewBuildingTransform(actualPosition, direction);
         spriteRenderer = buildingTransform.GetComponent<SpriteRenderer>();
         SetColor();
     }

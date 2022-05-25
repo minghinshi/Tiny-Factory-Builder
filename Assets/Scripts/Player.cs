@@ -1,6 +1,5 @@
 public class Player
 {
-    private Inventory inventory;
+    public static Inventory playerInventory;
     
-
 }

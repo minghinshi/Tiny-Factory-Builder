@@ -34,7 +34,7 @@ public class InventoryDisplay : MonoBehaviour
     private void RemoveAllButtons()
     {
         foreach (Transform child in transform)
-            Object.Destroy(child.gameObject);
+            Destroy(child.gameObject);
     }
 
     private void CreateButtons()
@@ -45,7 +45,7 @@ public class InventoryDisplay : MonoBehaviour
 
     private void CreateButton(ItemStack itemStack)
     {
-        Transform buttonTransform = Object.Instantiate(buttonPrefab, transform);
+        Transform buttonTransform = Instantiate(buttonPrefab, transform);
         Image itemImage = buttonTransform.GetComponentInChildren<Image>();
         itemImage.sprite = itemStack.GetItemType().GetSprite();
         Text itemCounter = buttonTransform.GetComponentInChildren<Text>();

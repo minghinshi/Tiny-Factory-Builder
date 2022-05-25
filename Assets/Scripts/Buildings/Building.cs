@@ -10,7 +10,7 @@ public abstract class Building : CellObject
         this.gridPosition = gridPosition;
         this.direction = direction;
         this.buildingType = buildingType;
-        transform = buildingType.CreateBuildingTransform(gridPosition, direction);
+        transform = buildingType.GetNewBuildingTransform(gridPosition, direction);
     }
 
     public Direction GetDirection()

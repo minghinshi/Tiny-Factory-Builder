@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14814ce8d8ca9304b9765727afd3b3d3, type: 3}
-  m_Name: Pump
+  m_Name: ConveyorCrafter
   m_EditorClassIdentifier: 
-  itemName: Pump
+  itemName: Conveyor Crafter
   itemSprite: {fileID: 21300000, guid: e22e4ed72ac673741afe5cd7f6296b7d, type: 3}
   size: {x: 3, y: 3}
   outputPosition: {x: 1, y: 3}
-  producedItem: {fileID: 11400000, guid: 63f642dfd507a954d84b3239ac42b1e3, type: 2}
+  producedItem: {fileID: 11400000, guid: 03af7e846f974f44f8556f5ebf9eeb95, type: 2}

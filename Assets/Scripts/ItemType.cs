@@ -9,18 +9,22 @@ public class ItemType : ScriptableObject
 
     public Transform GetNewItemTransform(Vector2Int gridPosition)
     {
-        Transform itemTransform = new GameObject(itemName, typeof(SpriteRenderer)).transform;
-        itemTransform.position = Grids.itemGrid.GetCentreWorldPosition(gridPosition);
-        InitializeSpriteRenderer(itemTransform.GetComponent<SpriteRenderer>());
-        return itemTransform;
+        Transform transform = CreateTransform();
+        InitializeSpriteRenderer(transform.GetComponent<SpriteRenderer>(), 1);
+        transform.position = Grids.itemGrid.GetCentreWorldPosition(gridPosition);
+        return transform;
     }
 
     public Sprite GetSprite() {
         return itemSprite;
     }
 
-    private void InitializeSpriteRenderer(SpriteRenderer spriteRenderer) {
-        spriteRenderer.sortingOrder = 1;
+    protected Transform CreateTransform() {
+        return new GameObject(itemName, typeof(SpriteRenderer)).transform;
+    }
+
+    protected void InitializeSpriteRenderer(SpriteRenderer spriteRenderer, int sortingOrder) {
         spriteRenderer.sprite = itemSprite;
+        spriteRenderer.sortingOrder = sortingOrder;
     }
 }
