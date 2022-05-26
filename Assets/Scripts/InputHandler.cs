@@ -3,6 +3,8 @@ using UnityEngine.EventSystems;
 
 public class InputHandler : MonoBehaviour
 {
+    public static InputHandler instance;
+
     private bool movedGhost = false;
     private bool placedBuilding = false;
 
@@ -13,15 +15,20 @@ public class InputHandler : MonoBehaviour
     private Direction currentDirection = Direction.North;
     private GhostBuilding ghostBuilding;
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         buildingGrid = Grids.buildingGrid;
         ghostBuilding = new GhostBuilding(gridPosition, currentDirection);
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         UpdatePointerPosition();
         DetectDestroy();
@@ -96,7 +103,7 @@ public class InputHandler : MonoBehaviour
 
 
     //Change the building type that the player is going to place.
-    public void ChangeBuildingType(BuildingType buildingType)
+    public void SetBuildingType(BuildingType buildingType)
     {
         if (buildingType.Equals(selectedBuildingType)) return;
         ghostBuilding.ChangeBuildingType(buildingType);
