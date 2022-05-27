@@ -1,10 +1,11 @@
 using UnityEngine;
 
-public class PlayerInventoryHandler : MonoBehaviour {
+public class PlayerInventory : MonoBehaviour {
+    public static readonly Inventory inventory = new Inventory();
+
     [SerializeField] private Transform inventoryPanel;
     [SerializeField] private ItemStack[] initialItems;
 
-    private Inventory playerInventory;
     private InventoryDisplay inventoryDisplay;
     private VisibilityHandler visibilityHandler;
 
@@ -15,14 +16,13 @@ public class PlayerInventoryHandler : MonoBehaviour {
     }
 
     private void InitializeInventory() {
-        playerInventory = new Inventory();
         foreach (ItemStack stack in initialItems)
-            playerInventory.StoreCopyOf(stack);
+            inventory.StoreCopyOf(stack);
     }
 
     private void InitializeInventoryPanel() {
         inventoryDisplay = inventoryPanel.GetComponent<InventoryDisplay>();
-        inventoryDisplay.SetTargetInventory(playerInventory);
+        inventoryDisplay.SetTargetInventory(inventory);
         inventoryDisplay.ButtonPressed += OnItemButtonPressed;
         visibilityHandler = inventoryPanel.GetComponent<VisibilityHandler>();
     }

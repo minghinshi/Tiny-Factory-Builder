@@ -4,11 +4,6 @@ public class Item : CellObject
 {
     private readonly ItemType itemType;
 
-    /// <summary>
-    /// Creates an item and places it at the location of the primaryCell.
-    /// </summary>
-    /// <param name="primaryCell">The cell that the item occupies.</param>
-    /// <param name="itemType">The item type.</param>
     public Item(Cell<Item> primaryCell, ItemType itemType)
     {
         gridPosition = primaryCell.GetGridPosition();

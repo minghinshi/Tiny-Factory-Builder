@@ -1,17 +1,19 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Machine : Producer
 {
     private Inventory inputInventory = new Inventory();
     private Inventory outputInventory = new Inventory();
 
-    private Cell<Item>[] inputCells;
+    private List<Cell<Item>> inputCells = new List<Cell<Item>>();
     private Recipe currentRecipe;
 
     //Creates a machine object.
     public Machine(Vector2Int gridPosition, Direction direction, MachineType machineType) : base(gridPosition, direction, machineType)
     {
         SetInputCells(machineType.GetInputPositions());
+        ConnectInputCells();
         currentRecipe = machineType.GetRecipes()[0];
         TickHandler.instance.TickMachines += ProduceOutputs;
     }
@@ -32,24 +34,35 @@ public class Machine : Producer
     public override void Destroy()
     {
         TickHandler.instance.TickMachines -= ProduceOutputs;
+        DisconnectInputCells();
         base.Destroy();
     }
 
-    private void SetInputCells(Vector2Int[] inputPositions)
+    private void SetInputCells(List<Vector2Int> relativePositions)
     {
-        inputCells = new Cell<Item>[inputPositions.Length];
-        for (int i = 0; i < inputPositions.Length; i++)
-            SetInputCell(inputPositions[i], inputCells[i]);
+        inputCells = RelativePositionsToCells(relativePositions);
     }
 
-    private void SetInputCell(Vector2Int inputPosition, Cell<Item> inputCell) {
-        Vector2Int position = GetGridPositionFromOffset(inputPosition);
-        inputCell = Grids.itemGrid.GetCellAt(position);
+    private void ConnectInputCells() {
+        inputCells.ForEach(x => ConnectInputCell(x));
+    }
+
+    private void ConnectInputCell(Cell<Item> inputCell) {
         inputCell.CellOccupied += OnInputCellOccupied;
         inputCell.UnblockCell();
     }
 
-    private void OnInputCellOccupied(Cell<Item> itemCell) {
+    private void DisconnectInputCells() {
+        inputCells.ForEach(x => DisconnectInputCell(x));
+    }
+
+    private void DisconnectInputCell(Cell<Item> inputCell) {
+        inputCell.CellOccupied -= OnInputCellOccupied;
+        inputCell.BlockCell();
+    }
+
+    private void OnInputCellOccupied(Cell<Item> itemCell)
+    {
         StoreInput(itemCell);
         if (!timer.IsEnabled() && CanProcess()) StartProcess();
     }
@@ -90,8 +103,10 @@ public class Machine : Producer
             outputInventory.StoreCopyOf(output);
     }
 
-    private void ProduceOutputs() {
-        if (outputCell.CanInsert() && outputInventory.HasItems()) {
+    private void ProduceOutputs()
+    {
+        if (outputCell.CanInsert() && outputInventory.HasItems())
+        {
             ItemType producedItem = outputInventory.GetFirstItemType();
             outputInventory.Remove(producedItem, 1);
             ProduceItem(producedItem);

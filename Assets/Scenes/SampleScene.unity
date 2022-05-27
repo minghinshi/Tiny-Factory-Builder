@@ -346,9 +346,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryPanel: {fileID: 1469595588}
   initialItems:
-  - itemType: {fileID: 11400000, guid: 4455312cc82cccf479e6ea4ab28c46e5, type: 2}
+  - itemType: {fileID: 11400000, guid: dd4b472a62b82f7448ec455274dc19ab, type: 2}
     count: 5
-  - itemType: {fileID: 11400000, guid: 7174a4c26a286f3488d3a9e4845c824b, type: 2}
+  - itemType: {fileID: 11400000, guid: 8ba1ab404439a4d49a6d68871d145af4, type: 2}
     count: 10
   - itemType: {fileID: 11400000, guid: 63f642dfd507a954d84b3239ac42b1e3, type: 2}
     count: 15

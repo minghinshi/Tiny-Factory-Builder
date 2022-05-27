@@ -39,6 +39,7 @@ public abstract class BuildingType : ItemType
             Building building = CreateBuilding(position, direction);
             Grids.buildingGrid.OccupyCells(building);
             AudioHandler.instance.PlayPlacement();
+            PlayerInventory.inventory.Remove(this, 1);
         }
     }
 

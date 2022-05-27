@@ -29,6 +29,6 @@ public abstract class Producer : Building
 
     private void SetOutputCell(Vector2Int outputPosition)
     {
-        outputCell = Grids.itemGrid.GetCellAt(GetGridPositionFromOffset(outputPosition));
+        outputCell = RelativePositionToCell(outputPosition);
     }
 }

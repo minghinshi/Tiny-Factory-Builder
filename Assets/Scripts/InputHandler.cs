@@ -33,10 +33,10 @@ public class InputHandler : MonoBehaviour
         UpdatePointerPosition();
         DetectDestroy();
         if (selectedBuildingType != null)
-            PlacingBuilding();
+            UpdateBuildingPlacement();
     }
 
-    private void PlacingBuilding() {
+    private void UpdateBuildingPlacement() {
         UpdateGhostPosition();
         DetectPlacement();
         DetectRotation();
@@ -65,10 +65,14 @@ public class InputHandler : MonoBehaviour
     private void DetectPlacement()
     {
         if (Input.GetMouseButton(0) && !placedBuilding && !EventSystem.current.IsPointerOverGameObject())
-        {
-            selectedBuildingType.PlaceBuilding(gridPosition, currentDirection);
-            placedBuilding = true;
-        }
+            PlaceBuilding();
+    }
+
+    private void PlaceBuilding() {
+        selectedBuildingType.PlaceBuilding(gridPosition, currentDirection);
+        placedBuilding = true;
+        if (PlayerInventory.inventory.GetItemCount(selectedBuildingType) == 0)
+            StopPlacing();
     }
 
     private void DetectRotation()

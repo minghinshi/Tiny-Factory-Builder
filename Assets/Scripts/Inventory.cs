@@ -3,10 +3,14 @@ using System.Collections.Generic;
 
 public class Inventory
 {
-    private List<ItemStack> itemStacks = new List<ItemStack>();
+    private List<ItemStack> itemStacks;
 
     public delegate void InventoryUpdatedHandler();
     public event InventoryUpdatedHandler InventoryUpdated;
+
+    public Inventory(params ItemStack[] itemStacks) {
+        this.itemStacks = new List<ItemStack>(itemStacks);
+    }
 
     public void Store(ItemType itemType, uint count)
     {

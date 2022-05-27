@@ -1,10 +1,11 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Conveyor : Building
 {
     //TODO: Conveyor Optimization
     private Cell<Item> itemCellAbove;
-    private Cell<Item>[] outputCells;
+    private List<Cell<Item>> outputCells;
     private int currentOutput = 0;
 
     public Conveyor(Vector2Int gridPosition, Direction direction, ConveyorType conveyorType) : base(gridPosition, direction, conveyorType)
@@ -14,14 +15,9 @@ public class Conveyor : Building
         TickHandler.instance.TickConveyors += MoveItem;
     }
 
-    private void SetOutputCells(Vector2Int[] outputPositions)
+    private void SetOutputCells(List<Vector2Int> relativePositions)
     {
-        outputCells = new Cell<Item>[outputPositions.Length];
-        for (int i = 0; i < outputPositions.Length; i++)
-        {
-            Vector2Int position = GetGridPositionFromOffset(outputPositions[i]);
-            outputCells[i] = Grids.itemGrid.GetCellAt(position);
-        }
+        outputCells = RelativePositionsToCells(relativePositions);
     }
 
     private void SetItemCellAbove()
@@ -33,7 +29,7 @@ public class Conveyor : Building
     private void MoveItem()
     {
         itemCellAbove.TryMoveCellObjectTo(outputCells[currentOutput]);
-        currentOutput = (currentOutput + 1) % outputCells.Length;
+        currentOutput = (currentOutput + 1) % outputCells.Count;
     }
 
     public override void Destroy()
@@ -45,7 +41,13 @@ public class Conveyor : Building
     private void DestroyConveyor()
     {
         itemCellAbove.BlockCell();
+        StoreItemAbove();
         itemCellAbove.DestroyCellObject();
         TickHandler.instance.TickConveyors -= MoveItem;
+    }
+
+    private void StoreItemAbove() {
+        if (itemCellAbove.GetContainedObject() != null)
+            PlayerInventory.inventory.Store(itemCellAbove.GetContainedObject().GetItemType(), 1);
     }
 }
