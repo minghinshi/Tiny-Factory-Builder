@@ -19,13 +19,13 @@ public class InventoryDisplay : MonoBehaviour
     private void DisconnectFromInventory()
     {
         if (targetInventory != null)
-            targetInventory.InventoryUpdated -= UpdateDisplay;
+            targetInventory.Updated -= UpdateDisplay;
     }
 
     private void ConnectToInventory(Inventory inventory)
     {
         targetInventory = inventory;
-        inventory.InventoryUpdated += UpdateDisplay;
+        inventory.Updated += UpdateDisplay;
     }
 
     private void UpdateDisplay()
@@ -42,28 +42,6 @@ public class InventoryDisplay : MonoBehaviour
 
     private void CreateButtons()
     {
-        foreach (ItemStack itemStack in targetInventory.GetAllItemStacks())
-            CreateButton(itemStack);
-    }
-
-    private void CreateButton(ItemStack itemStack)
-    {
-        Transform buttonTransform = Instantiate(buttonPrefab, transform);
-        SetButtonAppearance(itemStack, buttonTransform);
-        ConnectButtonToEvent(itemStack, buttonTransform);
-    }
-
-    private void SetButtonAppearance(ItemStack itemStack, Transform buttonTransform)
-    {
-        Image itemImage = buttonTransform.GetChild(0).GetComponent<Image>();
-        itemImage.sprite = itemStack.GetItemType().GetSprite();
-        Text itemCounter = buttonTransform.GetChild(1).GetComponent<Text>();
-        itemCounter.text = itemStack.GetCount().ToString();
-    }
-
-    private void ConnectButtonToEvent(ItemStack itemStack, Transform buttonTransform)
-    {
-        Button button = buttonTransform.GetComponent<Button>();
-        button.onClick.AddListener(() => ButtonPressed?.Invoke(itemStack.GetItemType()));
+        targetInventory.GetAllItemStacks().ForEach(x => ItemButtonMaker.instance.CreateItemButtonWithCounter(transform, x, () => ButtonPressed?.Invoke(x.GetItemType())));
     }
 }

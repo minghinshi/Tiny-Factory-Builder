@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class MachineType : ProducerType
 {
     [SerializeField] private List<Vector2Int> inputPositions;
-    [SerializeField] private Recipe[] recipes;
+    [SerializeField] private List<Recipe> recipes;
 
     public override Building CreateBuilding(Vector2Int gridPosition, Direction direction)
     {
@@ -17,8 +17,9 @@ public class MachineType : ProducerType
         return inputPositions;
     }
 
-    public Recipe[] GetRecipes()
+    public List<Recipe> GetRecipes()
     {
+        if (recipes.Count == 0) Debug.LogWarning("There are no recipes for " + name + ". Please add at least 1 recipe.");
         return recipes;
     }
 }

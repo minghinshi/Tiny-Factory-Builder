@@ -6,7 +6,7 @@ public class Inventory
     private List<ItemStack> itemStacks;
 
     public delegate void InventoryUpdatedHandler();
-    public event InventoryUpdatedHandler InventoryUpdated;
+    public event InventoryUpdatedHandler Updated;
 
     public Inventory(params ItemStack[] itemStacks) {
         this.itemStacks = new List<ItemStack>(itemStacks);
@@ -54,8 +54,8 @@ public class Inventory
         else return null;
     }
 
-    public ItemStack[] GetAllItemStacks() {
-        return itemStacks.ToArray();
+    public List<ItemStack> GetAllItemStacks() {
+        return itemStacks;
     }
 
     private ItemStack AddItemStack(ItemType itemType)
@@ -71,6 +71,6 @@ public class Inventory
     }
 
     private void NotifyUpdate() {
-        InventoryUpdated?.Invoke();
+        Updated?.Invoke();
     }
 }

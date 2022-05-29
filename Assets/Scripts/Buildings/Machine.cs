@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Machine : Producer
 {
@@ -16,6 +16,18 @@ public class Machine : Producer
         ConnectInputCells();
         currentRecipe = machineType.GetRecipes()[0];
         TickHandler.instance.TickMachines += ProduceOutputs;
+        inputInventory.Updated += OnInputInventoryUpdated;
+    }
+
+    private void OnInputInventoryUpdated()
+    {
+        if (CanProcess())
+            timer.Resume();
+        else
+        {
+            timer.Pause();
+            timer.Reset();
+        }
     }
 
     protected override Timer GetNewTimer()
@@ -25,10 +37,8 @@ public class Machine : Producer
 
     protected override void OnTimerEnded()
     {
+        currentRecipe.CraftOnce(inputInventory, outputInventory);
         timer.Reset();
-        AddOutputs();
-        if (CanProcess()) ConsumeInputs();
-        else timer.Pause();
     }
 
     public override void Destroy()
@@ -43,20 +53,24 @@ public class Machine : Producer
         inputCells = RelativePositionsToCells(relativePositions);
     }
 
-    private void ConnectInputCells() {
+    private void ConnectInputCells()
+    {
         inputCells.ForEach(x => ConnectInputCell(x));
     }
 
-    private void ConnectInputCell(Cell<Item> inputCell) {
+    private void ConnectInputCell(Cell<Item> inputCell)
+    {
         inputCell.CellOccupied += OnInputCellOccupied;
         inputCell.UnblockCell();
     }
 
-    private void DisconnectInputCells() {
+    private void DisconnectInputCells()
+    {
         inputCells.ForEach(x => DisconnectInputCell(x));
     }
 
-    private void DisconnectInputCell(Cell<Item> inputCell) {
+    private void DisconnectInputCell(Cell<Item> inputCell)
+    {
         inputCell.CellOccupied -= OnInputCellOccupied;
         inputCell.BlockCell();
     }
@@ -64,43 +78,13 @@ public class Machine : Producer
     private void OnInputCellOccupied(Cell<Item> itemCell)
     {
         StoreInput(itemCell);
-        if (!timer.IsEnabled() && CanProcess()) StartProcess();
     }
 
-    //Puts an item delivered to the input cell to the storage.
     private void StoreInput(Cell<Item> itemCell)
     {
         ItemType item = itemCell.GetContainedObject().GetItemType();
         inputInventory.Store(item, 1);
         itemCell.DestroyCellObject();
-    }
-
-    //Returns if the machine can process a recipe with the stored items.
-    private bool CanProcess()
-    {
-        ItemStack[] inputs = currentRecipe.GetInputs();
-        foreach (ItemStack input in inputs)
-            if (inputInventory.GetItemCount(input.GetItemType()) < input.GetCount()) return false;
-        return true;
-    }
-
-    private void StartProcess()
-    {
-        timer.Resume();
-        ConsumeInputs();
-    }
-
-    private void ConsumeInputs()
-    {
-        ItemStack[] inputs = currentRecipe.GetInputs();
-        foreach (ItemStack input in inputs)
-            inputInventory.RemoveCopyOf(input);
-    }
-
-    private void AddOutputs()
-    {
-        foreach (ItemStack output in currentRecipe.GetOutputs())
-            outputInventory.StoreCopyOf(output);
     }
 
     private void ProduceOutputs()
@@ -111,5 +95,10 @@ public class Machine : Producer
             outputInventory.Remove(producedItem, 1);
             ProduceItem(producedItem);
         }
+    }
+
+    private bool CanProcess()
+    {
+        return currentRecipe.CanCraft(inputInventory);
     }
 }
