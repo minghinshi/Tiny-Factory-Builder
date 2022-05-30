@@ -2,12 +2,15 @@ using UnityEngine;
 
 public class GhostBuilding
 {
-    private Vector3 displayedPosition;
     private float displayedRotation;
-    private Vector2Int actualPosition;
-    private Vector3 targetPosition;
-    private Direction direction;
     private float actualRotation;
+
+    private Vector3 displayedPosition;
+    private Vector3 targetPosition;
+
+    private Vector2Int actualPosition;
+    private Direction direction;
+
     private BuildingType buildingType;
 
     private Transform buildingTransform;

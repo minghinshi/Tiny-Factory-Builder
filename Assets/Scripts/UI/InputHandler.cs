@@ -105,7 +105,6 @@ public class InputHandler : MonoBehaviour
         }
     }
 
-
     //Change the building type that the player is going to place.
     public void SetBuildingType(BuildingType buildingType)
     {
