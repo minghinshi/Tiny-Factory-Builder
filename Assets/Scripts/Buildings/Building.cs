@@ -14,6 +14,8 @@ public abstract class Building : CellObject
         transform = buildingType.GetNewBuildingTransform(gridPosition, direction);
     }
 
+    public abstract void OnClick();
+
     public Direction GetDirection()
     {
         return direction;

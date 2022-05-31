@@ -15,6 +15,17 @@ public class Conveyor : Building
         TickHandler.instance.TickConveyors += MoveItem;
     }
 
+    public override void Destroy()
+    {
+        DestroyConveyor();
+        base.Destroy();
+    }
+
+    public override void OnClick()
+    {
+        StoreItemAbove();
+    }
+
     private void SetOutputCells(List<Vector2Int> relativePositions)
     {
         outputCells = RelativePositionsToCells(relativePositions);
@@ -32,22 +43,16 @@ public class Conveyor : Building
         currentOutput = (currentOutput + 1) % outputCells.Count;
     }
 
-    public override void Destroy()
-    {
-        DestroyConveyor();
-        base.Destroy();
-    }
-
     private void DestroyConveyor()
     {
         itemCellAbove.BlockCell();
         StoreItemAbove();
-        itemCellAbove.DestroyCellObject();
         TickHandler.instance.TickConveyors -= MoveItem;
     }
 
     private void StoreItemAbove() {
         if (itemCellAbove.GetContainedObject() != null)
             PlayerInventory.inventory.Store(itemCellAbove.GetContainedObject().GetItemType(), 1);
+        itemCellAbove.DestroyCellObject();
     }
 }

@@ -8,11 +8,11 @@ public class InputHandler : MonoBehaviour
     private bool movedGhost = false;
     private bool placedBuilding = false;
 
-    private GridSystem<Building> buildingGrid;
-    [SerializeField]
     private BuildingType selectedBuildingType = null;
     private Vector2Int gridPosition = new Vector2Int();
     private Direction currentDirection = Direction.North;
+
+    private GridSystem<Building> buildingGrid;
     private GhostBuilding ghostBuilding;
 
     private void Awake()
@@ -20,20 +20,25 @@ public class InputHandler : MonoBehaviour
         instance = this;
     }
 
-    // Start is called before the first frame update
     private void Start()
     {
         buildingGrid = Grids.buildingGrid;
         ghostBuilding = new GhostBuilding(gridPosition, currentDirection);
     }
 
-    // Update is called once per frame
     private void Update()
     {
         UpdatePointerPosition();
         DetectDestroy();
-        if (selectedBuildingType != null)
-            UpdateBuildingPlacement();
+        if (selectedBuildingType != null) UpdateBuildingPlacement();
+        else DetectClick();
+    }
+
+    public void SetBuildingType(BuildingType buildingType)
+    {
+        if (buildingType.Equals(selectedBuildingType)) return;
+        ghostBuilding.ChangeBuildingType(buildingType);
+        selectedBuildingType = buildingType;
     }
 
     private void UpdateBuildingPlacement() {
@@ -46,11 +51,12 @@ public class InputHandler : MonoBehaviour
 
     private void DetectDestroy()
     {
-        if (Input.GetMouseButton(1) && !EventSystem.current.IsPointerOverGameObject())
-        {
-            buildingGrid.TryDestroyCellObject(gridPosition);
-            placedBuilding = false;
-        }
+        if (Input.GetMouseButton(1) && !EventSystem.current.IsPointerOverGameObject()) DestroyBuilding();
+    }
+
+    private void DestroyBuilding() {
+        buildingGrid.TryDestroyCellObject(gridPosition);
+        placedBuilding = false;
     }
 
     private void UpdateGhostPosition()
@@ -64,8 +70,7 @@ public class InputHandler : MonoBehaviour
 
     private void DetectPlacement()
     {
-        if (Input.GetMouseButton(0) && !placedBuilding && !EventSystem.current.IsPointerOverGameObject())
-            PlaceBuilding();
+        if (Input.GetMouseButton(0) && !placedBuilding && !EventSystem.current.IsPointerOverGameObject()) PlaceBuilding();
     }
 
     private void PlaceBuilding() {
@@ -77,46 +82,46 @@ public class InputHandler : MonoBehaviour
 
     private void DetectRotation()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            currentDirection = currentDirection.RotateClockwise();
-            ghostBuilding.SetDirection(currentDirection);
-        }
+        if (Input.GetKeyDown(KeyCode.R)) RotateBuilding();
+    }
+
+    private void RotateBuilding() {
+        currentDirection = currentDirection.RotateClockwise();
+        ghostBuilding.SetDirection(currentDirection);
     }
 
     private void DetectExitPlacement()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            StopPlacing();
-        }
+        if (Input.GetKeyDown(KeyCode.Q)) StopPlacing();
     }
 
-    //Updates the position of the ghost building.
-    public void UpdatePointerPosition()
+    private void UpdatePointerPosition()
     {
-        Vector3 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2Int newGridPosition = buildingGrid.GetGridPosition(worldPoint);
-        if (!newGridPosition.Equals(gridPosition))
-        {
-            gridPosition = newGridPosition;
-            movedGhost = false;
-            placedBuilding = false;
-        }
+        if (!GetPointerGridPosition().Equals(gridPosition)) SetPointerGridPosition();
     }
 
-    //Change the building type that the player is going to place.
-    public void SetBuildingType(BuildingType buildingType)
-    {
-        if (buildingType.Equals(selectedBuildingType)) return;
-        ghostBuilding.ChangeBuildingType(buildingType);
-        selectedBuildingType = buildingType;
+    private Vector2Int GetPointerGridPosition() {
+        return buildingGrid.GetGridPosition(Camera.main.ScreenToWorldPoint(Input.mousePosition));
     }
 
-    //Stop placing buildings.
-    public void StopPlacing()
+    private void SetPointerGridPosition() {
+        gridPosition = GetPointerGridPosition();
+        movedGhost = false;
+        placedBuilding = false;
+    }
+
+    private void StopPlacing()
     {
         selectedBuildingType = null;
         ghostBuilding.SetInvisible();
+    }
+
+    private void DetectClick() {
+        if (Input.GetMouseButtonDown(0)) ClickOnBuilding();
+    }
+
+    private void ClickOnBuilding() {
+        Building building = buildingGrid.GetCellObjectAt(gridPosition);
+        if (building != null) building.OnClick();
     }
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 public class Machine : Producer
 {
     private Inventory inputInventory = new Inventory();
-    private Inventory outputInventory = new Inventory();
 
     private List<Cell<Item>> inputCells = new List<Cell<Item>>();
     private Recipe currentRecipe;
@@ -15,8 +14,24 @@ public class Machine : Producer
         SetInputCells(machineType.GetInputPositions());
         ConnectInputCells();
         currentRecipe = machineType.GetRecipes()[0];
-        TickHandler.instance.TickMachines += ProduceOutputs;
         inputInventory.Updated += OnInputInventoryUpdated;
+    }
+
+    public override void Destroy()
+    {
+        DisconnectInputCells();
+        inputInventory.TransferTo(PlayerInventory.inventory);
+        base.Destroy();
+    }
+
+    protected override Timer GetNewTimer()
+    {
+        return new Timer(150, false);
+    }
+
+    protected override void StoreOutputs()
+    {
+        currentRecipe.CraftOnce(inputInventory, outputInventory);
     }
 
     private void OnInputInventoryUpdated()
@@ -28,24 +43,6 @@ public class Machine : Producer
             timer.Pause();
             timer.Reset();
         }
-    }
-
-    protected override Timer GetNewTimer()
-    {
-        return new Timer(500, false);
-    }
-
-    protected override void OnTimerEnded()
-    {
-        currentRecipe.CraftOnce(inputInventory, outputInventory);
-        timer.Reset();
-    }
-
-    public override void Destroy()
-    {
-        TickHandler.instance.TickMachines -= ProduceOutputs;
-        DisconnectInputCells();
-        base.Destroy();
     }
 
     private void SetInputCells(List<Vector2Int> relativePositions)
@@ -85,16 +82,6 @@ public class Machine : Producer
         ItemType item = itemCell.GetContainedObject().GetItemType();
         inputInventory.Store(item, 1);
         itemCell.DestroyCellObject();
-    }
-
-    private void ProduceOutputs()
-    {
-        if (outputCell.CanInsert() && outputInventory.HasItems())
-        {
-            ItemType producedItem = outputInventory.GetFirstItemType();
-            outputInventory.Remove(producedItem, 1);
-            ProduceItem(producedItem);
-        }
     }
 
     private bool CanProcess()

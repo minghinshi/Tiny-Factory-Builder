@@ -884,6 +884,7 @@ MonoBehaviour:
   buttonPrefab: {fileID: 3895072473747016548, guid: eda9e9af1e66a9544812672ddb6cdb03, type: 3}
   craftingRecipes:
   - {fileID: 11400000, guid: 2a5cc330c5f0abf4fa8f374ff729cd20, type: 2}
+  - {fileID: 11400000, guid: b6e45fd3915082748a1eaf2934971c3b, type: 2}
 --- !u!114 &1724250517
 MonoBehaviour:
   m_ObjectHideFlags: 0

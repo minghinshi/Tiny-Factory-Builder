@@ -3,12 +3,13 @@ using System.Collections.Generic;
 
 public class Inventory
 {
-    private List<ItemStack> itemStacks;
+    private readonly List<ItemStack> itemStacks;
 
     public delegate void InventoryUpdatedHandler();
     public event InventoryUpdatedHandler Updated;
 
-    public Inventory(params ItemStack[] itemStacks) {
+    public Inventory(params ItemStack[] itemStacks)
+    {
         this.itemStacks = new List<ItemStack>(itemStacks);
     }
 
@@ -19,7 +20,8 @@ public class Inventory
         NotifyUpdate();
     }
 
-    public void StoreCopyOf(ItemStack itemStack) {
+    public void StoreCopyOf(ItemStack itemStack)
+    {
         Store(itemStack.GetItemType(), itemStack.GetCount());
     }
 
@@ -39,23 +41,38 @@ public class Inventory
         Remove(itemStack.GetItemType(), itemStack.GetCount());
     }
 
+    public void Empty()
+    {
+        itemStacks.Clear();
+        NotifyUpdate();
+    }
+
     public uint GetItemCount(ItemType itemType)
     {
         ItemStack itemStack = GetItemStack(itemType);
         return itemStack == null ? 0 : itemStack.GetCount();
     }
 
-    public bool HasItems() {
+    public bool HasItems()
+    {
         return itemStacks.Count != 0;
     }
 
-    public ItemType GetFirstItemType() {
+    public ItemType GetFirstItemType()
+    {
         if (HasItems()) return itemStacks[0].GetItemType();
         else return null;
     }
 
-    public List<ItemStack> GetAllItemStacks() {
+    public List<ItemStack> GetAllItemStacks()
+    {
         return itemStacks;
+    }
+
+    public void TransferTo(Inventory inventory)
+    {
+        itemStacks.ForEach(x => inventory.StoreCopyOf(x));
+        Empty();
     }
 
     private ItemStack AddItemStack(ItemType itemType)
@@ -70,7 +87,8 @@ public class Inventory
         return itemStacks.Find(x => x.GetItemType() == itemType);
     }
 
-    private void NotifyUpdate() {
+    private void NotifyUpdate()
+    {
         Updated?.Invoke();
     }
 }
