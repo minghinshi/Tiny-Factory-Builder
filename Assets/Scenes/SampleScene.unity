@@ -392,7 +392,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d33cd233d058170428a0769adfca2fc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedBuildingType: {fileID: 0}
 --- !u!212 &732226819
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -559,9 +558,9 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1008683268}
   m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &1008683271
 MonoBehaviour:
@@ -782,8 +781,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialItems:
-  - itemType: {fileID: 11400000, guid: 8ba1ab404439a4d49a6d68871d145af4, type: 2}
-    count: 100
   - itemType: {fileID: 11400000, guid: 7a2bec6b5f8c89144906471061e78c1e, type: 2}
     count: 1
   - itemType: {fileID: 11400000, guid: c1a24a65d932fb342be104f15f3db30b, type: 2}

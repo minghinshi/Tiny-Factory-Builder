@@ -15,6 +15,7 @@ public abstract class Building : CellObject
     }
 
     public abstract void OnClick();
+    public abstract void Insert(ItemStack itemStack);
 
     public Direction GetDirection()
     {

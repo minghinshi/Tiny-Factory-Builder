@@ -7,11 +7,11 @@ public class ItemType : ScriptableObject
     [SerializeField] private string itemName;
     [SerializeField] private Sprite itemSprite;
 
-    public Transform GetNewItemTransform(Vector2Int gridPosition)
+    public Transform GetNewItemTransform(Vector3 worldPosition)
     {
         Transform transform = CreateTransform();
+        transform.position = worldPosition;
         InitializeSpriteRenderer(transform.GetComponent<SpriteRenderer>(), 1);
-        transform.position = Grids.itemGrid.GetCentreWorldPosition(gridPosition);
         return transform;
     }
 

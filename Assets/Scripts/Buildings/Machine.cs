@@ -24,6 +24,12 @@ public class Machine : Producer
         base.Destroy();
     }
 
+    public override void Insert(ItemStack itemStack)
+    {
+        inputInventory.StoreCopyOf(itemStack);
+        PlayerInventory.inventory.RemoveCopyOf(itemStack);
+    }
+
     protected override Timer GetNewTimer()
     {
         return new Timer(150, false);

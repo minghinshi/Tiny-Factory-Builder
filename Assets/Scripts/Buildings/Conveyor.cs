@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Conveyor : Building
 {
@@ -26,6 +26,15 @@ public class Conveyor : Building
         StoreItemAbove();
     }
 
+    public override void Insert(ItemStack itemStack)
+    {
+        if (itemCellAbove.CanInsert() && !itemStack.IsEmpty())
+        {
+            _ = new Item(itemCellAbove, itemStack.GetItemType());
+            PlayerInventory.inventory.Remove(itemStack.GetItemType(), 1);
+        }
+    }
+
     private void SetOutputCells(List<Vector2Int> relativePositions)
     {
         outputCells = RelativePositionsToCells(relativePositions);
@@ -50,7 +59,8 @@ public class Conveyor : Building
         TickHandler.instance.TickConveyors -= MoveItem;
     }
 
-    private void StoreItemAbove() {
+    private void StoreItemAbove()
+    {
         if (itemCellAbove.GetContainedObject() != null)
             PlayerInventory.inventory.Store(itemCellAbove.GetContainedObject().GetItemType(), 1);
         itemCellAbove.DestroyCellObject();

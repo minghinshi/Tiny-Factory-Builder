@@ -9,6 +9,8 @@ public class Gatherer : Producer
         producedItem = gathererType.producedItem;
     }
 
+    public override void Insert(ItemStack itemStack) { }
+
     protected override Timer GetNewTimer()
     {
         return new Timer(150, true);

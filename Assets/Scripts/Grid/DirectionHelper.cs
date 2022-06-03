@@ -28,12 +28,17 @@ public static class DirectionHelper
         };
     }
 
-    public static Quaternion GetRotationQuaternion(this Direction direction)
+    public static Vector3 GetEulerAngles(this Direction direction)
     {
-        return Quaternion.Euler(0f, 0f, direction.GetRotationInDegrees());
+        return Vector3.forward * direction.GetRotationInDegrees();
     }
 
-    public static Vector2Int TransformSize(this Direction direction, Vector2Int size)
+    public static Quaternion GetRotationQuaternion(this Direction direction)
+    {
+        return Quaternion.Euler(direction.GetEulerAngles());
+    }
+
+    public static Vector2Int RotateSize(this Direction direction, Vector2Int size)
     {
         return direction switch
         {

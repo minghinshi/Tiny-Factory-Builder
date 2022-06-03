@@ -1,6 +1,6 @@
 using UnityEngine;
 
-//A cell on a grid. Can be used to contain objects.
+//A cell on a grid. Can contain objects.
 public class Cell<TCellObject> where TCellObject : CellObject
 {
     protected bool occupied = false;
@@ -47,16 +47,16 @@ public class Cell<TCellObject> where TCellObject : CellObject
         return !(occupied || blocked);
     }
 
-    public void OccupyCell(TCellObject cellObject)
+    public void Insert(TCellObject cellObject)
     {
         occupied = true;
         containedObject = cellObject;
         CellOccupied?.Invoke(this);
     }
 
-    public void TryOccupyCell(TCellObject cellObject)
+    public void TryInsert(TCellObject cellObject)
     {
-        if (CanInsert()) OccupyCell(cellObject);
+        if (CanInsert()) Insert(cellObject);
     }
 
     public void EmptyCell()
@@ -97,7 +97,7 @@ public class Cell<TCellObject> where TCellObject : CellObject
     private void MoveCellObjectTo(Cell<TCellObject> destination)
     {
         containedObject.MoveTo(destination.CentreWorldPosition);
-        destination.OccupyCell(containedObject);
+        destination.Insert(containedObject);
         EmptyCell();
     }
 }

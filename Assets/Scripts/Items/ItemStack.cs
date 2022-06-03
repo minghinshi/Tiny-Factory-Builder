@@ -36,4 +36,8 @@ public class ItemStack
             throw new InvalidOperationException();
         count -= amountToRemove;
     }
+
+    public bool IsEmpty() {
+        return count == 0;
+    }
 }

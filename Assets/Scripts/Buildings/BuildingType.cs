@@ -21,7 +21,7 @@ public abstract class BuildingType : ItemType
 
     public Vector2Int GetTransformedSize(Direction direction)
     {
-        return direction.TransformSize(size);
+        return direction.RotateSize(size);
     }
 
     public Vector3 GetWorldPosition(Vector2Int gridPosition, Direction direction)

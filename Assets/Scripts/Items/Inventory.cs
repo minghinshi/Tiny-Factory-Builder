@@ -58,6 +58,10 @@ public class Inventory
         return itemStacks.Count != 0;
     }
 
+    public bool Contains(ItemType itemType) {
+        return GetItemStack(itemType) != null;
+    }
+
     public ItemType GetFirstItemType()
     {
         if (HasItems()) return itemStacks[0].GetItemType();

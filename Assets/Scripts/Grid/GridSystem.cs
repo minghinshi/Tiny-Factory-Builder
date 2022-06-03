@@ -95,13 +95,17 @@ public class GridSystem<TCellObject> where TCellObject : CellObject
 
     public void OccupyCells(TCellObject cellObject)
     {
-        GetCellsInCellObject(cellObject).ForEach(cell => cell.TryOccupyCell(cellObject));
+        GetCellsInCellObject(cellObject).ForEach(cell => cell.TryInsert(cellObject));
     }
 
     public TCellObject GetCellObjectAt(Vector2Int gridPosition)
     {
         if (!IsWithinBounds(gridPosition)) return null;
         return GetCellAt(gridPosition).GetContainedObject();
+    }
+
+    public TCellObject GetCellObjectAt(Vector3 worldPosition) {
+        return GetCellObjectAt(GetGridPosition(worldPosition));
     }
 
     public void TryDestroyCellObject(Vector2Int gridPosition)
