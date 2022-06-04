@@ -1,25 +1,35 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public abstract class Placement
 {
-    /*protected Transform previewTransform;
+    protected Transform previewTransform;
     protected SpriteRenderer spriteRenderer;
 
-    public delegate void PlacementEndedHandler();
-    public event PlacementEndedHandler PlacementEnded;
+    public abstract void Update();
+    public abstract ItemType GetItemType();
 
-    public abstract void OnUpdate();
-    public abstract void RenderPreview(Vector3 worldPosition);
-    public abstract void Place();
-    protected abstract ItemType GetItemType();
-
-    public void Exit()
+    public virtual void Destroy()
     {
-        Object.Destroy(previewTransform);
-        PlacementEnded?.Invoke();
+        Debug.Log("Ending");
+        Object.Destroy(previewTransform.gameObject);
     }
 
-    protected void CheckForItemsLeft() {
-        if (!PlayerInventory.inventory.Contains(GetItemType())) Exit();
-    }*/
+    protected abstract void RenderPreview();
+    protected abstract void Place();
+
+    protected Vector3 GetMouseWorldPosition()
+    {
+        return Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    }
+
+    protected Vector2Int GetMouseGridPosition()
+    {
+        return Grids.buildingGrid.GetGridPosition(GetMouseWorldPosition());
+    }
+
+    protected bool IsMousePointingAtWorld()
+    {
+        return !EventSystem.current.IsPointerOverGameObject();
+    }
 }

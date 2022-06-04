@@ -8,6 +8,9 @@ public class Inventory
     public delegate void InventoryUpdatedHandler();
     public event InventoryUpdatedHandler Updated;
 
+    public delegate void OutOfStockHandler(ItemType itemType);
+    public event OutOfStockHandler OutOfStock;
+
     public Inventory(params ItemStack[] itemStacks)
     {
         this.itemStacks = new List<ItemStack>(itemStacks);
@@ -32,7 +35,7 @@ public class Inventory
         ItemStack itemStack = GetItemStack(itemType);
         itemStack.Remove(count);
         if (itemStack.GetCount() == 0)
-            itemStacks.Remove(itemStack);
+            RemoveItemStack(itemStack);
         NotifyUpdate();
     }
 
@@ -58,7 +61,8 @@ public class Inventory
         return itemStacks.Count != 0;
     }
 
-    public bool Contains(ItemType itemType) {
+    public bool Contains(ItemType itemType)
+    {
         return GetItemStack(itemType) != null;
     }
 
@@ -89,6 +93,12 @@ public class Inventory
     private ItemStack GetItemStack(ItemType itemType)
     {
         return itemStacks.Find(x => x.GetItemType() == itemType);
+    }
+
+    private void RemoveItemStack(ItemStack itemStack)
+    {
+        itemStacks.Remove(itemStack);
+        OutOfStock?.Invoke(itemStack.GetItemType());
     }
 
     private void NotifyUpdate()

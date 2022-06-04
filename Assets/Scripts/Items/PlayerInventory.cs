@@ -31,22 +31,23 @@ public class PlayerInventory : MonoBehaviour
 
     private bool OverrideControls()
     {
-        return Input.GetKeyDown(KeyCode.LeftShift);
+        return Input.GetKey(KeyCode.LeftShift);
     }
 
     private void OnItemButtonPressed(ItemType itemType)
     {
-        if (OverrideControls() || !(itemType is BuildingType buildingType)) StartPlacingItem(itemType);
-        else StartPlacingBuilding(buildingType);
+        if (itemType is BuildingType buildingType && !OverrideControls()) StartPlacingBuilding(buildingType);
+        else StartPlacingItem(itemType);
+        visibilityHandler.SetInvisibleImmediately();
     }
 
-    private void StartPlacingItem(ItemType itemType) { 
-        
+    private void StartPlacingItem(ItemType itemType)
+    {
+        NewInputHandler.instance.SetPlacement(new ItemPlacement(itemType));
     }
 
     private void StartPlacingBuilding(BuildingType buildingType)
     {
-        InputHandler.instance.SetBuildingType(buildingType);
-        visibilityHandler.FadeOut();
+        NewInputHandler.instance.SetPlacement(new BuildingPlacement(buildingType));
     }
 }

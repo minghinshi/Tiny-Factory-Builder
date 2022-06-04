@@ -2,9 +2,7 @@ using UnityEngine;
 
 public class BuildingPlacement : Placement
 {
-    private BuildingType buildingType;
-    protected Transform previewTransform;
-    protected SpriteRenderer spriteRenderer;
+    private readonly BuildingType buildingType;
 
     private Vector2Int gridPosition;
     private Direction direction = Direction.North;
@@ -17,46 +15,44 @@ public class BuildingPlacement : Placement
 
     private bool placedBuildingHere;
 
-    public BuildingPlacement(BuildingType buildingType, Vector3 worldPosition)
+    public BuildingPlacement(BuildingType buildingType)
     {
         this.buildingType = buildingType;
-        gridPosition = Grids.buildingGrid.GetGridPosition(worldPosition);
-        previewTransform = buildingType.GetNewBuildingTransform(gridPosition, Direction.North);
+        previewTransform = buildingType.GetNewBuildingTransform(GetMouseGridPosition(), Direction.North);
         spriteRenderer = previewTransform.GetComponent<SpriteRenderer>();
+        UpdateGridPosition(GetMouseGridPosition());
     }
 
-    public void OnUpdate() {
-
-    }
-
-    public void RenderPreview(Vector3 worldPosition)
+    public override void Update()
     {
-        Vector2Int pointerGridPosition = Grids.buildingGrid.GetGridPosition(worldPosition);
-        if (!pointerGridPosition.Equals(gridPosition))
-        {
-            UpdateGridPosition(pointerGridPosition);
-            UpdateColor();
-        }
+        RenderPreview();
+        if (Input.GetKeyDown(KeyCode.R)) Rotate();
+        if (Input.GetMouseButton(0) && IsMousePointingAtWorld()) Place();
+    }
+
+    public override ItemType GetItemType()
+    {
+        return buildingType;
+    }
+
+    protected override void RenderPreview()
+    {
+        Vector2Int pointerGridPosition = GetMouseGridPosition();
+        if (!pointerGridPosition.Equals(gridPosition)) UpdateGridPosition(pointerGridPosition);
         LerpTransform();
     }
 
-    public void Place()
+    protected override void Place()
     {
         if (placedBuildingHere) return;
         buildingType.PlaceBuilding(gridPosition, direction);
         placedBuildingHere = true;
-        if (!PlayerInventory.inventory.Contains(buildingType)) Terminate();
     }
 
-    public void Rotate()
+    private void Rotate()
     {
         direction = direction.RotateClockwise();
         targetRotation = direction.GetEulerAngles();
-    }
-
-    public void Terminate()
-    {
-        Object.Destroy(previewTransform);
     }
 
     private void UpdateGridPosition(Vector2Int gridPosition)
@@ -64,6 +60,7 @@ public class BuildingPlacement : Placement
         this.gridPosition = gridPosition;
         previewTargetPosition = Grids.buildingGrid.GetCentreWorldPosition(gridPosition, buildingType.GetSize());
         placedBuildingHere = false;
+        UpdateColor();
     }
 
     private void UpdateColor()

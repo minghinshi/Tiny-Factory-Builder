@@ -3,45 +3,36 @@ using UnityEngine;
 
 public class ItemPlacement : Placement
 {
-    private ItemType itemType;
-    protected Transform previewTransform;
-    protected SpriteRenderer spriteRenderer;
+    private readonly ItemType itemType;
 
     public ItemPlacement(ItemType itemType)
     {
         this.itemType = itemType;
-        previewTransform = itemType.GetNewItemTransform(GetMousePosition());
+        previewTransform = itemType.GetNewItemTransform(GetMouseWorldPosition());
         spriteRenderer = previewTransform.GetComponent<SpriteRenderer>();
         spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
     }
 
-    public void OnUpdate()
+    public override void Update()
     {
         RenderPreview();
-        if (Input.GetMouseButtonDown(0)) Place();
-        if (Input.GetKeyDown(KeyCode.Q)) Terminate();
+        if (Input.GetMouseButtonDown(0) && IsMousePointingAtWorld()) Place();
     }
 
-    private void RenderPreview()
+    public override ItemType GetItemType()
     {
-        previewTransform.position = Vector3.Lerp(previewTransform.position, GetMousePosition(), Time.deltaTime * 20f);
+        return itemType;
     }
 
-    private void Place()
+    protected override void RenderPreview()
     {
-        Building building = Grids.buildingGrid.GetCellObjectAt(GetMousePosition());
+        previewTransform.position = Vector3.Lerp(previewTransform.position, GetMouseWorldPosition(), Time.deltaTime * 20f);
+    }
+
+    protected override void Place()
+    {
+        Building building = Grids.buildingGrid.GetCellObjectAt(GetMouseWorldPosition());
         building?.Insert(new ItemStack(itemType, GetItemCount()));
-        if (!PlayerInventory.inventory.Contains(itemType)) Terminate();
-    }
-
-    private void Terminate()
-    {
-        UnityEngine.Object.Destroy(previewTransform);
-    }
-
-    private Vector3 GetMousePosition()
-    {
-        return Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
     private uint GetItemCount()

@@ -219,6 +219,7 @@ GameObject:
   - component: {fileID: 519420030}
   - component: {fileID: 519420034}
   - component: {fileID: 519420035}
+  - component: {fileID: 519420036}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -348,6 +349,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemButton: {fileID: 3895072473747016548, guid: eda9e9af1e66a9544812672ddb6cdb03, type: 3}
   itemButtonWithCounter: {fileID: 3895072473747016548, guid: d1fb7e976bab92b4c9328e66ec27436b, type: 3}
+--- !u!114 &519420036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67f62be34d2dd9547bd47f25c5542575, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &732226815
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,7 +370,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 732226817}
-  - component: {fileID: 732226818}
   - component: {fileID: 732226819}
   m_Layer: 0
   m_Name: GridSystem
@@ -380,18 +392,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &732226818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 732226815}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d33cd233d058170428a0769adfca2fc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &732226819
 SpriteRenderer:
   m_ObjectHideFlags: 0

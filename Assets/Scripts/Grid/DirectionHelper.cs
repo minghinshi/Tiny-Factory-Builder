@@ -9,7 +9,7 @@ public static class DirectionHelper
         return direction switch
         {
             Direction.North => 0f,
-            Direction.East => -90f,
+            Direction.East => 270f,
             Direction.South => 180f,
             Direction.West => 90f,
             _ => throw new System.Exception("Direction does not exist!")
