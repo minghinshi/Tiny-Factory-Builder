@@ -4,6 +4,8 @@ using UnityEngine;
 public class ItemPlacement : Placement
 {
     private readonly ItemType itemType;
+    private readonly Transform previewTransform;
+    private readonly SpriteRenderer spriteRenderer;
 
     public ItemPlacement(ItemType itemType)
     {
@@ -16,7 +18,12 @@ public class ItemPlacement : Placement
     public override void Update()
     {
         RenderPreview();
-        if (Input.GetMouseButtonDown(0) && IsMousePointingAtWorld()) Place();
+        CheckInputs();
+    }
+
+    public override void Destroy()
+    {
+        UnityEngine.Object.Destroy(previewTransform.gameObject);
     }
 
     public override ItemType GetItemType()
@@ -24,15 +31,20 @@ public class ItemPlacement : Placement
         return itemType;
     }
 
-    protected override void RenderPreview()
+    protected override void CheckInputs()
+    {
+        if (Input.GetMouseButtonDown(0) && IsMousePointingAtWorld()) PlaceItem();
+        base.CheckInputs();
+    }
+
+    private void RenderPreview()
     {
         previewTransform.position = Vector3.Lerp(previewTransform.position, GetMouseWorldPosition(), Time.deltaTime * 20f);
     }
 
-    protected override void Place()
+    private void PlaceItem()
     {
-        Building building = Grids.buildingGrid.GetCellObjectAt(GetMouseWorldPosition());
-        building?.Insert(new ItemStack(itemType, GetItemCount()));
+        Grids.buildingGrid.GetCellObjectAt(GetMouseWorldPosition())?.Insert(new ItemStack(itemType, GetItemCount()));
     }
 
     private uint GetItemCount()

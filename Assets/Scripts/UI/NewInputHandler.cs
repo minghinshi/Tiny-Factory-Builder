@@ -3,13 +3,7 @@ using UnityEngine;
 public class NewInputHandler : MonoBehaviour
 {
     public static NewInputHandler instance;
-    private Placement placement;
-
-    public void SetPlacement(Placement newPlacement)
-    {
-        placement?.Destroy();
-        placement = newPlacement;
-    }
+    private Placement placement = new NullPlacement();
 
     private void Awake()
     {
@@ -23,17 +17,23 @@ public class NewInputHandler : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q)) DestroyPlacement();
-        placement?.Update();
+        if (Input.GetKeyDown(KeyCode.Q)) EndPlacement();
+        else placement.Update();
+    }
+
+    public void SetPlacement(Placement newPlacement)
+    {
+        placement.Destroy();
+        placement = newPlacement;
     }
 
     private void OnInventoryItemOutOfStock(ItemType itemType)
     {
-        if (placement != null && placement.GetItemType().Equals(itemType)) DestroyPlacement();
+        if (itemType.Equals(placement.GetItemType())) EndPlacement();
     }
 
-    private void DestroyPlacement() {
-        placement.Destroy();
-        placement = null;
+    private void EndPlacement()
+    {
+        SetPlacement(new NullPlacement());
     }
 }

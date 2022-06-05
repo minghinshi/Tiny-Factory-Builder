@@ -7,10 +7,10 @@ public class Item : CellObject
     public Item(Cell<Item> primaryCell, ItemType itemType)
     {
         gridPosition = primaryCell.GetGridPosition();
-        primaryCell.TryInsert(this);
         this.itemType = itemType;
         transform = itemType.GetNewItemTransform(primaryCell.CentreWorldPosition);
         TickHandler.instance.TickItems += Tick;
+        primaryCell.TryInsert(this);
     }
 
     public void Tick()

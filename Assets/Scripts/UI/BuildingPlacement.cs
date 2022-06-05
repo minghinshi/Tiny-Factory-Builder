@@ -3,6 +3,8 @@ using UnityEngine;
 public class BuildingPlacement : Placement
 {
     private readonly BuildingType buildingType;
+    private readonly Transform previewTransform;
+    private readonly SpriteRenderer spriteRenderer;
 
     private Vector2Int gridPosition;
     private Direction direction = Direction.North;
@@ -26,8 +28,12 @@ public class BuildingPlacement : Placement
     public override void Update()
     {
         RenderPreview();
-        if (Input.GetKeyDown(KeyCode.R)) Rotate();
-        if (Input.GetMouseButton(0) && IsMousePointingAtWorld()) Place();
+        CheckInputs();
+    }
+
+    public override void Destroy()
+    {
+        Object.Destroy(previewTransform.gameObject);
     }
 
     public override ItemType GetItemType()
@@ -35,21 +41,34 @@ public class BuildingPlacement : Placement
         return buildingType;
     }
 
-    protected override void RenderPreview()
+    protected override void CheckInputs()
+    {
+        if (Input.GetKeyDown(KeyCode.R)) RotateBuilding();
+        if (Input.GetMouseButton(0) && IsMousePointingAtWorld()) PlaceBuilding();
+        base.CheckInputs();
+    }
+
+    protected override void DestroyBuilding()
+    {
+        base.DestroyBuilding();
+        placedBuildingHere = false;
+    }
+
+    private void RenderPreview()
     {
         Vector2Int pointerGridPosition = GetMouseGridPosition();
         if (!pointerGridPosition.Equals(gridPosition)) UpdateGridPosition(pointerGridPosition);
         LerpTransform();
     }
 
-    protected override void Place()
+    private void PlaceBuilding()
     {
         if (placedBuildingHere) return;
         buildingType.PlaceBuilding(gridPosition, direction);
         placedBuildingHere = true;
     }
 
-    private void Rotate()
+    private void RotateBuilding()
     {
         direction = direction.RotateClockwise();
         targetRotation = direction.GetEulerAngles();

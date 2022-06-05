@@ -3,22 +3,21 @@ using UnityEngine.EventSystems;
 
 public abstract class Placement
 {
-    protected Transform previewTransform;
-    protected SpriteRenderer spriteRenderer;
-
     public abstract void Update();
     public abstract ItemType GetItemType();
+    public virtual void Destroy() { }
 
-    public virtual void Destroy()
+    protected virtual void CheckInputs()
     {
-        Debug.Log("Ending");
-        Object.Destroy(previewTransform.gameObject);
+        if (Input.GetMouseButton(1)) DestroyBuilding();
     }
 
-    protected abstract void RenderPreview();
-    protected abstract void Place();
+    protected virtual void DestroyBuilding()
+    {
+        Grids.buildingGrid.TryDestroyCellObject(GetMouseGridPosition());
+    }
 
-    protected Vector3 GetMouseWorldPosition()
+    protected Vector2 GetMouseWorldPosition()
     {
         return Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
