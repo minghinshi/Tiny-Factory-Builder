@@ -43,11 +43,11 @@ public class PlayerInventory : MonoBehaviour
 
     private void StartPlacingItem(ItemType itemType)
     {
-        NewInputHandler.instance.SetPlacement(new ItemPlacement(itemType));
+        InputHandler.instance.SetPlacement(new ItemPlacement(itemType));
     }
 
     private void StartPlacingBuilding(BuildingType buildingType)
     {
-        NewInputHandler.instance.SetPlacement(new BuildingPlacement(buildingType));
+        InputHandler.instance.SetPlacement(new BuildingPlacement(buildingType));
     }
 }
