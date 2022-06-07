@@ -13,11 +13,7 @@ MonoBehaviour:
   m_Name: PlantGeneration
   m_EditorClassIdentifier: 
   inputs:
-  - itemType: {fileID: 11400000, guid: 243f14518b0b9be47a1baaa8596774b9, type: 2}
-    count: 4
-  - itemType: {fileID: 11400000, guid: 63f642dfd507a954d84b3239ac42b1e3, type: 2}
-    count: 4
-  - itemType: {fileID: 11400000, guid: 4b13c31ccf88ed346b59fbc08941fe7c, type: 2}
+  - itemType: {fileID: 11400000, guid: 806d32f256ad8f94d86ee6304e56d303, type: 2}
     count: 4
   - itemType: {fileID: 11400000, guid: f0b2162ea2530df4486a5295d534a008, type: 2}
     count: 4

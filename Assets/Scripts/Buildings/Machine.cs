@@ -3,17 +3,17 @@ using UnityEngine;
 
 public class Machine : Producer
 {
+    private readonly MachineType machineType;
     private Inventory inputInventory = new Inventory();
-
     private List<Cell<Item>> inputCells = new List<Cell<Item>>();
     private Recipe currentRecipe;
 
     //Creates a machine object.
     public Machine(Vector2Int gridPosition, Direction direction, MachineType machineType) : base(gridPosition, direction, machineType)
     {
+        this.machineType = machineType;
         SetInputCells(machineType.GetInputPositions());
         ConnectInputCells();
-        currentRecipe = machineType.GetRecipes()[0];
         inputInventory.Updated += OnInputInventoryUpdated;
     }
 
@@ -42,13 +42,15 @@ public class Machine : Producer
 
     private void OnInputInventoryUpdated()
     {
-        if (CanProcess())
-            timer.Resume();
-        else
-        {
-            timer.Pause();
-            timer.Reset();
-        }
+        if (IsRunning() && CanProcess()) return;
+        StartNewRecipe();
+    }
+
+    private void StartNewRecipe() {
+        timer.Reset();
+        currentRecipe = GetCraftableRecipe();
+        if (currentRecipe == null) timer.Pause();
+        else timer.Resume();
     }
 
     private void SetInputCells(List<Vector2Int> relativePositions)
@@ -93,5 +95,17 @@ public class Machine : Producer
     private bool CanProcess()
     {
         return currentRecipe.CanCraft(inputInventory);
+    }
+
+    private bool IsRunning()
+    {
+        return currentRecipe != null;
+    }
+
+    private Recipe GetCraftableRecipe()
+    {
+        foreach (Recipe recipe in machineType.GetRecipes())
+            if (recipe.CanCraft(inputInventory)) return recipe;
+        return null;
     }
 }
