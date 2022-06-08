@@ -28,13 +28,6 @@ public class VisibilityHandler : MonoBehaviour
         }
     }
 
-    private void SetActive(bool isActive)
-    {
-        this.isActive = isActive;
-        canvasGroup.interactable = isActive;
-        canvasGroup.blocksRaycasts = isActive;
-    }
-
     public void FadeIn()
     {
         canvasGroup.alpha = 0;
@@ -64,6 +57,13 @@ public class VisibilityHandler : MonoBehaviour
     public void Toggle() {
         if (isActive) FadeOut();
         else FadeIn();
+    }
+
+    private void SetActive(bool isActive)
+    {
+        this.isActive = isActive;
+        canvasGroup.interactable = isActive;
+        canvasGroup.blocksRaycasts = isActive;
     }
 
     private void AnimateFadeIn()
