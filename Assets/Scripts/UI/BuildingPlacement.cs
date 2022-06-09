@@ -6,7 +6,6 @@ public class BuildingPlacement : Placement
     private readonly Transform previewTransform;
     private readonly SpriteRenderer spriteRenderer;
 
-    private Vector2Int gridPosition;
     private Direction direction = Direction.North;
 
     private Vector3 previewTargetPosition;
@@ -20,9 +19,11 @@ public class BuildingPlacement : Placement
     public BuildingPlacement(BuildingType buildingType)
     {
         this.buildingType = buildingType;
-        previewTransform = buildingType.GetNewBuildingTransform(GetMouseGridPosition(), Direction.North);
+        previewTransform = buildingType.GetNewBuildingTransform(Mouse.instance.GetGridPosition(), Direction.North);
         spriteRenderer = previewTransform.GetComponent<SpriteRenderer>();
-        UpdateGridPosition(GetMouseGridPosition());
+
+        UpdatePreview();
+        Mouse.instance.MouseTargetChanged += OnMouseTargetChanged;
     }
 
     public override void Update()
@@ -33,6 +34,7 @@ public class BuildingPlacement : Placement
 
     public override void Destroy()
     {
+        Mouse.instance.MouseTargetChanged -= OnMouseTargetChanged;
         Object.Destroy(previewTransform.gameObject);
     }
 
@@ -44,7 +46,7 @@ public class BuildingPlacement : Placement
     protected override void CheckInputs()
     {
         if (Input.GetKeyDown(KeyCode.R)) RotateBuilding();
-        if (Input.GetMouseButton(0) && IsMousePointingAtWorld()) PlaceBuilding();
+        if (Input.GetMouseButton(0) && Mouse.instance.IsPointingAtWorld()) PlaceBuilding();
         base.CheckInputs();
     }
 
@@ -54,17 +56,10 @@ public class BuildingPlacement : Placement
         placedBuildingHere = false;
     }
 
-    private void RenderPreview()
-    {
-        Vector2Int pointerGridPosition = GetMouseGridPosition();
-        if (!pointerGridPosition.Equals(gridPosition)) UpdateGridPosition(pointerGridPosition);
-        LerpTransform();
-    }
-
     private void PlaceBuilding()
     {
         if (placedBuildingHere) return;
-        buildingType.PlaceBuilding(gridPosition, direction);
+        buildingType.PlaceBuilding(Mouse.instance.GetGridPosition(), direction);
         placedBuildingHere = true;
     }
 
@@ -74,17 +69,25 @@ public class BuildingPlacement : Placement
         targetRotation = direction.GetEulerAngles();
     }
 
-    private void UpdateGridPosition(Vector2Int gridPosition)
+    private void OnMouseTargetChanged()
     {
-        this.gridPosition = gridPosition;
-        previewTargetPosition = Grids.buildingGrid.GetCentreWorldPosition(gridPosition, buildingType.GetSize());
+        UpdatePreview();
         placedBuildingHere = false;
+    }
+
+    private void UpdatePreview() {
+        UpdateTargetPosition();
         UpdateColor();
+    }
+
+    private void UpdateTargetPosition()
+    {
+        previewTargetPosition = Grids.buildingGrid.GetCentreWorldPosition(Mouse.instance.GetGridPosition(), buildingType.GetSize());
     }
 
     private void UpdateColor()
     {
-        if (Grids.buildingGrid.CanPlace(gridPosition, buildingType.GetTransformedSize(direction))) SetCanPlaceColor();
+        if (Grids.buildingGrid.CanPlace(Mouse.instance.GetGridPosition(), buildingType.GetTransformedSize(direction))) SetCanPlaceColor();
         else SetCannotPlaceColor();
     }
 
@@ -98,7 +101,7 @@ public class BuildingPlacement : Placement
         spriteRenderer.color = cannotPlaceColor;
     }
 
-    private void LerpTransform()
+    private void RenderPreview()
     {
         previewTransform.position = Vector3.Lerp(previewTransform.position, previewTargetPosition, Time.deltaTime * 20f);
         previewTransform.eulerAngles = Vector3.Lerp(previewTransform.eulerAngles, targetRotation, Time.deltaTime * 20f);

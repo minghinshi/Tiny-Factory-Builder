@@ -10,7 +10,7 @@ public class ItemPlacement : Placement
     public ItemPlacement(ItemType itemType)
     {
         this.itemType = itemType;
-        previewTransform = itemType.GetNewItemTransform(GetMouseWorldPosition());
+        previewTransform = itemType.GetNewItemTransform(Mouse.instance.GetWorldPosition());
         spriteRenderer = previewTransform.GetComponent<SpriteRenderer>();
         spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
     }
@@ -33,18 +33,18 @@ public class ItemPlacement : Placement
 
     protected override void CheckInputs()
     {
-        if (Input.GetMouseButtonDown(0) && IsMousePointingAtWorld()) PlaceItem();
+        if (Input.GetMouseButtonDown(0) && Mouse.instance.IsPointingAtWorld()) PlaceItem();
         base.CheckInputs();
     }
 
     private void RenderPreview()
     {
-        previewTransform.position = Vector3.Lerp(previewTransform.position, GetMouseWorldPosition(), Time.deltaTime * 20f);
+        previewTransform.position = Vector3.Lerp(previewTransform.position, Mouse.instance.GetWorldPosition(), Time.deltaTime * 20f);
     }
 
     private void PlaceItem()
     {
-        Grids.buildingGrid.GetCellObjectAt(GetMouseWorldPosition())?.Insert(new ItemStack(itemType, GetItemCount()));
+        Mouse.instance.GetTargetBuilding()?.Insert(new ItemStack(itemType, GetItemCount()));
     }
 
     private uint GetItemCount()

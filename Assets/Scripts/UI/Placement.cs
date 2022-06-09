@@ -14,21 +14,6 @@ public abstract class Placement
 
     protected virtual void DestroyBuilding()
     {
-        Grids.buildingGrid.TryDestroyCellObject(GetMouseGridPosition());
-    }
-
-    protected Vector2 GetMouseWorldPosition()
-    {
-        return Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    }
-
-    protected Vector2Int GetMouseGridPosition()
-    {
-        return Grids.buildingGrid.GetGridPosition(GetMouseWorldPosition());
-    }
-
-    protected bool IsMousePointingAtWorld()
-    {
-        return !EventSystem.current.IsPointerOverGameObject();
+        Grids.buildingGrid.TryDestroyCellObject(Mouse.instance.GetGridPosition());
     }
 }

@@ -19,6 +19,6 @@ public class NullPlacement : Placement
 
     private void ClickOnMachine()
     {
-        Grids.buildingGrid.GetCellObjectAt(GetMouseGridPosition())?.OnClick();
+        Mouse.instance.GetTargetBuilding()?.OnClick();
     }
 }
