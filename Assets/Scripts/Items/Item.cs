@@ -18,14 +18,19 @@ public class Item : CellObject
         isMovedThisTick = false;
     }
 
-    public override void Destroy()
-    {
-        Object.Destroy(transform.gameObject);
-    }
-
     public override Vector2Int GetSize()
     {
         return new Vector2Int(1, 1);
+    }
+
+    public override string GetTooltipText()
+    {
+        return itemType.GetName();
+    }
+
+    public override void Destroy()
+    {
+        Object.Destroy(transform.gameObject);
     }
 
     public ItemType GetItemType()

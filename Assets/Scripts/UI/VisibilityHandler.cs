@@ -2,6 +2,7 @@ using UnityEngine;
 
 public enum FadeDirection { None, FadeIn, FadeOut }
 
+[RequireComponent(typeof(CanvasGroup))]
 public class VisibilityHandler : MonoBehaviour
 {
     private const float FadeSpeed = 10f;
@@ -30,9 +31,8 @@ public class VisibilityHandler : MonoBehaviour
 
     public void FadeIn()
     {
-        canvasGroup.alpha = 0;
-        SetActive(true);
         fadeDirection = FadeDirection.FadeIn;
+        SetActive(true);
     }
 
     public void SetVisibleImmediately()
@@ -43,9 +43,8 @@ public class VisibilityHandler : MonoBehaviour
 
     public void FadeOut()
     {
-        canvasGroup.alpha = 1;
-        SetActive(false);
         fadeDirection = FadeDirection.FadeOut;
+        SetActive(false);
     }
 
     public void SetInvisibleImmediately()
@@ -54,7 +53,8 @@ public class VisibilityHandler : MonoBehaviour
         SetActive(false);
     }
 
-    public void Toggle() {
+    public void Toggle()
+    {
         if (isActive) FadeOut();
         else FadeIn();
     }
@@ -68,14 +68,14 @@ public class VisibilityHandler : MonoBehaviour
 
     private void AnimateFadeIn()
     {
-        canvasGroup.alpha += Time.deltaTime * FadeSpeed;
         if (canvasGroup.alpha >= 1) StopFading();
+        else canvasGroup.alpha += Time.deltaTime * FadeSpeed;
     }
 
     private void AnimateFadeOut()
     {
-        canvasGroup.alpha -= Time.deltaTime * FadeSpeed;
         if (canvasGroup.alpha <= 0) StopFading();
+        else canvasGroup.alpha -= Time.deltaTime * FadeSpeed;
     }
 
     private void StopFading()

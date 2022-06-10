@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 952ecd43ca7e8924b8c930a0680a41a6
+guid: 4f63728c777a65e4caf037f9ec9de83a
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Lato
+  - Roboto
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

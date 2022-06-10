@@ -12,7 +12,7 @@ public class Mouse : MonoBehaviour
     private bool hasTargetChanged;
 
     public delegate void MouseTargetChangedHandler();
-    public event MouseTargetChangedHandler MouseTargetChanged;
+    public event MouseTargetChangedHandler TargetChanged;
 
     private void Awake()
     {
@@ -22,7 +22,7 @@ public class Mouse : MonoBehaviour
     private void Update()
     {
         UpdateProperties();
-        if (hasTargetChanged) MouseTargetChanged?.Invoke();
+        if (hasTargetChanged) TargetChanged?.Invoke();
     }
 
     public Vector2 GetWorldPosition()
@@ -48,6 +48,16 @@ public class Mouse : MonoBehaviour
     public bool IsPointingAtWorld()
     {
         return !EventSystem.current.IsPointerOverGameObject();
+    }
+
+    public bool IsPointingAtBuilding()
+    {
+        return IsPointingAtWorld() && targetBuilding != null;
+    }
+
+    public bool IsPointingAtItem()
+    {
+        return IsPointingAtWorld() && targetItem != null;
     }
 
     private void UpdateProperties()

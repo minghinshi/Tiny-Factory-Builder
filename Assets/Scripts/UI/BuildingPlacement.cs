@@ -23,7 +23,7 @@ public class BuildingPlacement : Placement
         spriteRenderer = previewTransform.GetComponent<SpriteRenderer>();
 
         UpdatePreview();
-        Mouse.instance.MouseTargetChanged += OnMouseTargetChanged;
+        Mouse.instance.TargetChanged += OnMouseTargetChanged;
     }
 
     public override void Update()
@@ -34,7 +34,7 @@ public class BuildingPlacement : Placement
 
     public override void Destroy()
     {
-        Mouse.instance.MouseTargetChanged -= OnMouseTargetChanged;
+        Mouse.instance.TargetChanged -= OnMouseTargetChanged;
         Object.Destroy(previewTransform.gameObject);
     }
 

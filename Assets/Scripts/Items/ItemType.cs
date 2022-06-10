@@ -15,15 +15,23 @@ public class ItemType : ScriptableObject
         return transform;
     }
 
-    public Sprite GetSprite() {
+    public Sprite GetSprite()
+    {
         return itemSprite;
     }
 
-    protected Transform CreateTransform() {
+    public string GetName()
+    {
+        return itemName;
+    }
+
+    protected Transform CreateTransform()
+    {
         return new GameObject(itemName, typeof(SpriteRenderer)).transform;
     }
 
-    protected void InitializeSpriteRenderer(SpriteRenderer spriteRenderer, int sortingOrder) {
+    protected void InitializeSpriteRenderer(SpriteRenderer spriteRenderer, int sortingOrder)
+    {
         spriteRenderer.sprite = itemSprite;
         spriteRenderer.sortingOrder = sortingOrder;
     }

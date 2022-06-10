@@ -17,14 +17,14 @@ public abstract class Building : CellObject
     public abstract void OnClick();
     public abstract void Insert(ItemStack itemStack);
 
-    public Direction GetDirection()
-    {
-        return direction;
-    }
-
     public override Vector2Int GetSize()
     {
         return buildingType.GetTransformedSize(direction);
+    }
+
+    public override string GetTooltipText()
+    {
+        return buildingType.GetName();
     }
 
     public override void Destroy()
