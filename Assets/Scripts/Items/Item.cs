@@ -23,11 +23,6 @@ public class Item : CellObject
         return new Vector2Int(1, 1);
     }
 
-    public override string GetTooltipText()
-    {
-        return itemType.GetName();
-    }
-
     public override void Destroy()
     {
         Object.Destroy(transform.gameObject);

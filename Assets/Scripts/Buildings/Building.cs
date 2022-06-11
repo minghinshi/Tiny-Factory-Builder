@@ -22,15 +22,14 @@ public abstract class Building : CellObject
         return buildingType.GetTransformedSize(direction);
     }
 
-    public override string GetTooltipText()
-    {
-        return buildingType.GetName();
-    }
-
     public override void Destroy()
     {
         PlayerInventory.inventory.Store(buildingType, 1);
         Object.Destroy(transform.gameObject);
+    }
+
+    public BuildingType GetBuildingType() {
+        return buildingType;
     }
 
     protected Cell<Item> RelativePositionToCell(Vector2Int relativePosition)

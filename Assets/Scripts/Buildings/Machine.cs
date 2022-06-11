@@ -8,7 +8,6 @@ public class Machine : Producer
     private List<Cell<Item>> inputCells = new List<Cell<Item>>();
     private Recipe currentRecipe;
 
-    //Creates a machine object.
     public Machine(Vector2Int gridPosition, Direction direction, MachineType machineType) : base(gridPosition, direction, machineType)
     {
         this.machineType = machineType;
@@ -30,6 +29,11 @@ public class Machine : Producer
         PlayerInventory.inventory.RemoveCopyOf(itemStack);
     }
 
+    public Inventory GetInputInventory()
+    {
+        return inputInventory;
+    }
+
     protected override Timer GetNewTimer()
     {
         return new Timer(150, false);
@@ -46,7 +50,8 @@ public class Machine : Producer
         StartNewRecipe();
     }
 
-    private void StartNewRecipe() {
+    private void StartNewRecipe()
+    {
         timer.Reset();
         currentRecipe = GetCraftableRecipe();
         if (currentRecipe == null) timer.Pause();

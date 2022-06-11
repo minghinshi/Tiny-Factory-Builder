@@ -28,6 +28,10 @@ public abstract class Producer : Building
         outputInventory.TransferTo(PlayerInventory.inventory);
     }
 
+    public Inventory GetOutputInventory() {
+        return outputInventory;
+    }
+
     protected abstract Timer GetNewTimer();
 
     protected abstract void StoreOutputs();

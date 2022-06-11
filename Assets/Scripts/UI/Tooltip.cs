@@ -7,6 +7,7 @@ public class Tooltip : MonoBehaviour
 {
     private Mouse mouse;
     private VisibilityHandler visibilityHandler;
+    private RectTransform rectTransform;
 
     //TODO: Make the tooltip include more than just text
     private Text text;
@@ -15,7 +16,9 @@ public class Tooltip : MonoBehaviour
     {
         mouse = Mouse.instance;
         visibilityHandler = GetComponent<VisibilityHandler>();
+        rectTransform = GetComponent<RectTransform>();
         text = transform.GetChild(0).GetComponent<Text>();
+
         mouse.TargetChanged += OnMouseTargetChanged;
     }
 
@@ -23,19 +26,26 @@ public class Tooltip : MonoBehaviour
     {
         SetVisibility();
         SetText();
+        SetFrameSize();
     }
 
     private void SetVisibility()
     {
-        if (mouse.IsPointingAtBuilding() || mouse.IsPointingAtItem()) visibilityHandler.FadeIn();
-        else visibilityHandler.FadeOut();
+        if (mouse.IsPointingAtBuilding() || mouse.IsPointingAtItem()) visibilityHandler.SetVisibleImmediately();
+        else visibilityHandler.SetInvisibleImmediately();
     }
 
     private void SetText()
     {
-        StringBuilder stringBuilder = new StringBuilder();
-        if (mouse.IsPointingAtBuilding()) stringBuilder.Append(mouse.GetTargetBuilding().GetTooltipText());
-        if (mouse.IsPointingAtItem()) stringBuilder.Append(mouse.GetTargetItem().GetTooltipText());
-        text.text = stringBuilder.ToString();
+        TooltipBuilder tooltipBuilder = new TooltipBuilder();
+        if (mouse.IsPointingAtBuilding()) tooltipBuilder.AddBuildingInfo(mouse.GetTargetBuilding());
+        if (mouse.IsPointingAtItem()) tooltipBuilder.AddItemInfo(mouse.GetTargetItem());
+        text.text = tooltipBuilder.GetTooltip();
+    }
+
+    private void SetFrameSize()
+    {
+        const float Padding = 5f;
+        rectTransform.sizeDelta = new Vector2(text.preferredWidth + Padding * 2, text.preferredHeight + Padding * 2);
     }
 }

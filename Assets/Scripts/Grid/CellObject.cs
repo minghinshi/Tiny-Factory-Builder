@@ -23,6 +23,5 @@ public abstract class CellObject
     }
 
     public abstract Vector2Int GetSize();
-    public abstract string GetTooltipText();
     public abstract void Destroy();
 }
