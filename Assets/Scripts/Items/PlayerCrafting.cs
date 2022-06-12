@@ -13,7 +13,13 @@ public class PlayerCrafting : MonoBehaviour
 
     private void GenerateCraftingButtons()
     {
-        craftingRecipes.ForEach(x => ItemButtonMaker.instance.CreateItemButton(transform, x.GetOutputs()[0].GetItemType(), () => Craft(x)));
+        craftingRecipes.ForEach(x => GenerateCraftingButton(x));
+    }
+
+    private void GenerateCraftingButton(Recipe recipe)
+    {
+        Transform buttonTransform = ItemLabelDirector.CreateItemButton(recipe.GetOutputs()[0].GetItemType(), () => Craft(recipe));
+        buttonTransform.SetParent(transform);
     }
 
     private void Craft(Recipe recipe)

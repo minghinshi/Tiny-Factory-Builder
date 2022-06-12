@@ -1,10 +1,8 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class InventoryDisplay : MonoBehaviour
 {
     private Inventory targetInventory;
-    [SerializeField] private Transform buttonPrefab;
 
     public delegate void ItemButtonPressedHandler(ItemType itemType);
     public event ItemButtonPressedHandler ButtonPressed;
@@ -18,8 +16,7 @@ public class InventoryDisplay : MonoBehaviour
 
     private void DisconnectFromInventory()
     {
-        if (targetInventory != null)
-            targetInventory.Updated -= UpdateDisplay;
+        if (targetInventory != null) targetInventory.Updated -= UpdateDisplay;
     }
 
     private void ConnectToInventory(Inventory inventory)
@@ -36,12 +33,17 @@ public class InventoryDisplay : MonoBehaviour
 
     private void RemoveAllButtons()
     {
-        foreach (Transform child in transform)
-            Destroy(child.gameObject);
+        foreach (Transform child in transform) Destroy(child.gameObject);
     }
 
     private void CreateButtons()
     {
-        targetInventory.GetAllItemStacks().ForEach(x => ItemButtonMaker.instance.CreateItemButtonWithCounter(transform, x, () => ButtonPressed?.Invoke(x.GetItemType())));
+        targetInventory.GetAllItemStacks().ForEach(x => CreateButton(x));
+    }
+
+    private void CreateButton(ItemStack itemStack)
+    {
+        Transform buttonTransform = ItemLabelDirector.CreateItemButton(itemStack, () => ButtonPressed?.Invoke(itemStack.GetItemType()));
+        buttonTransform.SetParent(transform);
     }
 }

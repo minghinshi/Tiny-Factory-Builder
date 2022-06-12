@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class AudioHandler : MonoBehaviour
 {
     public static AudioHandler instance;
@@ -16,7 +17,7 @@ public class AudioHandler : MonoBehaviour
 
     private void Start()
     {
-        audioSource = GetComponentInChildren<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void RandomizePitch()
