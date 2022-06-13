@@ -3,13 +3,16 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class ItemLabelBuilder : MonoBehaviour
+public class ItemLabelBuilder
 {
-    [SerializeField]
-    private Transform buttonPrefab, imagePrefab, counterPrefab;
+    //Prefabs
+    private readonly Transform buttonPrefab = ((GameObject)Resources.Load("Prefabs/ItemButton")).transform;
+    private readonly Transform imagePrefab = ((GameObject)Resources.Load("Prefabs/ItemImage")).transform;
+    private readonly Transform counterPrefab = ((GameObject)Resources.Load("Prefabs/ItemCounter")).transform;
+
     private Transform result;
 
-    private void Start()
+    public ItemLabelBuilder()
     {
         ResetLabel();
     }
@@ -21,18 +24,18 @@ public class ItemLabelBuilder : MonoBehaviour
 
     public void AddButton(params UnityAction[] clickActions)
     {
-        Button buttonTransform = Instantiate(buttonPrefab, result).GetComponent<Button>();
+        Button buttonTransform = Object.Instantiate(buttonPrefab, result).GetComponent<Button>();
         new List<UnityAction>(clickActions).ForEach(x => buttonTransform.onClick.AddListener(x));
     }
 
     public void AddImage(Sprite itemSprite)
     {
-        Instantiate(imagePrefab, result).GetComponent<Image>().sprite = itemSprite;
+        Object.Instantiate(imagePrefab, result).GetComponent<Image>().sprite = itemSprite;
     }
 
     public void AddCounter(uint itemCount)
     {
-        Instantiate(counterPrefab, result).GetComponent<Text>().text = itemCount.ToString("N0");
+        Object.Instantiate(counterPrefab, result).GetComponent<Text>().text = itemCount.ToString("N0");
     }
 
     public Transform GetResult()

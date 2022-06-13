@@ -13,25 +13,29 @@ public class PlayerInventory : MonoBehaviour
     {
         InitializeInventory();
         InitializeInventoryPanel();
+        InitializeVisibilityHandler();
     }
 
     private void InitializeInventory()
     {
-        foreach (ItemStack stack in initialItems)
-            inventory.StoreCopyOf(stack);
+        foreach (ItemStack stack in initialItems) inventory.StoreCopyOf(stack);
     }
 
     private void InitializeInventoryPanel()
     {
         inventoryDisplay = GetComponent<InventoryDisplay>();
+        inventoryDisplay.SetCreateLabelFunc(CreateItemButton);
         inventoryDisplay.SetTargetInventory(inventory);
-        inventoryDisplay.ButtonPressed += OnItemButtonPressed;
+    }
+
+    private void InitializeVisibilityHandler()
+    {
         visibilityHandler = transform.parent.GetComponent<VisibilityHandler>();
     }
 
-    private bool OverrideControls()
+    private Transform CreateItemButton(ItemStack itemStack)
     {
-        return Input.GetKey(KeyCode.LeftShift);
+        return ItemLabelDirector.CreateItemButton(itemStack, () => OnItemButtonPressed(itemStack.GetItemType()));
     }
 
     private void OnItemButtonPressed(ItemType itemType)
@@ -49,5 +53,10 @@ public class PlayerInventory : MonoBehaviour
     private void StartPlacingBuilding(BuildingType buildingType)
     {
         InputHandler.instance.SetPlacement(new BuildingPlacement(buildingType));
+    }
+
+    private bool OverrideControls()
+    {
+        return Input.GetKey(KeyCode.LeftShift);
     }
 }

@@ -1,49 +1,53 @@
+using System;
 using UnityEngine;
 
 public class InventoryDisplay : MonoBehaviour
 {
+    private Func<ItemStack, Transform> createLabel;
     private Inventory targetInventory;
 
-    public delegate void ItemButtonPressedHandler(ItemType itemType);
-    public event ItemButtonPressedHandler ButtonPressed;
+    public void SetCreateLabelFunc(Func<ItemStack, Transform> createLabel)
+    {
+        this.createLabel = createLabel;
+    }
 
     public void SetTargetInventory(Inventory inventory)
     {
         DisconnectFromInventory();
         ConnectToInventory(inventory);
-        UpdateDisplay();
+        RebuildDisplay();
     }
 
     private void DisconnectFromInventory()
     {
-        if (targetInventory != null) targetInventory.Updated -= UpdateDisplay;
+        if (targetInventory != null) targetInventory.Updated -= RebuildDisplay;
     }
 
     private void ConnectToInventory(Inventory inventory)
     {
         targetInventory = inventory;
-        inventory.Updated += UpdateDisplay;
+        inventory.Updated += RebuildDisplay;
     }
 
-    private void UpdateDisplay()
+    private void RebuildDisplay()
     {
-        RemoveAllButtons();
-        CreateButtons();
+        RemoveAllLabels();
+        CreateLabels();
     }
 
-    private void RemoveAllButtons()
+    private void RemoveAllLabels()
     {
         foreach (Transform child in transform) Destroy(child.gameObject);
     }
 
-    private void CreateButtons()
+    private void CreateLabels()
     {
-        targetInventory.GetAllItemStacks().ForEach(x => CreateButton(x));
+        targetInventory.GetAllItemStacks().ForEach(x => CreateLabel(x));
     }
 
-    private void CreateButton(ItemStack itemStack)
+    private void CreateLabel(ItemStack itemStack)
     {
-        Transform buttonTransform = ItemLabelDirector.CreateItemButton(itemStack, () => ButtonPressed?.Invoke(itemStack.GetItemType()));
+        Transform buttonTransform = createLabel.Invoke(itemStack);
         buttonTransform.SetParent(transform);
     }
 }

@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class PlayerCrafting : MonoBehaviour
 {
-    [SerializeField] private Transform buttonPrefab;
     [SerializeField] private List<Recipe> craftingRecipes;
 
     private void Start()

@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 public class ItemLabelDirector
 {
-    private static readonly ItemLabelBuilder builder = Object.FindObjectOfType<ItemLabelBuilder>();
+    private static readonly ItemLabelBuilder builder = new ItemLabelBuilder();
 
     public static Transform CreateItemButton(ItemType itemType, params UnityAction[] clickActions)
     {

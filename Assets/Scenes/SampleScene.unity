@@ -1047,7 +1047,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d26bf0da540cfb642a1eeeb6574bb3a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonPrefab: {fileID: 3895072473747016548, guid: eda9e9af1e66a9544812672ddb6cdb03, type: 3}
   craftingRecipes:
   - {fileID: 11400000, guid: 2a5cc330c5f0abf4fa8f374ff729cd20, type: 2}
   - {fileID: 11400000, guid: b6e45fd3915082748a1eaf2934971c3b, type: 2}
@@ -1225,7 +1224,6 @@ GameObject:
   - component: {fileID: 1845851211}
   - component: {fileID: 1845851210}
   - component: {fileID: 1845851209}
-  - component: {fileID: 1845851208}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -1233,21 +1231,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1845851208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1845851207}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29b59877318da1a4b997869f2c5af447, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buttonPrefab: {fileID: 3895072473747016548, guid: d1fb7e976bab92b4c9328e66ec27436b, type: 3}
-  imagePrefab: {fileID: 1491825984330092679, guid: 034bb1803b5f36441b546fe94c1944eb, type: 3}
-  counterPrefab: {fileID: 2489024281056965935, guid: 849f8a23bc4f19e459562c80ac6d6a35, type: 3}
 --- !u!114 &1845851209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1296,8 +1279,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e6eb396e5f2e5445b90f839da2ac475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemButton: {fileID: 3895072473747016548, guid: eda9e9af1e66a9544812672ddb6cdb03, type: 3}
-  itemButtonWithCounter: {fileID: 3895072473747016548, guid: d1fb7e976bab92b4c9328e66ec27436b, type: 3}
 --- !u!4 &1845851213
 Transform:
   m_ObjectHideFlags: 0
