@@ -6,7 +6,7 @@ public enum FadeDirection { None, FadeIn, FadeOut }
 public class VisibilityHandler : MonoBehaviour
 {
     private const float FadeSpeed = 10f;
-    private bool isActive;
+    private bool isVisible;
 
     private FadeDirection fadeDirection;
     private CanvasGroup canvasGroup;
@@ -32,38 +32,38 @@ public class VisibilityHandler : MonoBehaviour
     public void FadeIn()
     {
         fadeDirection = FadeDirection.FadeIn;
-        SetActive(true);
+        SetVisible(true);
     }
 
     public void SetVisibleImmediately()
     {
         canvasGroup.alpha = 1;
-        SetActive(true);
+        SetVisible(true);
     }
 
     public void FadeOut()
     {
         fadeDirection = FadeDirection.FadeOut;
-        SetActive(false);
+        SetVisible(false);
     }
 
     public void SetInvisibleImmediately()
     {
         canvasGroup.alpha = 0;
-        SetActive(false);
+        SetVisible(false);
     }
 
     public void Toggle()
     {
-        if (isActive) FadeOut();
+        if (isVisible) FadeOut();
         else FadeIn();
     }
 
-    private void SetActive(bool isActive)
+    private void SetVisible(bool isVisible)
     {
-        this.isActive = isActive;
-        canvasGroup.interactable = isActive;
-        canvasGroup.blocksRaycasts = isActive;
+        this.isVisible = isVisible;
+        canvasGroup.interactable = isVisible;
+        canvasGroup.blocksRaycasts = isVisible;
     }
 
     private void AnimateFadeIn()

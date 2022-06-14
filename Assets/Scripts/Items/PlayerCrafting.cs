@@ -17,7 +17,7 @@ public class PlayerCrafting : MonoBehaviour
 
     private void GenerateCraftingButton(Recipe recipe)
     {
-        Transform buttonTransform = ItemLabelDirector.CreateItemButton(recipe.GetOutputs()[0].GetItemType(), () => Craft(recipe));
+        Transform buttonTransform = ItemLabelDirector.BuildItemButton(recipe.GetOutputs()[0].GetItemType(), () => Craft(recipe));
         buttonTransform.SetParent(transform);
     }
 

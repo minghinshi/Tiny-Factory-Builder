@@ -1,34 +1,37 @@
-using System.Text;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class TooltipBuilder
 {
-    private StringBuilder stringBuilder = new StringBuilder();
+    private readonly Transform textPrefab = ((GameObject)Resources.Load("Prefabs/Tooltip/Text")).transform;
+    private readonly Transform inventoryDisplayPrefab = ((GameObject)Resources.Load("Prefabs/Tooltip/InventoryDisplay")).transform;
 
-    public void AddBuildingInfo(Building building)
+    private readonly Transform tooltipTransform;
+
+    public TooltipBuilder(Transform tooltipTransform)
     {
-        AddName("Building", building.GetBuildingType().GetName());
-        if (building is Machine machine) AddInventoryDisplay(machine.GetInputInventory());
-        if (building is Producer producer) AddInventoryDisplay(producer.GetOutputInventory());
+        this.tooltipTransform = tooltipTransform;
     }
 
-    public void AddItemInfo(Item item)
+    public void ResetTooltip()
     {
-        AddName("Item", item.GetItemType().GetName());
+        foreach (Transform child in tooltipTransform) Object.Destroy(child.gameObject);
     }
 
-    public string GetTooltip()
+    public void AddText(string str)
     {
-        return stringBuilder.ToString();
+        Object.Instantiate(textPrefab, tooltipTransform).GetComponent<Text>().text = str;
     }
 
-    private void AddName(string groupName, string objectName)
+    public void AddInventoryDisplay(Inventory target)
     {
-        stringBuilder.Append("<b>").Append(groupName).Append(": ").Append(objectName).Append("</b>");
-        stringBuilder.AppendLine();
+        InventoryDisplay display = Object.Instantiate(inventoryDisplayPrefab, tooltipTransform).GetComponent<InventoryDisplay>();
+        display.SetCreateLabelFunc(CreateLabel);
+        display.SetTargetInventory(target);
     }
 
-    private void AddInventoryDisplay(Inventory inventory)
+    private Transform CreateLabel(ItemStack itemStack)
     {
-        //Placeholder method
+        return ItemLabelDirector.BuildItemLabel(itemStack);
     }
 }

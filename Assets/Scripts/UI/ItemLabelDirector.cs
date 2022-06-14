@@ -5,14 +5,14 @@ public class ItemLabelDirector
 {
     private static readonly ItemLabelBuilder builder = new ItemLabelBuilder();
 
-    public static Transform CreateItemButton(ItemType itemType, params UnityAction[] clickActions)
+    public static Transform BuildItemButton(ItemType itemType, params UnityAction[] clickActions)
     {
         builder.AddButton(clickActions);
         builder.AddImage(itemType.GetSprite());
         return builder.GetResult();
     }
 
-    public static Transform CreateItemButton(ItemStack itemStack, params UnityAction[] clickActions)
+    public static Transform BuildItemButton(ItemStack itemStack, params UnityAction[] clickActions)
     {
         builder.AddButton(clickActions);
         builder.AddImage(itemStack.GetItemType().GetSprite());
@@ -20,7 +20,7 @@ public class ItemLabelDirector
         return builder.GetResult();
     }
 
-    public static Transform CreateItemLabel(ItemStack itemStack)
+    public static Transform BuildItemLabel(ItemStack itemStack)
     {
         builder.AddImage(itemStack.GetItemType().GetSprite());
         builder.AddCounter(itemStack.GetCount());

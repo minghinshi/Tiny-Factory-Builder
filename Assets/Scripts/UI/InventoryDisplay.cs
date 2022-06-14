@@ -6,6 +6,11 @@ public class InventoryDisplay : MonoBehaviour
     private Func<ItemStack, Transform> createLabel;
     private Inventory targetInventory;
 
+    private void OnDestroy()
+    {
+        DisconnectFromInventory();
+    }
+
     public void SetCreateLabelFunc(Func<ItemStack, Transform> createLabel)
     {
         this.createLabel = createLabel;

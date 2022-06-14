@@ -60,6 +60,11 @@ public class Mouse : MonoBehaviour
         return IsPointingAtWorld() && targetItem != null;
     }
 
+    public bool IsPointingAtSomething()
+    {
+        return IsPointingAtBuilding() || IsPointingAtItem();
+    }
+
     private void UpdateProperties()
     {
         hasTargetChanged = false;

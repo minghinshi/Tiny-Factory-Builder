@@ -6,18 +6,18 @@ using UnityEngine.UI;
 public class ItemLabelBuilder
 {
     //Prefabs
-    private readonly Transform buttonPrefab = ((GameObject)Resources.Load("Prefabs/ItemButton")).transform;
-    private readonly Transform imagePrefab = ((GameObject)Resources.Load("Prefabs/ItemImage")).transform;
-    private readonly Transform counterPrefab = ((GameObject)Resources.Load("Prefabs/ItemCounter")).transform;
+    private readonly Transform buttonPrefab = ((GameObject)Resources.Load("Prefabs/ItemLabel/Button")).transform;
+    private readonly Transform imagePrefab = ((GameObject)Resources.Load("Prefabs/ItemLabel/Image")).transform;
+    private readonly Transform counterPrefab = ((GameObject)Resources.Load("Prefabs/ItemLabel/Counter")).transform;
 
     private Transform result;
 
     public ItemLabelBuilder()
     {
-        ResetLabel();
+        Reset();
     }
 
-    public void ResetLabel()
+    public void Reset()
     {
         result = new GameObject("Item Label", typeof(RectTransform)).transform;
     }
@@ -41,7 +41,7 @@ public class ItemLabelBuilder
     public Transform GetResult()
     {
         Transform result = this.result;
-        ResetLabel();
+        Reset();
         return result;
     }
 }
