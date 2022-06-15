@@ -35,7 +35,8 @@ public class PlayerInventory : MonoBehaviour
 
     private Transform CreateItemButton(ItemStack itemStack)
     {
-        return ItemLabelDirector.BuildItemButton(itemStack, () => OnItemButtonPressed(itemStack.GetItemType()));
+        ItemLabelDirector.BuildItemButton(itemStack, () => OnItemButtonPressed(itemStack.GetItemType()));
+        return ItemLabelDirector.builder.GetResult();
     }
 
     private void OnItemButtonPressed(ItemType itemType)

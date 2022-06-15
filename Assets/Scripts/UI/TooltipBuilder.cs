@@ -32,6 +32,7 @@ public class TooltipBuilder
 
     private Transform CreateLabel(ItemStack itemStack)
     {
-        return ItemLabelDirector.BuildItemLabel(itemStack);
+        ItemLabelDirector.BuildItemLabel(itemStack);
+        return ItemLabelDirector.builder.GetResult();
     }
 }
