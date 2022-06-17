@@ -48,12 +48,12 @@ public class PlayerInventory : MonoBehaviour
 
     private void StartPlacingItem(ItemType itemType)
     {
-        InputHandler.instance.SetPlacement(new ItemPlacement(itemType));
+        PlacementContext.instance.SetPlacement(new ItemPlacement(itemType));
     }
 
     private void StartPlacingBuilding(BuildingType buildingType)
     {
-        InputHandler.instance.SetPlacement(new BuildingPlacement(buildingType));
+        PlacementContext.instance.SetPlacement(new BuildingPlacement(buildingType));
     }
 
     private bool OverrideControls()

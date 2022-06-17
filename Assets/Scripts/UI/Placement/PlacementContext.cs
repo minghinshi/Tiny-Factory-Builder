@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class InputHandler : MonoBehaviour
+public class PlacementContext : MonoBehaviour
 {
-    public static InputHandler instance;
+    public static PlacementContext instance;
     private Placement placement = new NullPlacement();
 
     private void Awake()
