@@ -17,6 +17,12 @@ public class Recipe : ScriptableObject
         return outputs;
     }
 
+    public bool Produces(ItemType itemType)
+    {
+        foreach (ItemStack itemStack in outputs) if (itemStack.GetItemType().Equals(itemType)) return true;
+        return false;
+    }
+
     public bool CanCraft(Inventory inventory)
     {
         return inputs.TrueForAll(x => inventory.GetItemCount(x.GetItemType()) >= x.GetCount());

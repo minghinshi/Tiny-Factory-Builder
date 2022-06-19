@@ -40,5 +40,6 @@ public class RecipeViewer : MonoBehaviour
     private void ViewRecipes(ItemType itemType)
     {
         ShowRecipePage(itemType);
+        RecipeFinder.GetRecipes(itemType).ForEach(x => x.GetInputs().ForEach(y => print(y.GetCount().ToString() + " " + y.GetItemType().GetName())));
     }
 }
