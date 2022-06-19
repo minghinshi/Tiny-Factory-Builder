@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class ItemStack
+public class ItemStack : IDisplayable
 {
     [SerializeField] private ItemType itemType;
     [SerializeField] private uint count;

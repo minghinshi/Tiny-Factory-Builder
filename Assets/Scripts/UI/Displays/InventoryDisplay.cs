@@ -1,9 +1,5 @@
-using System;
-using UnityEngine;
-
-public class InventoryDisplay : MonoBehaviour
+public class InventoryDisplay : ItemDisplay<ItemStack>
 {
-    private Func<ItemStack, Transform> createLabel;
     private Inventory targetInventory;
 
     private void OnDestroy()
@@ -11,48 +7,25 @@ public class InventoryDisplay : MonoBehaviour
         DisconnectFromInventory();
     }
 
-    public void SetCreateLabelFunc(Func<ItemStack, Transform> createLabel)
-    {
-        this.createLabel = createLabel;
-    }
-
     public void SetTargetInventory(Inventory inventory)
     {
         DisconnectFromInventory();
         ConnectToInventory(inventory);
-        RebuildDisplay();
-    }
-
-    private void DisconnectFromInventory()
-    {
-        if (targetInventory != null) targetInventory.Updated -= RebuildDisplay;
+        DisplayInventory();
     }
 
     private void ConnectToInventory(Inventory inventory)
     {
         targetInventory = inventory;
-        inventory.Updated += RebuildDisplay;
+        inventory.Updated += DisplayInventory;
     }
 
-    private void RebuildDisplay()
+    private void DisconnectFromInventory()
     {
-        RemoveAllLabels();
-        CreateLabels();
+        if (targetInventory != null) targetInventory.Updated -= DisplayInventory;
     }
 
-    private void RemoveAllLabels()
-    {
-        foreach (Transform child in transform) Destroy(child.gameObject);
-    }
-
-    private void CreateLabels()
-    {
-        targetInventory.GetAllItemStacks().ForEach(x => CreateLabel(x));
-    }
-
-    private void CreateLabel(ItemStack itemStack)
-    {
-        Transform buttonTransform = createLabel.Invoke(itemStack);
-        buttonTransform.SetParent(transform);
+    private void DisplayInventory() {
+        DisplayItems(targetInventory.GetAllItemStacks());
     }
 }
