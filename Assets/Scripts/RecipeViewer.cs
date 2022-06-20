@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class RecipeViewer : MonoBehaviour
 {
@@ -40,6 +41,8 @@ public class RecipeViewer : MonoBehaviour
     private void ViewRecipes(ItemType itemType)
     {
         ShowRecipePage(itemType);
-        RecipeFinder.GetRecipes(itemType).ForEach(x => x.GetInputs().ForEach(y => print(y.GetCount().ToString() + " " + y.GetItemType().GetName())));
+        List<Recipe> foundRecipes = Finder.FindRecipes(itemType);
+        foundRecipes.ForEach(x => x.GetInputs().ForEach(y => print(y.GetCount().ToString() + " " + y.GetItemType().GetName())));
+        foundRecipes.ForEach(x => Finder.FindMachines(x).ForEach(y => print(y.GetName())));
     }
 }
