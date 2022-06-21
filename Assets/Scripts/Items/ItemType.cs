@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Item")]
-public class ItemType : ScriptableObject, IDisplayable
+public class ItemType : ScriptableObject, IDisplayableAsItem
 {
     [SerializeField] private string itemName;
     [SerializeField] private Sprite itemSprite;

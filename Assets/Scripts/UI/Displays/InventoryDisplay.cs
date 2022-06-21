@@ -1,4 +1,4 @@
-public class InventoryDisplay : ItemDisplay<ItemStack>
+public class InventoryDisplay : ItemLabelGrid<ItemStack>
 {
     private Inventory targetInventory;
 

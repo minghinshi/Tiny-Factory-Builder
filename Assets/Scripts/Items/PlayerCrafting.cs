@@ -3,22 +3,20 @@ using UnityEngine;
 
 public class PlayerCrafting : MonoBehaviour
 {
+    private RecipeLabelGrid itemDisplay;
     [SerializeField] private List<Recipe> craftingRecipes;
 
     private void Start()
     {
-        GenerateCraftingButtons();
+        itemDisplay = gameObject.AddComponent<RecipeLabelGrid>();
+        itemDisplay.SetCreateLabelFunc(GenerateCraftingButton);
+        itemDisplay.DisplayItems(craftingRecipes);
     }
 
-    private void GenerateCraftingButtons()
-    {
-        craftingRecipes.ForEach(x => GenerateCraftingButton(x));
-    }
-
-    private void GenerateCraftingButton(Recipe recipe)
+    private Transform GenerateCraftingButton(Recipe recipe)
     {
         ItemLabelDirector.BuildItemButton(recipe.GetOutputs()[0].GetItemType(), () => Craft(recipe));
-        ItemLabelDirector.builder.GetResult().SetParent(transform);
+        return ItemLabelDirector.builder.GetResult();
     }
 
     private void Craft(Recipe recipe)

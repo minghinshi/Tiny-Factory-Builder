@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IDisplayable { }
+public interface IDisplayableAsItem { }
 
-public class ItemDisplay<T> : MonoBehaviour where T : IDisplayable
+public abstract class ItemLabelGrid<T> : MonoBehaviour where T : IDisplayableAsItem
 {
     private Func<T, Transform> CreateLabel;
 
@@ -29,3 +29,5 @@ public class ItemDisplay<T> : MonoBehaviour where T : IDisplayable
         CreateLabel.Invoke(item).SetParent(transform);
     }
 }
+
+public class RecipeLabelGrid : ItemLabelGrid<Recipe> { }
