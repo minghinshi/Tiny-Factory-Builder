@@ -36,7 +36,8 @@ public class Timer
         TickHandler.instance.TickTimers -= OnTick;
     }
 
-    public bool IsEnabled() {
+    public bool IsEnabled()
+    {
         return isEnabled;
     }
 

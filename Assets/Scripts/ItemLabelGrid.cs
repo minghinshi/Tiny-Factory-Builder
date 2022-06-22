@@ -4,9 +4,15 @@ using UnityEngine;
 
 public interface IDisplayableAsItem { }
 
-public abstract class ItemLabelGrid<T> : MonoBehaviour where T : IDisplayableAsItem
+public class ItemLabelGrid<T> where T : IDisplayableAsItem
 {
     private Func<T, Transform> CreateLabel;
+    private Transform transform;
+
+    public ItemLabelGrid(Transform transform)
+    {
+        this.transform = transform;
+    }
 
     public void SetCreateLabelFunc(Func<T, Transform> func)
     {
@@ -15,13 +21,13 @@ public abstract class ItemLabelGrid<T> : MonoBehaviour where T : IDisplayableAsI
 
     public void DisplayItems(List<T> items)
     {
-        RemoveAllLabels();
+        ClearDisplay();
         items.ForEach(DisplayItem);
     }
 
-    private void RemoveAllLabels()
+    private void ClearDisplay()
     {
-        foreach (Transform child in transform) Destroy(child.gameObject);
+        foreach (Transform child in transform) UnityEngine.Object.Destroy(child.gameObject);
     }
 
     private void DisplayItem(T item)
@@ -29,5 +35,3 @@ public abstract class ItemLabelGrid<T> : MonoBehaviour where T : IDisplayableAsI
         CreateLabel.Invoke(item).SetParent(transform);
     }
 }
-
-public class RecipeLabelGrid : ItemLabelGrid<Recipe> { }

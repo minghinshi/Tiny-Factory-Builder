@@ -23,7 +23,7 @@ public class PlayerInventory : MonoBehaviour
 
     private void InitializeInventoryPanel()
     {
-        inventoryDisplay = GetComponent<InventoryDisplay>();
+        inventoryDisplay = new InventoryDisplay(transform);
         inventoryDisplay.SetCreateLabelFunc(CreateItemButton);
         inventoryDisplay.SetTargetInventory(inventory);
     }

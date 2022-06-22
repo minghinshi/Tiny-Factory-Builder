@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Conveyor", menuName = "Conveyor")]
 public class ConveyorType : BuildingType

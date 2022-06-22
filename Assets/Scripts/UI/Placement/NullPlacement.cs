@@ -12,7 +12,8 @@ public class NullPlacement : Placement
         return null;
     }
 
-    protected override void CheckInputs() {
+    protected override void CheckInputs()
+    {
         if (Input.GetMouseButtonDown(0)) ClickOnMachine();
         base.CheckInputs();
     }

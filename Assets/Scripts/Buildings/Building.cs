@@ -28,7 +28,8 @@ public abstract class Building : CellObject
         Object.Destroy(transform.gameObject);
     }
 
-    public BuildingType GetBuildingType() {
+    public BuildingType GetBuildingType()
+    {
         return buildingType;
     }
 

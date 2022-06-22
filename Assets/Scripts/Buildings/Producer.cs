@@ -28,7 +28,8 @@ public abstract class Producer : Building
         outputInventory.TransferTo(PlayerInventory.inventory);
     }
 
-    public Inventory GetOutputInventory() {
+    public Inventory GetOutputInventory()
+    {
         return outputInventory;
     }
 

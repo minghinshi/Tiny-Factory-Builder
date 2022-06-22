@@ -1,6 +1,10 @@
+using UnityEngine;
+
 public class InventoryDisplay : ItemLabelGrid<ItemStack>
 {
     private Inventory targetInventory;
+
+    public InventoryDisplay(Transform transform) : base(transform) { }
 
     private void OnDestroy()
     {
@@ -25,7 +29,8 @@ public class InventoryDisplay : ItemLabelGrid<ItemStack>
         if (targetInventory != null) targetInventory.Updated -= DisplayInventory;
     }
 
-    private void DisplayInventory() {
+    private void DisplayInventory()
+    {
         DisplayItems(targetInventory.GetAllItemStacks());
     }
 }

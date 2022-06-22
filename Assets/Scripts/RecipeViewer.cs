@@ -1,18 +1,38 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 public class RecipeViewer : MonoBehaviour
 {
+    public static RecipeViewer instance;
+
     [SerializeField] private Transform itemPage, recipePage;
     [SerializeField] private PanelSwitcher panelSwitcher;
     [SerializeField] private Button returnButton;
     [SerializeField] private Text headerText;
 
+    [SerializeField] private Transform recipeDisplayPrefab;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     private void Start()
     {
         CreateButtons();
         returnButton.onClick.AddListener(ShowItemPage);
+    }
+
+    public void ViewRecipes(ItemType itemType)
+    {
+        ShowRecipePage(itemType);
+        ClearRecipePage();
+        Finder.FindRecipes(itemType).ForEach(CreateRecipeDisplay);
+    }
+
+    private void CreateRecipeDisplay(Recipe recipe)
+    {
+        new RecipeDisplay(Instantiate(recipeDisplayPrefab, recipePage), recipe).ShowRecipe();
     }
 
     private void CreateButtons()
@@ -32,17 +52,14 @@ public class RecipeViewer : MonoBehaviour
         headerText.text = "Recipes";
     }
 
+    private void ClearRecipePage()
+    {
+        foreach (Transform child in recipePage) Destroy(child.gameObject);
+    }
+
     private void ShowRecipePage(ItemType itemType)
     {
         panelSwitcher.SwitchPanel(recipePage.GetComponent<VisibilityHandler>());
         headerText.text = "Recipes > " + itemType.GetName();
-    }
-
-    private void ViewRecipes(ItemType itemType)
-    {
-        ShowRecipePage(itemType);
-        List<Recipe> foundRecipes = Finder.FindRecipes(itemType);
-        foundRecipes.ForEach(x => x.GetInputs().ForEach(y => print(y.GetCount().ToString() + " " + y.GetItemType().GetName())));
-        foundRecipes.ForEach(x => Finder.FindMachines(x).ForEach(y => print(y.GetName())));
     }
 }

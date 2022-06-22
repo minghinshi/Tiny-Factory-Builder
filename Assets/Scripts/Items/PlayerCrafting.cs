@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class PlayerCrafting : MonoBehaviour
 {
-    private RecipeLabelGrid itemDisplay;
+    private ItemLabelGrid<Recipe> itemDisplay;
     [SerializeField] private List<Recipe> craftingRecipes;
 
     private void Start()
     {
-        itemDisplay = gameObject.AddComponent<RecipeLabelGrid>();
+        itemDisplay = new ItemLabelGrid<Recipe>(transform);
         itemDisplay.SetCreateLabelFunc(GenerateCraftingButton);
         itemDisplay.DisplayItems(craftingRecipes);
     }

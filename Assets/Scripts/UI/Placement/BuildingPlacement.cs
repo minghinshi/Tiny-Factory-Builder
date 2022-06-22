@@ -75,7 +75,8 @@ public class BuildingPlacement : Placement
         placedBuildingHere = false;
     }
 
-    private void UpdatePreview() {
+    private void UpdatePreview()
+    {
         UpdateTargetPosition();
         UpdateColor();
     }

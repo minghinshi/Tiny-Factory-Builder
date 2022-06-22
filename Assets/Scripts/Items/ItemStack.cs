@@ -37,7 +37,8 @@ public class ItemStack : IDisplayableAsItem
         count -= amountToRemove;
     }
 
-    public bool IsEmpty() {
+    public bool IsEmpty()
+    {
         return count == 0;
     }
 }

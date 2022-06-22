@@ -26,7 +26,8 @@ public class CameraHandler : MonoBehaviour
         ZoomCamera();
     }
 
-    private void MoveCamera() {
+    private void MoveCamera()
+    {
         if (Input.GetKey(KeyCode.W))
             transform.Translate(Vector3.up * GetMovementVelocity());
         if (Input.GetKey(KeyCode.A))
@@ -37,7 +38,8 @@ public class CameraHandler : MonoBehaviour
             transform.Translate(Vector3.right * GetMovementVelocity());
     }
 
-    private void ZoomCamera() {
+    private void ZoomCamera()
+    {
         if (Input.mouseScrollDelta.y < 0)
             camera.orthographicSize = Mathf.Min(camera.orthographicSize * zoomVelocity, maxZoomSize);
         if (Input.mouseScrollDelta.y > 0)

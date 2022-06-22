@@ -104,7 +104,8 @@ public class GridSystem<TCellObject> where TCellObject : CellObject
         return GetCellAt(gridPosition).GetContainedObject();
     }
 
-    public TCellObject GetCellObjectAt(Vector3 worldPosition) {
+    public TCellObject GetCellObjectAt(Vector3 worldPosition)
+    {
         return GetCellObjectAt(GetGridPosition(worldPosition));
     }
 

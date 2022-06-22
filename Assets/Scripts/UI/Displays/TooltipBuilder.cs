@@ -25,7 +25,7 @@ public class TooltipBuilder
 
     public void AddInventoryDisplay(Inventory target)
     {
-        InventoryDisplay display = Object.Instantiate(inventoryDisplayPrefab, tooltipTransform).GetComponent<InventoryDisplay>();
+        InventoryDisplay display = new InventoryDisplay(Object.Instantiate(inventoryDisplayPrefab, tooltipTransform));
         display.SetCreateLabelFunc(CreateLabel);
         display.SetTargetInventory(target);
     }
