@@ -1708,6 +1708,8 @@ MonoBehaviour:
     count: 1
   - itemType: {fileID: 11400000, guid: bc5e09915d580d64cb938183367681cf, type: 2}
     count: 1
+  visibilityHandler: {fileID: 1008683271}
+  panelSwitcher: {fileID: 1906871376}
 --- !u!1 &1713406302
 GameObject:
   m_ObjectHideFlags: 0
@@ -1937,6 +1939,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5b65c3548f85d5040929260f67610098, type: 2}
   - {fileID: 11400000, guid: 9d84d2795db8cd44fa1630b5cc3e4e55, type: 2}
   - {fileID: 11400000, guid: 8d2df61d9e536c941b4d6b9a3351f421, type: 2}
+  - {fileID: 11400000, guid: d72c217930008a1419c816d454e26401, type: 2}
 --- !u!114 &1724250517
 MonoBehaviour:
   m_ObjectHideFlags: 0

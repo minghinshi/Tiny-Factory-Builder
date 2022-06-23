@@ -5,15 +5,14 @@ public class PlayerInventory : MonoBehaviour
     public static readonly Inventory inventory = new Inventory();
 
     [SerializeField] private ItemStack[] initialItems;
-
+    [SerializeField] private VisibilityHandler visibilityHandler;
+    [SerializeField] private PanelSwitcher panelSwitcher;
     private InventoryDisplay inventoryDisplay;
-    private VisibilityHandler visibilityHandler;
 
     private void Start()
     {
         InitializeInventory();
         InitializeInventoryPanel();
-        InitializeVisibilityHandler();
     }
 
     private void InitializeInventory()
@@ -28,11 +27,6 @@ public class PlayerInventory : MonoBehaviour
         inventoryDisplay.SetTargetInventory(inventory);
     }
 
-    private void InitializeVisibilityHandler()
-    {
-        visibilityHandler = transform.parent.GetComponent<VisibilityHandler>();
-    }
-
     private Transform CreateItemButton(ItemStack itemStack)
     {
         ItemLabelDirector.BuildItemButton(itemStack, () => OnItemButtonPressed(itemStack.GetItemType()));
@@ -43,7 +37,7 @@ public class PlayerInventory : MonoBehaviour
     {
         if (itemType is BuildingType buildingType && !OverrideControls()) StartPlacingBuilding(buildingType);
         else StartPlacingItem(itemType);
-        visibilityHandler.SetInvisibleImmediately();
+        panelSwitcher.TogglePanel(visibilityHandler);
     }
 
     private void StartPlacingItem(ItemType itemType)

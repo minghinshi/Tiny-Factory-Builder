@@ -6,16 +6,16 @@ public class InventoryDisplay : ItemLabelGrid<ItemStack>
 
     public InventoryDisplay(Transform transform) : base(transform) { }
 
-    private void OnDestroy()
-    {
-        DisconnectFromInventory();
-    }
-
     public void SetTargetInventory(Inventory inventory)
     {
         DisconnectFromInventory();
         ConnectToInventory(inventory);
         DisplayInventory();
+    }
+
+    protected override void Destroy()
+    {
+        DisconnectFromInventory();
     }
 
     private void ConnectToInventory(Inventory inventory)

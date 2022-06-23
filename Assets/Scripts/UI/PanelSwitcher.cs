@@ -2,13 +2,7 @@ using UnityEngine;
 
 public class PanelSwitcher : MonoBehaviour
 {
-    public static PanelSwitcher instance;
     [SerializeField] private VisibilityHandler current;
-
-    private void Awake()
-    {
-        instance = this;
-    }
 
     public void TogglePanel(VisibilityHandler panel)
     {

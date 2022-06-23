@@ -10,13 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 176c6a98500671842bd2137bf487fcca, type: 3}
-  m_Name: Campfire
+  m_Name: BurnBranch
   m_EditorClassIdentifier: 
   inputs:
-  - itemType: {fileID: 11400000, guid: 2f32fb8086d3bb74683ef1d3b8589bb6, type: 2}
-    count: 16
   - itemType: {fileID: 11400000, guid: 82400f5133c1ac74c8a528163f0d667c, type: 2}
-    count: 4
-  outputs:
-  - itemType: {fileID: 11400000, guid: 3c562272fbfbd7f46bac160323ac4154, type: 2}
     count: 1
+  outputs:
+  - itemType: {fileID: 11400000, guid: 2f32fb8086d3bb74683ef1d3b8589bb6, type: 2}
+    count: 2

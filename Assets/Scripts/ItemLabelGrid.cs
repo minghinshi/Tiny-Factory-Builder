@@ -21,9 +21,15 @@ public class ItemLabelGrid<T> where T : IDisplayableAsItem
 
     public void DisplayItems(List<T> items)
     {
-        ClearDisplay();
-        items.ForEach(DisplayItem);
+        if (transform)
+        {
+            ClearDisplay();
+            items.ForEach(DisplayItem);
+        }
+        else Destroy();
     }
+
+    protected virtual void Destroy() { }
 
     private void ClearDisplay()
     {
