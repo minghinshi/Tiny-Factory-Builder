@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 176c6a98500671842bd2137bf487fcca, type: 3}
-  m_Name: Transporter1
+  m_Name: Waterway
   m_EditorClassIdentifier: 
   inputs:
   - itemType: {fileID: 11400000, guid: 1562bf37f0b582e4f9bf147f05fc5e31, type: 2}

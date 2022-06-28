@@ -9,7 +9,7 @@ public class BuildingPlacement : Placement
     private Direction direction = Direction.North;
 
     private Vector3 previewTargetPosition;
-    private Vector3 targetRotation;
+    private float targetRotation;
 
     private readonly Color canPlaceColor = new Color(46 / 255f, 204 / 255f, 113 / 255f, .5f);
     private readonly Color cannotPlaceColor = new Color(231 / 255f, 76 / 255f, 60 / 255f, .5f);
@@ -66,7 +66,7 @@ public class BuildingPlacement : Placement
     private void RotateBuilding()
     {
         direction = direction.RotateClockwise();
-        targetRotation = direction.GetEulerAngles();
+        targetRotation = direction.GetRotationInDegrees();
     }
 
     private void OnMouseTargetChanged()
@@ -105,6 +105,6 @@ public class BuildingPlacement : Placement
     private void RenderPreview()
     {
         previewTransform.position = Vector3.Lerp(previewTransform.position, previewTargetPosition, Time.deltaTime * 20f);
-        previewTransform.eulerAngles = Vector3.Lerp(previewTransform.eulerAngles, targetRotation, Time.deltaTime * 20f);
+        previewTransform.eulerAngles = new Vector3(0f, 0f, Mathf.LerpAngle(previewTransform.eulerAngles.z, targetRotation, Time.deltaTime * 20f));
     }
 }

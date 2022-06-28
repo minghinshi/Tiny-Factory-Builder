@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83076e94c4af77849a4412bf505b7233, type: 3}
-  m_Name: Landscape
+  m_Name: TinyGlobe
   m_EditorClassIdentifier: 
   itemName: Landscape
   itemSprite: {fileID: 21300000, guid: a7515bbc19d546e45b84f22a35fc351c, type: 3}
