@@ -16,7 +16,7 @@ public class Inventory
         this.itemStacks = new List<ItemStack>(itemStacks);
     }
 
-    public void Store(ItemType itemType, uint count)
+    public void Store(ItemType itemType, int count)
     {
         ItemStack itemStack = GetItemStack(itemType) ?? AddItemStack(itemType);
         itemStack.Store(count);
@@ -25,10 +25,15 @@ public class Inventory
 
     public void StoreCopyOf(ItemStack itemStack)
     {
-        Store(itemStack.GetItemType(), itemStack.GetCount());
+        StoreCopiesOf(itemStack, 1);
     }
 
-    public void Remove(ItemType itemType, uint count)
+    public void StoreCopiesOf(ItemStack itemStack, int numberOfCopies)
+    {
+        Store(itemStack.GetItemType(), itemStack.GetCount() * numberOfCopies);
+    }
+
+    public void Remove(ItemType itemType, int count)
     {
         if (count > GetItemCount(itemType))
             throw new InvalidOperationException();
@@ -41,7 +46,12 @@ public class Inventory
 
     public void RemoveCopyOf(ItemStack itemStack)
     {
-        Remove(itemStack.GetItemType(), itemStack.GetCount());
+        RemoveCopiesOf(itemStack, 1);
+    }
+
+    public void RemoveCopiesOf(ItemStack itemStack, int numberOfCopies)
+    {
+        Remove(itemStack.GetItemType(), itemStack.GetCount() * numberOfCopies);
     }
 
     public void Empty()
@@ -50,7 +60,7 @@ public class Inventory
         NotifyUpdate();
     }
 
-    public uint GetItemCount(ItemType itemType)
+    public int GetItemCount(ItemType itemType)
     {
         ItemStack itemStack = GetItemStack(itemType);
         return itemStack == null ? 0 : itemStack.GetCount();

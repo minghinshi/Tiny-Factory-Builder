@@ -5,9 +5,9 @@ using UnityEngine;
 public class ItemStack : IDisplayableAsItem
 {
     [SerializeField] private ItemType itemType;
-    [SerializeField] private uint count;
+    [SerializeField] private int count;
 
-    public ItemStack(ItemType itemType, uint count)
+    public ItemStack(ItemType itemType, int count)
     {
         this.itemType = itemType;
         this.count = count;
@@ -20,20 +20,19 @@ public class ItemStack : IDisplayableAsItem
         return itemType;
     }
 
-    public uint GetCount()
+    public int GetCount()
     {
         return count;
     }
 
-    public void Store(uint amountToStore)
+    public void Store(int amountToStore)
     {
         count += amountToStore;
     }
 
-    public void Remove(uint amountToRemove)
+    public void Remove(int amountToRemove)
     {
-        if (amountToRemove > count)
-            throw new InvalidOperationException();
+        if (amountToRemove > count) throw new InvalidOperationException();
         count -= amountToRemove;
     }
 

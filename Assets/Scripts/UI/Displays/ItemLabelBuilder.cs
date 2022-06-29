@@ -33,7 +33,7 @@ public class ItemLabelBuilder
         Object.Instantiate(imagePrefab, result).GetComponent<Image>().sprite = itemSprite;
     }
 
-    public void AddCounter(uint itemCount)
+    public void AddCounter(int itemCount)
     {
         Object.Instantiate(counterPrefab, result).GetComponent<Text>().text = itemCount.ToString("N0");
     }

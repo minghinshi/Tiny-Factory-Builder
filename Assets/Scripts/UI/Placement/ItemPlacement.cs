@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class ItemPlacement : Placement
@@ -47,11 +46,11 @@ public class ItemPlacement : Placement
         Mouse.instance.GetTargetBuilding()?.Insert(new ItemStack(itemType, GetItemCount()));
     }
 
-    private uint GetItemCount()
+    private int GetItemCount()
     {
-        uint count = 1;
+        int count = 1;
         if (Input.GetKey(KeyCode.LeftShift)) count *= 10;
         if (Input.GetKey(KeyCode.LeftControl)) count *= 100;
-        return Math.Min(count, PlayerInventory.inventory.GetItemCount(itemType));
+        return Mathf.Min(count, PlayerInventory.inventory.GetItemCount(itemType));
     }
 }

@@ -28,9 +28,24 @@ public class Recipe : ScriptableObject, IDisplayableAsItem
         return inputs.TrueForAll(x => inventory.GetItemCount(x.GetItemType()) >= x.GetCount());
     }
 
+    public int GetMaximumCrafts(Inventory inventory)
+    {
+        return Mathf.Min(inputs.ConvertAll(x => inventory.GetItemCount(x.GetItemType()) / x.GetCount()).ToArray());
+    }
+
     public void CraftOnce(Inventory inputInventory, Inventory outputInventory)
     {
-        inputs.ForEach(x => inputInventory.RemoveCopyOf(x));
-        outputs.ForEach(x => outputInventory.StoreCopyOf(x));
+        Craft(inputInventory, outputInventory, 1);
+    }
+
+    public void CraftAll(Inventory inputInventory, Inventory outputInventory)
+    {
+        Craft(inputInventory, outputInventory, GetMaximumCrafts(inputInventory));
+    }
+
+    private void Craft(Inventory inputInventory, Inventory outputInventory, int count)
+    {
+        inputs.ForEach(x => inputInventory.RemoveCopiesOf(x, count));
+        outputs.ForEach(x => outputInventory.StoreCopiesOf(x, count));
     }
 }

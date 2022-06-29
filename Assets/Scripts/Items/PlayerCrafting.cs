@@ -4,10 +4,12 @@ using UnityEngine;
 public class PlayerCrafting : MonoBehaviour
 {
     private ItemLabelGrid<Recipe> itemDisplay;
+    private Inventory playerInventory = PlayerInventory.inventory;
     [SerializeField] private List<Recipe> craftingRecipes;
 
     private void Start()
     {
+
         itemDisplay = new ItemLabelGrid<Recipe>(transform);
         itemDisplay.SetCreateLabelFunc(GenerateCraftingButton);
         itemDisplay.DisplayItems(craftingRecipes);
@@ -21,7 +23,8 @@ public class PlayerCrafting : MonoBehaviour
 
     private void Craft(Recipe recipe)
     {
-        Inventory playerInventory = PlayerInventory.inventory;
-        if (recipe.CanCraft(playerInventory)) recipe.CraftOnce(playerInventory, playerInventory);
+        if (!recipe.CanCraft(playerInventory)) return;
+        if (Input.GetKey(KeyCode.LeftShift)) recipe.CraftAll(playerInventory, playerInventory);
+        else recipe.CraftOnce(playerInventory, playerInventory);
     }
 }
