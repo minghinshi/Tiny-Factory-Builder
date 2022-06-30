@@ -14,7 +14,7 @@ public class NullPlacement : Placement
 
     protected override void CheckInputs()
     {
-        if (Input.GetMouseButtonDown(0)) ClickOnMachine();
+        if (Input.GetMouseButtonDown(0) && Mouse.instance.IsPointingAtWorld()) ClickOnMachine();
         base.CheckInputs();
     }
 

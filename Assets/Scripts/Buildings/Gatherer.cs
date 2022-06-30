@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 public class Gatherer : Producer
 {
     private ItemType producedItem;

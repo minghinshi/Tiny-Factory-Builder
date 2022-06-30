@@ -16,6 +16,12 @@ public class Machine : Producer
         inputInventory.Updated += OnInputInventoryUpdated;
     }
 
+    public override void OnClick()
+    {
+        base.OnClick();
+        if (Input.GetKey(KeyCode.LeftShift)) inputInventory.TransferTo(PlayerInventory.inventory);
+    }
+
     public override void Destroy()
     {
         DisconnectInputCells();
