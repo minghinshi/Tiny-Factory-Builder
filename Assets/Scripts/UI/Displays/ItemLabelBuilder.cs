@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ItemLabelBuilder
@@ -28,6 +29,16 @@ public class ItemLabelBuilder
         new List<UnityAction>(clickActions).ForEach(x => buttonTransform.onClick.AddListener(x));
     }
 
+    public void AddPointerEnterAction(UnityAction<BaseEventData> action)
+    {
+        AddPointerAction(EventTriggerType.PointerEnter, action);
+    }
+
+    public void AddPointerExitAction(UnityAction<BaseEventData> action)
+    {
+        AddPointerAction(EventTriggerType.PointerExit, action);
+    }
+
     public void AddImage(Sprite itemSprite)
     {
         Object.Instantiate(imagePrefab, result).GetComponent<Image>().sprite = itemSprite;
@@ -43,5 +54,13 @@ public class ItemLabelBuilder
         Transform result = this.result;
         Reset();
         return result;
+    }
+
+    private void AddPointerAction(EventTriggerType eventTriggerType, UnityAction<BaseEventData> action)
+    {
+        EventTrigger trigger = result.GetComponent<EventTrigger>();
+        EventTrigger.Entry entry = new EventTrigger.Entry { eventID = eventTriggerType };
+        entry.callback.AddListener(action);
+        trigger.triggers.Add(entry);
     }
 }
