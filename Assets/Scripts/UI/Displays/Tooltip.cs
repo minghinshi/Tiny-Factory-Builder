@@ -3,9 +3,16 @@ using UnityEngine;
 [RequireComponent(typeof(VisibilityHandler), typeof(RectTransform))]
 public class Tooltip : MonoBehaviour
 {
+    public static Tooltip instance;
+
     private Mouse mouse;
     private VisibilityHandler visibilityHandler;
     private TooltipDirector tooltipDirector;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
@@ -16,20 +23,20 @@ public class Tooltip : MonoBehaviour
         mouse.TargetChanged += OnMouseTargetChanged;
     }
 
-    private void OnMouseTargetChanged()
-    {
-        if (mouse.IsPointingAtSomething()) ShowTooltip();
-        else HideTooltip();
-    }
-
-    private void ShowTooltip()
+    public void ShowTooltip()
     {
         visibilityHandler.SetVisibleImmediately();
         tooltipDirector.BuildTooltip(mouse);
     }
 
-    private void HideTooltip()
+    public void HideTooltip()
     {
         visibilityHandler.SetInvisibleImmediately();
+    }
+
+    private void OnMouseTargetChanged()
+    {
+        if (mouse.IsPointingAtSomething()) ShowTooltip();
+        else HideTooltip();
     }
 }

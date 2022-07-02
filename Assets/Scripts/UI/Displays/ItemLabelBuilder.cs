@@ -29,14 +29,14 @@ public class ItemLabelBuilder
         new List<UnityAction>(clickActions).ForEach(x => buttonTransform.onClick.AddListener(x));
     }
 
-    public void AddPointerEnterAction(UnityAction<BaseEventData> action)
+    public void AddPointerEnterAction(params UnityAction[] enterActions)
     {
-        AddPointerAction(EventTriggerType.PointerEnter, action);
+        new List<UnityAction>(enterActions).ForEach(x => AddPointerAction(EventTriggerType.PointerEnter, x));
     }
 
-    public void AddPointerExitAction(UnityAction<BaseEventData> action)
+    public void AddPointerExitAction(params UnityAction[] exitActions)
     {
-        AddPointerAction(EventTriggerType.PointerExit, action);
+        new List<UnityAction>(exitActions).ForEach(x => AddPointerAction(EventTriggerType.PointerExit, x));
     }
 
     public void AddImage(Sprite itemSprite)
@@ -56,11 +56,11 @@ public class ItemLabelBuilder
         return result;
     }
 
-    private void AddPointerAction(EventTriggerType eventTriggerType, UnityAction<BaseEventData> action)
+    private void AddPointerAction(EventTriggerType eventTriggerType, UnityAction action)
     {
-        EventTrigger trigger = result.GetComponent<EventTrigger>();
+        EventTrigger trigger = result.GetComponentInChildren<EventTrigger>();
         EventTrigger.Entry entry = new EventTrigger.Entry { eventID = eventTriggerType };
-        entry.callback.AddListener(action);
+        entry.callback.AddListener(x => { action.Invoke(); });
         trigger.triggers.Add(entry);
     }
 }

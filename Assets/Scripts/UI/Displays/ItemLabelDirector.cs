@@ -22,4 +22,10 @@ public class ItemLabelDirector
         builder.AddImage(itemStack.GetItemType().GetSprite());
         builder.AddCounter(itemStack.GetCount());
     }
+
+    public static void AddHoverTooltip()
+    {
+        builder.AddPointerEnterAction(Tooltip.instance.ShowTooltip);
+        builder.AddPointerExitAction(Tooltip.instance.HideTooltip);
+    }
 }

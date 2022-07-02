@@ -9,7 +9,6 @@ public class PlayerCrafting : MonoBehaviour
 
     private void Start()
     {
-
         itemDisplay = new ItemLabelGrid<Recipe>(transform);
         itemDisplay.SetCreateLabelFunc(GenerateCraftingButton);
         itemDisplay.DisplayItems(craftingRecipes);
@@ -18,6 +17,7 @@ public class PlayerCrafting : MonoBehaviour
     private Transform GenerateCraftingButton(Recipe recipe)
     {
         ItemLabelDirector.BuildItemButton(recipe.GetOutputs()[0].GetItemType(), () => Craft(recipe));
+        ItemLabelDirector.AddHoverTooltip();
         return ItemLabelDirector.builder.GetResult();
     }
 
