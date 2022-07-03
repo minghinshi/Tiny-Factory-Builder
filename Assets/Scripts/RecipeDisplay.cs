@@ -6,13 +6,20 @@ public class RecipeDisplay
     private readonly Transform transform;
     private readonly Recipe recipe;
 
-    public RecipeDisplay(Transform transform, Recipe recipe)
+    private RecipeDisplay(Transform transform, Recipe recipe)
     {
         this.transform = transform;
         this.recipe = recipe;
     }
 
-    public void ShowRecipe()
+    public static RecipeDisplay Create(Transform parent, Recipe recipe)
+    {
+        RecipeDisplay recipeDisplay = new RecipeDisplay(Object.Instantiate(PrefabLoader.recipeDisplay, parent), recipe);
+        recipeDisplay.ShowRecipe();
+        return recipeDisplay;
+    }
+
+    private void ShowRecipe()
     {
         ShowInputs();
         ShowOutputs();

@@ -3,9 +3,6 @@ using UnityEngine.UI;
 
 public class TooltipBuilder
 {
-    private readonly Transform textPrefab = ((GameObject)Resources.Load("Prefabs/Tooltip/Text")).transform;
-    private readonly Transform inventoryDisplayPrefab = ((GameObject)Resources.Load("Prefabs/Tooltip/InventoryDisplay")).transform;
-
     private readonly Transform tooltipTransform;
 
     public TooltipBuilder(Transform tooltipTransform)
@@ -20,14 +17,19 @@ public class TooltipBuilder
 
     public void AddText(string str)
     {
-        Object.Instantiate(textPrefab, tooltipTransform).GetComponent<Text>().text = str;
+        Object.Instantiate(PrefabLoader.tooltipText, tooltipTransform).GetComponent<Text>().text = str;
     }
 
     public void AddInventoryDisplay(Inventory target)
     {
-        InventoryDisplay display = new InventoryDisplay(Object.Instantiate(inventoryDisplayPrefab, tooltipTransform));
+        InventoryDisplay display = new InventoryDisplay(Object.Instantiate(PrefabLoader.inventoryDisplay, tooltipTransform));
         display.SetCreateLabelFunc(CreateLabel);
-        display.SetTargetInventory(target);
+        display.SetTargetInventory(target); 
+    }
+
+    public void AddRecipeDisplay(Recipe target)
+    {
+        RecipeDisplay.Create(tooltipTransform, target);
     }
 
     private Transform CreateLabel(ItemStack itemStack)

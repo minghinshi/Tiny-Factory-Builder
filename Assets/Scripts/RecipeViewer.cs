@@ -10,8 +10,6 @@ public class RecipeViewer : MonoBehaviour
     [SerializeField] private Button returnButton;
     [SerializeField] private Text headerText;
 
-    [SerializeField] private Transform recipeDisplayPrefab;
-
     private void Awake()
     {
         instance = this;
@@ -32,7 +30,7 @@ public class RecipeViewer : MonoBehaviour
 
     private void CreateRecipeDisplay(Recipe recipe)
     {
-        new RecipeDisplay(Instantiate(recipeDisplayPrefab, recipePage), recipe).ShowRecipe();
+        RecipeDisplay.Create(recipePage, recipe);
     }
 
     private void CreateButtons()

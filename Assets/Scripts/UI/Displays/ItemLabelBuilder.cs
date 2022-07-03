@@ -6,11 +6,6 @@ using UnityEngine.UI;
 
 public class ItemLabelBuilder
 {
-    //Prefabs
-    private readonly Transform buttonPrefab = ((GameObject)Resources.Load("Prefabs/ItemLabel/Button")).transform;
-    private readonly Transform imagePrefab = ((GameObject)Resources.Load("Prefabs/ItemLabel/Image")).transform;
-    private readonly Transform counterPrefab = ((GameObject)Resources.Load("Prefabs/ItemLabel/Counter")).transform;
-
     private Transform result;
 
     public ItemLabelBuilder()
@@ -25,7 +20,7 @@ public class ItemLabelBuilder
 
     public void AddButton(params UnityAction[] clickActions)
     {
-        Button buttonTransform = Object.Instantiate(buttonPrefab, result).GetComponent<Button>();
+        Button buttonTransform = Object.Instantiate(PrefabLoader.button, result).GetComponent<Button>();
         new List<UnityAction>(clickActions).ForEach(x => buttonTransform.onClick.AddListener(x));
     }
 
@@ -41,12 +36,12 @@ public class ItemLabelBuilder
 
     public void AddImage(Sprite itemSprite)
     {
-        Object.Instantiate(imagePrefab, result).GetComponent<Image>().sprite = itemSprite;
+        Object.Instantiate(PrefabLoader.image, result).GetComponent<Image>().sprite = itemSprite;
     }
 
     public void AddCounter(int itemCount)
     {
-        Object.Instantiate(counterPrefab, result).GetComponent<Text>().text = itemCount.ToString("N0");
+        Object.Instantiate(PrefabLoader.counter, result).GetComponent<Text>().text = itemCount.ToString("N0");
     }
 
     public Transform GetResult()
