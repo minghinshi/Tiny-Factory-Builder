@@ -1,3 +1,4 @@
+using System;
 using UnityEngine.Events;
 
 public class ItemLabelDirector
@@ -23,9 +24,9 @@ public class ItemLabelDirector
         builder.AddCounter(itemStack.GetCount());
     }
 
-    public static void AddHoverTooltip(UnityAction buildTooltipAction)
+    public static void AddHoverTooltip(Action buildTooltipAction)
     {
-        builder.AddPointerEnterAction(Tooltip.instance.ShowTooltip, buildTooltipAction);
+        builder.AddPointerEnterAction(() => Tooltip.instance.ShowTooltip(buildTooltipAction));
         builder.AddPointerExitAction(Tooltip.instance.HideTooltip);
     }
 }

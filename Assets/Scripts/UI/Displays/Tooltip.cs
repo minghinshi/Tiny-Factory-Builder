@@ -1,13 +1,12 @@
+using System;
 using UnityEngine;
 
-[RequireComponent(typeof(VisibilityHandler), typeof(RectTransform))]
+[RequireComponent(typeof(TooltipBuilder))]
 public class Tooltip : MonoBehaviour
 {
     public static Tooltip instance;
-
-    private Mouse mouse;
+    private TooltipBuilder tooltipBuilder;
     private VisibilityHandler visibilityHandler;
-    private TooltipDirector tooltipDirector;
 
     private void Awake()
     {
@@ -16,17 +15,15 @@ public class Tooltip : MonoBehaviour
 
     private void Start()
     {
-        mouse = Mouse.instance;
+        tooltipBuilder = GetComponent<TooltipBuilder>();
         visibilityHandler = GetComponent<VisibilityHandler>();
-        tooltipDirector = new TooltipDirector(new TooltipBuilder(transform));
-
-        mouse.TargetChanged += OnMouseTargetChanged;
     }
 
-    public void ShowTooltip()
+    public void ShowTooltip(Action buildTooltipAction)
     {
+        tooltipBuilder.ResetTooltip();
         visibilityHandler.SetVisibleImmediately();
-        tooltipDirector.BuildTooltip(mouse);
+        buildTooltipAction.Invoke();
     }
 
     public void HideTooltip()
@@ -34,9 +31,26 @@ public class Tooltip : MonoBehaviour
         visibilityHandler.SetInvisibleImmediately();
     }
 
-    private void OnMouseTargetChanged()
+    public void BuildCraftingTooltip(Recipe recipe)
     {
-        if (mouse.IsPointingAtSomething()) ShowTooltip();
-        else HideTooltip();
+        tooltipBuilder.AddRecipeDisplay(recipe);
+    }
+
+    public void BuildBuildingTooltip(Building building)
+    {
+        tooltipBuilder.AddText("<b>" + building.GetBuildingType().GetName() + "</b>");
+        if (building is Machine machine) BuildInventoryTooltip(machine.GetInputInventory(), "Inputs");
+        if (building is Producer producer) BuildInventoryTooltip(producer.GetOutputInventory(), "Outputs");
+    }
+
+    public void BuildItemTooltip(Item item)
+    {
+        tooltipBuilder.AddText("Contains: " + item.GetItemType().GetName());
+    }
+
+    private void BuildInventoryTooltip(Inventory inventory, string inventoryName)
+    {
+        tooltipBuilder.AddText(inventoryName + ":");
+        tooltipBuilder.AddInventoryDisplay(inventory);
     }
 }

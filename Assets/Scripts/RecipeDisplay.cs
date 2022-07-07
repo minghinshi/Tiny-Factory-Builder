@@ -28,14 +28,14 @@ public class RecipeDisplay
 
     private void ShowInputs()
     {
-        ItemLabelGrid<ItemStack> inputGrid = new ItemLabelGrid<ItemStack>(transform.Find("Inputs"));
+        ItemLabelGrid<ItemStack> inputGrid = new ItemLabelGrid<ItemStack>(transform.Find("Materials").Find("Inputs"));
         inputGrid.SetCreateLabelFunc(CreateItemLabel);
         inputGrid.DisplayItems(recipe.GetInputs());
     }
 
     private void ShowOutputs()
     {
-        ItemLabelGrid<ItemStack> outputGrid = new ItemLabelGrid<ItemStack>(transform.Find("Outputs"));
+        ItemLabelGrid<ItemStack> outputGrid = new ItemLabelGrid<ItemStack>(transform.Find("Materials").Find("Outputs"));
         outputGrid.SetCreateLabelFunc(CreateItemLabel);
         outputGrid.DisplayItems(recipe.GetOutputs());
     }

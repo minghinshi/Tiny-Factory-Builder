@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 public class Mouse : MonoBehaviour
 {
     public static Mouse instance;
+    private Tooltip tooltip;
 
     private Vector2 worldPosition;
     private Vector2Int gridPosition;
@@ -11,18 +12,24 @@ public class Mouse : MonoBehaviour
     private Item targetItem;
     private bool hasTargetChanged;
 
-    public delegate void MouseTargetChangedHandler();
-    public event MouseTargetChangedHandler TargetChanged;
+    public delegate void TargetChangedHandler();
+    public event TargetChangedHandler TargetChanged;
 
     private void Awake()
     {
         instance = this;
     }
 
+    private void Start()
+    {
+        tooltip = Tooltip.instance;
+        TargetChanged += UpdateTooltip;
+    }
+
     private void Update()
     {
         UpdateProperties();
-        if (hasTargetChanged) TargetChanged?.Invoke();
+        if (hasTargetChanged && IsPointingAtWorld()) TargetChanged?.Invoke();
     }
 
     public Vector2 GetWorldPosition()
@@ -112,5 +119,17 @@ public class Mouse : MonoBehaviour
     private T GetTarget<T>(GridSystem<T> targetGrid) where T : CellObject
     {
         return targetGrid.GetCellObjectAt(gridPosition);
+    }
+
+    private void UpdateTooltip()
+    {
+        if (IsPointingAtSomething()) tooltip.ShowTooltip(BuildTooltip);
+        else tooltip.HideTooltip();
+    }
+
+    private void BuildTooltip()
+    {
+        if (IsPointingAtBuilding()) tooltip.BuildBuildingTooltip(GetTargetBuilding());
+        if (IsPointingAtItem()) tooltip.BuildItemTooltip(GetTargetItem());
     }
 }

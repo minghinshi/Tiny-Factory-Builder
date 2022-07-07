@@ -17,12 +17,8 @@ public class PlayerCrafting : MonoBehaviour
     private Transform GenerateCraftingButton(Recipe recipe)
     {
         ItemLabelDirector.BuildItemButton(recipe.GetOutputs()[0].GetItemType(), () => Craft(recipe));
-        ItemLabelDirector.AddHoverTooltip(BuildTooltip);
+        ItemLabelDirector.AddHoverTooltip(() => Tooltip.instance.BuildCraftingTooltip(recipe));
         return ItemLabelDirector.builder.GetResult();
-    }
-
-    private void BuildTooltip() { 
-        
     }
 
     private void Craft(Recipe recipe)

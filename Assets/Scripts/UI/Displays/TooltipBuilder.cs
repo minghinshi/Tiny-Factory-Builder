@@ -1,35 +1,28 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TooltipBuilder
+public class TooltipBuilder : MonoBehaviour
 {
-    private readonly Transform tooltipTransform;
-
-    public TooltipBuilder(Transform tooltipTransform)
-    {
-        this.tooltipTransform = tooltipTransform;
-    }
-
     public void ResetTooltip()
     {
-        foreach (Transform child in tooltipTransform) Object.Destroy(child.gameObject);
+        foreach (Transform child in transform) Destroy(child.gameObject);
     }
 
     public void AddText(string str)
     {
-        Object.Instantiate(PrefabLoader.tooltipText, tooltipTransform).GetComponent<Text>().text = str;
+        Instantiate(PrefabLoader.tooltipText, transform).GetComponent<Text>().text = str;
     }
 
     public void AddInventoryDisplay(Inventory target)
     {
-        InventoryDisplay display = new InventoryDisplay(Object.Instantiate(PrefabLoader.inventoryDisplay, tooltipTransform));
+        InventoryDisplay display = new InventoryDisplay(Instantiate(PrefabLoader.inventoryDisplay, transform));
         display.SetCreateLabelFunc(CreateLabel);
-        display.SetTargetInventory(target); 
+        display.SetTargetInventory(target);
     }
 
     public void AddRecipeDisplay(Recipe target)
     {
-        RecipeDisplay.Create(tooltipTransform, target);
+        RecipeDisplay.Create(transform, target);
     }
 
     private Transform CreateLabel(ItemStack itemStack)

@@ -215,7 +215,8 @@ GameObject:
   - component: {fileID: 122557972}
   - component: {fileID: 122557976}
   - component: {fileID: 122557975}
-  - component: {fileID: 122557974}
+  - component: {fileID: 122557979}
+  - component: {fileID: 122557980}
   - component: {fileID: 122557978}
   - component: {fileID: 122557977}
   m_Layer: 5
@@ -282,18 +283,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 122557970}
   m_CullTransparentMesh: 1
---- !u!114 &122557974
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 122557970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 666cd23a3f3f23b4ca8f6bb0f8a228d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &122557975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,6 +347,30 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &122557979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122557970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 092f0184de2f2254697d00bb64b0543f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &122557980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122557970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21b03b3a47bc1cd4b999d895c7f9f145, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &150844780
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,7 +455,6 @@ MonoBehaviour:
   panelSwitcher: {fileID: 150844785}
   returnButton: {fileID: 1713406304}
   headerText: {fileID: 250473506}
-  recipeDisplayPrefab: {fileID: 577639454110550213, guid: 3508f97e528860d419b74f5897372131, type: 3}
 --- !u!114 &150844785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1152,12 +1164,12 @@ MonoBehaviour:
     m_Right: 25
     m_Top: 25
     m_Bottom: 25
-  m_ChildAlignment: 0
+  m_ChildAlignment: 1
   m_Spacing: 25
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
-  m_ChildControlHeight: 0
+  m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0

@@ -9,7 +9,8 @@ public class DataLoader
     public static readonly List<Recipe> allRecipes = Resources.LoadAll<Recipe>("Data/Recipes").ToList();
 }
 
-public class PrefabLoader {
+public class PrefabLoader
+{
     public static readonly Transform button = ((GameObject)Resources.Load("Prefabs/ItemLabel/Button")).transform;
     public static readonly Transform image = ((GameObject)Resources.Load("Prefabs/ItemLabel/Image")).transform;
     public static readonly Transform counter = ((GameObject)Resources.Load("Prefabs/ItemLabel/Counter")).transform;
