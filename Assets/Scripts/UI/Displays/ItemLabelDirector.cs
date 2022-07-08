@@ -8,14 +8,18 @@ public class ItemLabelDirector
     public static void BuildItemButton(ItemType itemType, params UnityAction[] clickActions)
     {
         builder.AddButton(clickActions);
-        builder.AddImage(itemType.GetSprite());
+        BuildItemLabel(itemType);
     }
 
     public static void BuildItemButton(ItemStack itemStack, params UnityAction[] clickActions)
     {
         builder.AddButton(clickActions);
-        builder.AddImage(itemStack.GetItemType().GetSprite());
-        builder.AddCounter(itemStack.GetCount());
+        BuildItemLabel(itemStack);
+    }
+
+    public static void BuildItemLabel(ItemType itemType)
+    {
+        builder.AddImage(itemType.GetSprite());
     }
 
     public static void BuildItemLabel(ItemStack itemStack)

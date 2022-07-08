@@ -22,12 +22,18 @@ public class TooltipBuilder : MonoBehaviour
 
     public void AddRecipeDisplay(Recipe target)
     {
-        RecipeDisplay.Create(transform, target);
+        RecipeDisplay.Create(transform, target, CreateLabel, CreateLabel);
     }
 
     private Transform CreateLabel(ItemStack itemStack)
     {
         ItemLabelDirector.BuildItemLabel(itemStack);
+        return ItemLabelDirector.builder.GetResult();
+    }
+
+    private Transform CreateLabel(ItemType itemType)
+    {
+        ItemLabelDirector.BuildItemLabel(itemType);
         return ItemLabelDirector.builder.GetResult();
     }
 }
