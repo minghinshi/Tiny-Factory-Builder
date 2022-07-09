@@ -25,7 +25,7 @@ public class Recipe : ScriptableObject, IDisplayableAsItem
 
     public bool CanCraft(Inventory inventory)
     {
-        return inputs.TrueForAll(x => inventory.GetItemCount(x.GetItemType()) >= x.GetCount());
+        return inputs.TrueForAll(x => inventory.Contains(x));
     }
 
     public int GetMaximumCrafts(Inventory inventory)

@@ -30,7 +30,7 @@ public class RecipeViewer : MonoBehaviour
 
     private void CreateRecipeDisplay(Recipe recipe)
     {
-        RecipeDisplay.Create(recipePage, recipe, BuildItemButton, BuildMachineButton);
+        RecipeDisplay.Create(recipePage, recipe, BuildItemButton, BuildItemButton, BuildMachineButton);
     }
 
     private Transform BuildItemButton(ItemStack itemStack)

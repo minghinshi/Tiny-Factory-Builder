@@ -6,21 +6,31 @@ public class RecipeDisplay
 {
     private readonly Transform transform;
     private readonly Recipe recipe;
-    private Func<ItemStack, Transform> buildItemLabel;
+    private Func<ItemStack, Transform> buildInputItemLabel;
+    private Func<ItemStack, Transform> buildOutputItemLabel;
     private Func<ItemType, Transform> buildMachineLabel;
 
-    private RecipeDisplay(Transform transform, Recipe recipe, Func<ItemStack, Transform> buildItemLabel, Func<ItemType, Transform> buildMachineLabel)
+    private RecipeDisplay(Transform transform,
+                          Recipe recipe,
+                          Func<ItemStack, Transform> buildInputItemLabel,
+                          Func<ItemStack, Transform> buildOutputItemLabel,
+                          Func<ItemType, Transform> buildMachineLabel)
     {
         this.transform = transform;
         this.recipe = recipe;
-        this.buildItemLabel = buildItemLabel;
+        this.buildInputItemLabel = buildInputItemLabel;
+        this.buildOutputItemLabel = buildOutputItemLabel;
         this.buildMachineLabel = buildMachineLabel;
     }
 
-    public static RecipeDisplay Create(Transform parent, Recipe recipe, Func<ItemStack, Transform> buildItemLabel, Func<ItemType, Transform> buildMachineLabel)
+    public static RecipeDisplay Create(Transform parent,
+                                       Recipe recipe,
+                                       Func<ItemStack, Transform> buildInputItemLabel,
+                                       Func<ItemStack, Transform> buildOutputItemLabel,
+                                       Func<ItemType, Transform> buildMachineLabel)
     {
         Transform transform = UnityEngine.Object.Instantiate(PrefabLoader.recipeDisplay, parent);
-        RecipeDisplay recipeDisplay = new RecipeDisplay(transform, recipe, buildItemLabel, buildMachineLabel);
+        RecipeDisplay recipeDisplay = new RecipeDisplay(transform, recipe, buildInputItemLabel, buildOutputItemLabel, buildMachineLabel);
         recipeDisplay.ShowRecipe();
         return recipeDisplay;
     }
@@ -35,14 +45,14 @@ public class RecipeDisplay
     private void ShowInputs()
     {
         ItemLabelGrid<ItemStack> inputGrid = new ItemLabelGrid<ItemStack>(transform.Find("Materials").Find("Inputs"));
-        inputGrid.SetCreateLabelFunc(buildItemLabel);
+        inputGrid.SetCreateLabelFunc(buildInputItemLabel);
         inputGrid.DisplayItems(recipe.GetInputs());
     }
 
     private void ShowOutputs()
     {
         ItemLabelGrid<ItemStack> outputGrid = new ItemLabelGrid<ItemStack>(transform.Find("Materials").Find("Outputs"));
-        outputGrid.SetCreateLabelFunc(buildItemLabel);
+        outputGrid.SetCreateLabelFunc(buildOutputItemLabel);
         outputGrid.DisplayItems(recipe.GetOutputs());
     }
 

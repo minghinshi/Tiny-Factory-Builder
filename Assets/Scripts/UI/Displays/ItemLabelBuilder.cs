@@ -44,6 +44,10 @@ public class ItemLabelBuilder
         Object.Instantiate(PrefabLoader.counter, result).GetComponent<Text>().text = itemCount.ToString("N0");
     }
 
+    public void SetTextColor(Color color) {
+        result.GetComponentInChildren<Text>().color = color;
+    }
+
     public Transform GetResult()
     {
         Transform result = this.result;
