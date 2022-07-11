@@ -32,8 +32,7 @@ public class TooltipBuilder : MonoBehaviour
     }
 
     private Transform CreateStockIndicator(ItemStack itemStack) {
-        ItemLabelDirector.BuildItemLabel(itemStack);
-        if (!PlayerInventory.inventory.Contains(itemStack)) ItemLabelDirector.builder.SetTextColor(new Color(231f / 255, 76f / 255, 60f / 255));
+        ItemLabelDirector.BuildStockIndicator(itemStack);
         return ItemLabelDirector.builder.GetResult();
     }
 
