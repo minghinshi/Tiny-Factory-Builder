@@ -9,7 +9,6 @@ public class Mouse : MonoBehaviour
     private Vector2 worldPosition;
     private Vector2Int gridPosition;
     private Building targetBuilding;
-    private Item targetItem;
     private bool hasTargetChanged;
 
     public delegate void TargetChangedHandler();
@@ -32,45 +31,11 @@ public class Mouse : MonoBehaviour
         if (hasTargetChanged && IsPointingAtWorld()) TargetChanged?.Invoke();
     }
 
-    public Vector2 GetWorldPosition()
-    {
-        return worldPosition;
-    }
-
-    public Vector2Int GetGridPosition()
-    {
-        return gridPosition;
-    }
-
-    public Building GetTargetBuilding()
-    {
-        return targetBuilding;
-    }
-
-    public Item GetTargetItem()
-    {
-        return targetItem;
-    }
-
-    public bool IsPointingAtWorld()
-    {
-        return !EventSystem.current.IsPointerOverGameObject();
-    }
-
-    public bool IsPointingAtBuilding()
-    {
-        return IsPointingAtWorld() && targetBuilding != null;
-    }
-
-    public bool IsPointingAtItem()
-    {
-        return IsPointingAtWorld() && targetItem != null;
-    }
-
-    public bool IsPointingAtSomething()
-    {
-        return IsPointingAtBuilding() || IsPointingAtItem();
-    }
+    public Vector2 GetWorldPosition() => worldPosition;
+    public Vector2Int GetGridPosition() => gridPosition;
+    public Building GetTargetBuilding() => targetBuilding;
+    public bool IsPointingAtWorld() => !EventSystem.current.IsPointerOverGameObject();
+    public bool IsPointingAtBuilding() => IsPointingAtWorld() && targetBuilding != null;
 
     private void UpdateProperties()
     {
@@ -78,7 +43,6 @@ public class Mouse : MonoBehaviour
         UpdateWorldPosition();
         UpdateGridPosition();
         UpdateTargetBuilding();
-        UpdateTargetItem();
     }
 
     private void UpdateWorldPosition()
@@ -88,7 +52,7 @@ public class Mouse : MonoBehaviour
 
     private void UpdateGridPosition()
     {
-        Vector2Int newGridPosition = Grids.buildingGrid.GetGridPosition(worldPosition);
+        Vector2Int newGridPosition = Grids.grid.GetGridPosition(worldPosition);
         if (!newGridPosition.Equals(gridPosition))
         {
             gridPosition = newGridPosition;
@@ -98,7 +62,7 @@ public class Mouse : MonoBehaviour
 
     private void UpdateTargetBuilding()
     {
-        Building newTarget = GetTarget(Grids.buildingGrid);
+        Building newTarget = Grids.grid.GetBuildingAt(gridPosition);
         if (newTarget != targetBuilding)
         {
             targetBuilding = newTarget;
@@ -106,30 +70,14 @@ public class Mouse : MonoBehaviour
         }
     }
 
-    private void UpdateTargetItem()
-    {
-        Item newTarget = GetTarget(Grids.itemGrid);
-        if (newTarget != targetItem)
-        {
-            targetItem = newTarget;
-            hasTargetChanged = true;
-        }
-    }
-
-    private T GetTarget<T>(GridSystem<T> targetGrid) where T : CellObject
-    {
-        return targetGrid.GetCellObjectAt(gridPosition);
-    }
-
     private void UpdateTooltip()
     {
-        if (IsPointingAtSomething()) tooltip.ShowTooltip(BuildTooltip);
+        if (IsPointingAtBuilding()) tooltip.ShowTooltip(BuildTooltip);
         else tooltip.HideTooltip();
     }
 
     private void BuildTooltip()
     {
         if (IsPointingAtBuilding()) tooltip.BuildBuildingTooltip(GetTargetBuilding());
-        if (IsPointingAtItem()) tooltip.BuildItemTooltip(GetTargetItem());
     }
 }

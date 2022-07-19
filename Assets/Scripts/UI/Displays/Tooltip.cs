@@ -43,11 +43,6 @@ public class Tooltip : MonoBehaviour
         if (building is Producer producer) BuildInventoryTooltip(producer.GetOutputInventory(), "Outputs");
     }
 
-    public void BuildItemTooltip(Item item)
-    {
-        tooltipBuilder.AddText("Contains: " + item.GetItemType().GetName());
-    }
-
     private void BuildInventoryTooltip(Inventory inventory, string inventoryName)
     {
         tooltipBuilder.AddText(inventoryName + ":");

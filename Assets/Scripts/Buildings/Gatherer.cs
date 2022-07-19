@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class Gatherer : Producer
 {
@@ -9,7 +10,12 @@ public class Gatherer : Producer
         producedItem = gathererType.producedItem;
     }
 
-    public override void Insert(ItemStack itemStack) { }
+    public override bool CanInsert() => false;
+
+    public override void Insert(ItemStack itemStack)
+    {
+        throw new InvalidOperationException();
+    }
 
     protected override Timer GetNewTimer()
     {

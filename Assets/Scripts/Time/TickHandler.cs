@@ -1,16 +1,16 @@
 using UnityEngine;
 
-public delegate void Tick();
+public delegate void TickEventHandler();
 public class TickHandler : MonoBehaviour
 {
     public static TickHandler instance;
 
     private Timer conveyorTimer;
 
-    public event Tick TickItems;
-    public event Tick TickConveyors;
-    public event Tick TickTimers;
-    public event Tick TickMachines;
+    public event TickEventHandler PretickConveyors;
+    public event TickEventHandler TickConveyors;
+    public event TickEventHandler TickTimers;
+    public event TickEventHandler TickMachines;
 
     private void Awake()
     {
@@ -25,13 +25,13 @@ public class TickHandler : MonoBehaviour
 
     private void FixedUpdate()
     {
-        TickItems?.Invoke();
         TickTimers?.Invoke();
         TickMachines?.Invoke();
     }
 
     private void OnConveyorTimerEnded()
     {
+        PretickConveyors?.Invoke();
         TickConveyors?.Invoke();
         conveyorTimer.Reset();
     }

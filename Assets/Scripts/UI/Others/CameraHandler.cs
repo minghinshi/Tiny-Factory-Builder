@@ -6,17 +6,17 @@ public class CameraHandler : MonoBehaviour
     [SerializeField] private float zoomVelocity;
     [SerializeField] private float maxZoomSize;
     [SerializeField] private float minZoomSize;
-    private Camera camera;
+    private Camera target;
 
     // Start is called before the first frame update
     void Start()
     {
-        camera = GetComponent<Camera>();
+        target = GetComponent<Camera>();
     }
 
     float GetMovementVelocity()
     {
-        return Time.deltaTime * movementVelocityFactor * camera.orthographicSize;
+        return Time.deltaTime * movementVelocityFactor * target.orthographicSize;
     }
 
     // Update is called once per frame
@@ -41,8 +41,8 @@ public class CameraHandler : MonoBehaviour
     private void ZoomCamera()
     {
         if (Input.mouseScrollDelta.y < 0)
-            camera.orthographicSize = Mathf.Min(camera.orthographicSize * zoomVelocity, maxZoomSize);
+            target.orthographicSize = Mathf.Min(target.orthographicSize * zoomVelocity, maxZoomSize);
         if (Input.mouseScrollDelta.y > 0)
-            camera.orthographicSize = Mathf.Max(camera.orthographicSize / zoomVelocity, minZoomSize);
+            target.orthographicSize = Mathf.Max(target.orthographicSize / zoomVelocity, minZoomSize);
     }
 }

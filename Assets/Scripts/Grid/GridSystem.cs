@@ -1,27 +1,27 @@
 using System.Collections.Generic;
 using UnityEngine;
-public class GridSystem<TCellObject> where TCellObject : CellObject
+public class GridSystem
 {
     private Vector2Int size;
     private float cellSize;
-    private Cell<TCellObject>[,] gridOfCells;
+    private Cell[,] gridOfCells;
 
-    public GridSystem(int width, int height, float cellSize, bool startBlocked)
+    public GridSystem(int width, int height, float cellSize)
     {
         size = new Vector2Int(width, height);
         this.cellSize = cellSize;
-        gridOfCells = new Cell<TCellObject>[width, height];
-        CreateGridOfCells(width, height, startBlocked);
+        gridOfCells = new Cell[width, height];
+        CreateGridOfCells(width, height);
     }
 
-    private void CreateGridOfCells(int width, int height, bool startBlocked)
+    private void CreateGridOfCells(int width, int height)
     {
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
                 Vector2Int gridPosition = new Vector2Int(i, j);
-                gridOfCells[i, j] = new Cell<TCellObject>(gridPosition, GetCentreWorldPosition(gridPosition), startBlocked);
+                gridOfCells[i, j] = new Cell(gridPosition, GetCentreWorldPosition(gridPosition));
             }
         }
     }
@@ -48,16 +48,16 @@ public class GridSystem<TCellObject> where TCellObject : CellObject
         return new Vector3((gridPosition.x + 0.5f * size.x) * cellSize, (gridPosition.y + 0.5f * size.y) * cellSize);
     }
 
-    public Cell<TCellObject> GetCellAt(Vector2Int gridPosition)
+    public Cell GetCellAt(Vector2Int gridPosition)
     {
         return gridOfCells[gridPosition.x, gridPosition.y];
     }
 
-    public List<Cell<TCellObject>> GetCellsInCellObject(TCellObject cellObject)
+    public List<Cell> GetCellsInBuilding(Building building)
     {
-        List<Cell<TCellObject>> cells = new List<Cell<TCellObject>>();
-        Vector2Int size = cellObject.GetSize();
-        Vector2Int gridPosition = cellObject.GetGridPosition();
+        List<Cell> cells = new List<Cell>();
+        Vector2Int size = building.GetSize();
+        Vector2Int gridPosition = building.GetGridPosition();
         for (int i = gridPosition.x; i < gridPosition.x + size.x; i++)
             for (int j = gridPosition.y; j < gridPosition.y + size.y; j++)
                 cells.Add(gridOfCells[i, j]);
@@ -93,33 +93,32 @@ public class GridSystem<TCellObject> where TCellObject : CellObject
         return true;
     }
 
-    public void OccupyCells(TCellObject cellObject)
+    public void OccupyCells(Building building)
     {
-        GetCellsInCellObject(cellObject).ForEach(cell => cell.TryInsert(cellObject));
+        GetCellsInBuilding(building).ForEach(cell => cell.OccupyWith(building));
     }
 
-    public TCellObject GetCellObjectAt(Vector2Int gridPosition)
+    public Building GetBuildingAt(Vector2Int gridPosition)
     {
         if (!IsWithinBounds(gridPosition)) return null;
-        return GetCellAt(gridPosition).GetContainedObject();
+        return GetCellAt(gridPosition).GetContainedBuilding();
     }
 
-    public TCellObject GetCellObjectAt(Vector3 worldPosition)
+    public Building GetBuildingAt(Vector3 worldPosition)
     {
-        return GetCellObjectAt(GetGridPosition(worldPosition));
+        return GetBuildingAt(GetGridPosition(worldPosition));
     }
 
-    public void TryDestroyCellObject(Vector2Int gridPosition)
+    public void DestroyBuildingAt(Vector2Int gridPosition)
     {
-        TCellObject cellObject = GetCellObjectAt(gridPosition);
-        if (cellObject != null) DestroyCellObject(cellObject);
+        Building building = GetBuildingAt(gridPosition);
+        if (building != null) DestroyBuilding(building);
     }
 
-    private void DestroyCellObject(TCellObject cellObject)
+    private void DestroyBuilding(Building building)
     {
-        foreach (Cell<TCellObject> cell in GetCellsInCellObject(cellObject))
-            cell.EmptyCell();
-        cellObject.Destroy();
+        foreach (Cell cell in GetCellsInBuilding(building)) cell.Empty();
+        building.Destroy();
         AudioHandler.instance.PlayDestroy();
     }
 }

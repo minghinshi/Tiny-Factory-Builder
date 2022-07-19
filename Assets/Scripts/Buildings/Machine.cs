@@ -1,18 +1,14 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Machine : Producer
 {
     private readonly MachineType machineType;
     private Inventory inputInventory = new Inventory();
-    private List<Cell<Item>> inputCells = new List<Cell<Item>>();
     private Recipe currentRecipe;
 
     public Machine(Vector2Int gridPosition, Direction direction, MachineType machineType) : base(gridPosition, direction, machineType)
     {
         this.machineType = machineType;
-        SetInputCells(machineType.GetInputPositions());
-        ConnectInputCells();
         inputInventory.Updated += OnInputInventoryUpdated;
     }
 
@@ -24,16 +20,12 @@ public class Machine : Producer
 
     public override void Destroy()
     {
-        DisconnectInputCells();
         inputInventory.TransferTo(PlayerInventory.inventory);
         base.Destroy();
     }
 
-    public override void Insert(ItemStack itemStack)
-    {
-        inputInventory.StoreCopyOf(itemStack);
-        PlayerInventory.inventory.RemoveCopyOf(itemStack);
-    }
+    public override bool CanInsert() => true;
+    public override void Insert(ItemStack itemStack) => inputInventory.StoreCopyOf(itemStack);
 
     public Inventory GetInputInventory()
     {
@@ -62,45 +54,6 @@ public class Machine : Producer
         currentRecipe = GetCraftableRecipe();
         if (currentRecipe == null) timer.Pause();
         else timer.Resume();
-    }
-
-    private void SetInputCells(List<Vector2Int> relativePositions)
-    {
-        inputCells = RelativePositionsToCells(relativePositions);
-    }
-
-    private void ConnectInputCells()
-    {
-        inputCells.ForEach(x => ConnectInputCell(x));
-    }
-
-    private void ConnectInputCell(Cell<Item> inputCell)
-    {
-        inputCell.CellOccupied += OnInputCellOccupied;
-        inputCell.UnblockCell();
-    }
-
-    private void DisconnectInputCells()
-    {
-        inputCells.ForEach(x => DisconnectInputCell(x));
-    }
-
-    private void DisconnectInputCell(Cell<Item> inputCell)
-    {
-        inputCell.CellOccupied -= OnInputCellOccupied;
-        inputCell.BlockCell();
-    }
-
-    private void OnInputCellOccupied(Cell<Item> itemCell)
-    {
-        StoreInput(itemCell);
-    }
-
-    private void StoreInput(Cell<Item> itemCell)
-    {
-        ItemType item = itemCell.GetContainedObject().GetItemType();
-        inputInventory.Store(item, 1);
-        itemCell.DestroyCellObject();
     }
 
     private bool CanProcess()

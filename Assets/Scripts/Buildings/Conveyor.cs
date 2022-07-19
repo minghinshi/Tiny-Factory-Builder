@@ -3,16 +3,33 @@ using UnityEngine;
 
 public class Conveyor : Building
 {
-    //TODO: Conveyor Optimization
-    private Cell<Item> itemCellAbove;
-    private List<Cell<Item>> outputCells;
+    private ItemType storedItem;
+    private SpriteRenderer itemRenderer;
+
+    private List<Cell> inputCells;
+    private List<Cell> outputCells;
+
     private int currentOutput = 0;
+    private bool itemInsertedThisTick = false;
 
     public Conveyor(Vector2Int gridPosition, Direction direction, ConveyorType conveyorType) : base(gridPosition, direction, conveyorType)
     {
-        SetItemCellAbove();
+        SetInputCells(conveyorType.GetInputPositions());
         SetOutputCells(conveyorType.GetOutputPositions());
-        TickHandler.instance.TickConveyors += MoveItem;
+        CreateItemRenderer();
+        ConnectEvents();
+    }
+
+    public override void OnClick() { }
+    public override bool CanInsert() => storedItem == null;
+    public override bool CanInsertByPlayer() => false;
+    public override bool CanExtract() => false;
+    public override ItemStack Extract() => throw new System.InvalidOperationException();
+
+    public override void Insert(ItemStack itemStack)
+    {
+        SetStoredItem(itemStack.GetItemType());
+        itemInsertedThisTick = true;
     }
 
     public override void Destroy()
@@ -21,18 +38,9 @@ public class Conveyor : Building
         base.Destroy();
     }
 
-    public override void OnClick()
+    private void SetInputCells(List<Vector2Int> relativePositions)
     {
-        StoreItemAbove();
-    }
-
-    public override void Insert(ItemStack itemStack)
-    {
-        if (itemCellAbove.CanInsert() && !itemStack.IsEmpty())
-        {
-            _ = new Item(itemCellAbove, itemStack.GetItemType());
-            PlayerInventory.inventory.Remove(itemStack.GetItemType(), 1);
-        }
+        inputCells = RelativePositionsToCells(relativePositions);
     }
 
     private void SetOutputCells(List<Vector2Int> relativePositions)
@@ -40,29 +48,87 @@ public class Conveyor : Building
         outputCells = RelativePositionsToCells(relativePositions);
     }
 
-    private void SetItemCellAbove()
+    private void CreateItemRenderer()
     {
-        itemCellAbove = Grids.itemGrid.GetCellAt(gridPosition);
-        itemCellAbove.UnblockCell();
+        Transform rendererTransform = new GameObject("ItemDisplay", typeof(SpriteRenderer)).transform;
+        rendererTransform.SetParent(transform);
+        rendererTransform.position = transform.position;
+        itemRenderer = rendererTransform.GetComponent<SpriteRenderer>();
+        itemRenderer.sortingOrder = 1;
+    }
+
+    private void SetStoredItem(ItemType item)
+    {
+        storedItem = item;
+        itemRenderer.sprite = item.GetSprite();
+    }
+
+    private void RemoveStoredItem()
+    {
+        storedItem = null;
+        itemRenderer.sprite = null;
+    }
+
+    private void OnPretick()
+    {
+        itemInsertedThisTick = false;
     }
 
     private void MoveItem()
     {
-        itemCellAbove.TryMoveCellObjectTo(outputCells[currentOutput]);
+        if (!itemInsertedThisTick) DoInsertCycle();
+        DoExtractCycle();
+    }
+
+    private void DoInsertCycle()
+    {
+        Building target = outputCells[currentOutput].GetContainedBuilding();
+        if (storedItem != null && target != null && target.CanInsert()) InsertTo(target);
+        SetNextOutput();
+    }
+
+    private void InsertTo(Building target)
+    {
+        target.Insert(new ItemStack(storedItem, 1));
+        RemoveStoredItem();
+    }
+
+    private void SetNextOutput()
+    {
         currentOutput = (currentOutput + 1) % outputCells.Count;
+    }
+
+    private void DoExtractCycle()
+    {
+        inputCells.ForEach(CheckInputCell);
+    }
+
+    private void CheckInputCell(Cell inputCell)
+    {
+        Building target = inputCell.GetContainedBuilding();
+        if (storedItem == null && target != null && target.CanExtract()) ExtractFrom(target);
+    }
+
+    private void ExtractFrom(Building target)
+    {
+        SetStoredItem(target.Extract().GetItemType());
     }
 
     private void DestroyConveyor()
     {
-        itemCellAbove.BlockCell();
-        StoreItemAbove();
-        TickHandler.instance.TickConveyors -= MoveItem;
+        if (storedItem) PlayerInventory.inventory.Store(storedItem, 1);
+        DisconnectEvents();
     }
 
-    private void StoreItemAbove()
+    private void ConnectEvents()
     {
-        if (itemCellAbove.GetContainedObject() != null)
-            PlayerInventory.inventory.Store(itemCellAbove.GetContainedObject().GetItemType(), 1);
-        itemCellAbove.DestroyCellObject();
+        TickHandler.instance.TickConveyors += MoveItem;
+        TickHandler.instance.PretickConveyors += OnPretick;
+    }
+
+    private void DisconnectEvents()
+    {
+        TickHandler.instance.TickConveyors -= MoveItem;
+        TickHandler.instance.TickConveyors -= OnPretick;
     }
 }

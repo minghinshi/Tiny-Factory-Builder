@@ -13,6 +13,6 @@ public abstract class Placement
 
     protected virtual void DestroyBuilding()
     {
-        Grids.buildingGrid.TryDestroyCellObject(Mouse.instance.GetGridPosition());
+        Grids.grid.DestroyBuildingAt(Mouse.instance.GetGridPosition());
     }
 }

@@ -22,7 +22,7 @@ public class ItemPlacement : Placement
 
     public override void Destroy()
     {
-        UnityEngine.Object.Destroy(previewTransform.gameObject);
+        Object.Destroy(previewTransform.gameObject);
     }
 
     public override ItemType GetItemType()
@@ -43,7 +43,13 @@ public class ItemPlacement : Placement
 
     private void PlaceItem()
     {
-        Mouse.instance.GetTargetBuilding()?.Insert(new ItemStack(itemType, GetItemCount()));
+        Building target = Mouse.instance.GetTargetBuilding();
+        if (target != null && target.CanInsertByPlayer())
+        {
+            ItemStack itemToPlace = new ItemStack(itemType, GetItemCount());
+            target.Insert(itemToPlace);
+            PlayerInventory.inventory.RemoveCopyOf(itemToPlace);
+        }
     }
 
     private int GetItemCount()

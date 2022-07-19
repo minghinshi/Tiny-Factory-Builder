@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Building : CellObject
+public abstract class Building
 {
+    protected Vector2Int gridPosition;
     protected Direction direction;
+    protected Transform transform;
     protected BuildingType buildingType;
 
     public Building(Vector2Int gridPosition, Direction direction, BuildingType buildingType)
@@ -15,17 +17,20 @@ public abstract class Building : CellObject
     }
 
     public abstract void OnClick();
+    public abstract bool CanInsert();
+    public virtual bool CanInsertByPlayer() => CanInsert();
+    public abstract bool CanExtract();
     public abstract void Insert(ItemStack itemStack);
+    public abstract ItemStack Extract();
 
-    public override Vector2Int GetSize()
+    public Vector2Int GetGridPosition()
     {
-        return buildingType.GetTransformedSize(direction);
+        return gridPosition;
     }
 
-    public override void Destroy()
+    public Vector2Int GetSize()
     {
-        PlayerInventory.inventory.Store(buildingType, 1);
-        Object.Destroy(transform.gameObject);
+        return buildingType.GetTransformedSize(direction);
     }
 
     public BuildingType GetBuildingType()
@@ -33,31 +38,35 @@ public abstract class Building : CellObject
         return buildingType;
     }
 
-    protected Cell<Item> RelativePositionToCell(Vector2Int relativePosition)
+    public virtual void Destroy()
     {
-        return Grids.itemGrid.GetCellAt(RelativeToAbsolute(relativePosition));
+        PlayerInventory.inventory.Store(buildingType, 1);
+        Object.Destroy(transform.gameObject);
     }
 
-    protected List<Cell<Item>> RelativePositionsToCells(List<Vector2Int> relativePositions)
+    protected Cell RelativePositionToCell(Vector2Int relativePosition)
+    {
+        return Grids.grid.GetCellAt(RelativeToAbsolute(relativePosition));
+    }
+
+    protected List<Cell> RelativePositionsToCells(List<Vector2Int> relativePositions)
     {
         return relativePositions.ConvertAll(x => RelativePositionToCell(x));
     }
 
     private Vector2Int RelativeToAbsolute(Vector2Int relativePosition)
     {
-        Vector2Int actualOffset = direction.RotateVector(relativePosition);
-        switch (direction)
+        return gridPosition + direction.RotateVector(relativePosition) + GetDirectionalOffset();
+    }
+
+    private Vector2Int GetDirectionalOffset() {
+        return direction switch
         {
-            case Direction.East:
-                actualOffset.y += buildingType.GetSize().x - 1;
-                break;
-            case Direction.South:
-                actualOffset += buildingType.GetSize() - new Vector2Int(1, 1);
-                break;
-            case Direction.West:
-                actualOffset.x += buildingType.GetSize().y - 1;
-                break;
-        }
-        return gridPosition + actualOffset;
+            Direction.North => Vector2Int.zero,
+            Direction.East => Vector2Int.up * (buildingType.GetSize().x - 1),
+            Direction.South => buildingType.GetSize() - new Vector2Int(1, 1),
+            Direction.West => Vector2Int.right * (buildingType.GetSize().y - 1),
+            _ => throw new System.Exception("Invalid direction."),
+        };
     }
 }

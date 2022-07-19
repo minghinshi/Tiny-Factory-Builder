@@ -35,12 +35,10 @@ public class Inventory
 
     public void Remove(ItemType itemType, int count)
     {
-        if (count > GetItemCount(itemType))
-            throw new InvalidOperationException();
+        if (count > GetItemCount(itemType)) throw new InvalidOperationException();
         ItemStack itemStack = GetItemStack(itemType);
         itemStack.Remove(count);
-        if (itemStack.GetCount() == 0)
-            RemoveItemStack(itemStack);
+        if (itemStack.GetCount() == 0) RemoveItemStack(itemStack);
         NotifyUpdate();
     }
 
