@@ -39,7 +39,6 @@ public abstract class Producer : Building
     }
 
     protected abstract Timer GetNewTimer();
-
     protected abstract void StoreOutputs();
 
     private void OnTimerEnded()

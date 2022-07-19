@@ -33,7 +33,7 @@ public class Cell
         containedBuilding = building;
     }
 
-    public void Empty() 
+    public void Empty()
     {
         containedBuilding = null;
     }

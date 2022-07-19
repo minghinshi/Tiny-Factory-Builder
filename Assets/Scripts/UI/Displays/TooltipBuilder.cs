@@ -31,7 +31,8 @@ public class TooltipBuilder : MonoBehaviour
         return ItemLabelDirector.builder.GetResult();
     }
 
-    private Transform CreateStockIndicator(ItemStack itemStack) {
+    private Transform CreateStockIndicator(ItemStack itemStack)
+    {
         ItemLabelDirector.BuildStockIndicator(itemStack);
         return ItemLabelDirector.builder.GetResult();
     }

@@ -36,7 +36,8 @@ public class ItemLabelDirector
         if (!PlayerInventory.inventory.Contains(itemStack)) builder.SetTextColor(red);
     }
 
-    public static void BuildCraftingButton(Recipe recipe, UnityAction craftingAction) {
+    public static void BuildCraftingButton(Recipe recipe, UnityAction craftingAction)
+    {
         BuildItemButton(recipe.GetOutputs()[0].GetItemType(), craftingAction, () => Tooltip.instance.ShowTooltip(() => Tooltip.instance.BuildCraftingTooltip(recipe)));
         AddHoverTooltip(() => Tooltip.instance.BuildCraftingTooltip(recipe));
     }

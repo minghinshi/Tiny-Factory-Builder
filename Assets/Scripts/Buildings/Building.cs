@@ -59,7 +59,8 @@ public abstract class Building
         return gridPosition + direction.RotateVector(relativePosition) + GetDirectionalOffset();
     }
 
-    private Vector2Int GetDirectionalOffset() {
+    private Vector2Int GetDirectionalOffset()
+    {
         return direction switch
         {
             Direction.North => Vector2Int.zero,
