@@ -48,6 +48,7 @@ public abstract class BuildingType : ItemType
         Transform transform = CreateTransform();
         InitializeSpriteRenderer(transform.GetComponent<SpriteRenderer>(), 0);
         transform.SetPositionAndRotation(GetWorldPosition(gridPosition, direction), direction.GetRotationQuaternion());
+        transform.SetParent(ObjectFinder.worldTransform);
         transform.localScale = new Vector3(size.x, size.y, 1);
         return transform;
     }

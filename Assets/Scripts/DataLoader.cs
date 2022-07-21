@@ -19,3 +19,8 @@ public class PrefabLoader
     public static readonly Transform inventoryDisplay = ((GameObject)Resources.Load("Prefabs/Displays/InventoryDisplay")).transform;
     public static readonly Transform recipeDisplay = ((GameObject)Resources.Load("Prefabs/Displays/RecipeDisplay")).transform;
 }
+
+public class ObjectFinder
+{
+    public static readonly Transform worldTransform = GameObject.Find("WorldCanvas").transform;
+}

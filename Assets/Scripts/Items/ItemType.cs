@@ -26,7 +26,7 @@ public class ItemType : ScriptableObject, IDisplayableAsItem
 
     protected Transform CreateTransform()
     {
-        return new GameObject(itemName, typeof(SpriteRenderer)).transform;
+        return new GameObject(itemName, typeof(SpriteRenderer), typeof(RectTransform)).transform;
     }
 
     protected void InitializeSpriteRenderer(SpriteRenderer spriteRenderer, int sortingOrder)
