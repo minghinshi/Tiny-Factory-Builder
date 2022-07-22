@@ -1798,8 +1798,6 @@ MonoBehaviour:
     count: 1
   - itemType: {fileID: 11400000, guid: bc5e09915d580d64cb938183367681cf, type: 2}
     count: 1
-  - itemType: {fileID: 11400000, guid: 8ba1ab404439a4d49a6d68871d145af4, type: 2}
-    count: 999
   visibilityHandler: {fileID: 1008683271}
   panelSwitcher: {fileID: 1906871376}
 --- !u!1 &1713406302

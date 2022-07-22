@@ -18,6 +18,7 @@ public class PrefabLoader
     public static readonly Transform tooltipText = ((GameObject)Resources.Load("Prefabs/Displays/Text")).transform;
     public static readonly Transform inventoryDisplay = ((GameObject)Resources.Load("Prefabs/Displays/InventoryDisplay")).transform;
     public static readonly Transform recipeDisplay = ((GameObject)Resources.Load("Prefabs/Displays/RecipeDisplay")).transform;
+    public static readonly Transform progressBar = ((GameObject)Resources.Load("Prefabs/Displays/ProgressSlider")).transform;
 }
 
 public class ObjectFinder

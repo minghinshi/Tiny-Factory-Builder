@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Producer : Building
 {
@@ -9,6 +10,7 @@ public abstract class Producer : Building
     {
         timer = GetNewTimer();
         timer.TimerEnded += OnTimerEnded;
+        AddProgressBar();
     }
 
     public override void Destroy()
@@ -31,6 +33,12 @@ public abstract class Producer : Building
         ItemStack itemStack = new ItemStack(outputInventory.GetFirstItemType(), 1);
         outputInventory.RemoveCopyOf(itemStack);
         return itemStack;
+    }
+
+    public void AddProgressBar()
+    {
+        Transform progressBar = Object.Instantiate(PrefabLoader.progressBar, transform);
+        timer.SetSlider(progressBar.GetComponent<Slider>());
     }
 
     public Inventory GetOutputInventory()
