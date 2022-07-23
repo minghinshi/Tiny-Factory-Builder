@@ -6,9 +6,11 @@ public class RecipeViewer : MonoBehaviour
     public static RecipeViewer instance;
 
     [SerializeField] private Transform itemPage, recipePage;
-    [SerializeField] private PanelSwitcher panelSwitcher;
+    [SerializeField] private PanelSwitcher tabSwitcher, panelSwitcher;
     [SerializeField] private Button returnButton;
-    [SerializeField] private Text headerText;
+    [SerializeField] private Text headerText, returnText;
+
+    private bool isShowingRecipe = false;
 
     private void Awake()
     {
@@ -18,7 +20,6 @@ public class RecipeViewer : MonoBehaviour
     private void Start()
     {
         CreateButtons();
-        returnButton.onClick.AddListener(ShowItemPage);
     }
 
     public void ViewRecipes(ItemType itemType)
@@ -26,6 +27,12 @@ public class RecipeViewer : MonoBehaviour
         ShowRecipePage(itemType);
         ClearRecipePage();
         Finder.FindRecipes(itemType).ForEach(CreateRecipeDisplay);
+    }
+
+    public void OnReturn()
+    {
+        if (isShowingRecipe) ShowItemPage();
+        else ClosePanel();
     }
 
     private void CreateRecipeDisplay(Recipe recipe)
@@ -58,8 +65,10 @@ public class RecipeViewer : MonoBehaviour
 
     private void ShowItemPage()
     {
-        panelSwitcher.SwitchPanel(itemPage.GetComponent<VisibilityHandler>());
+        tabSwitcher.SwitchPanel(itemPage.GetComponent<VisibilityHandler>());
         headerText.text = "Recipes";
+        returnText.text = "Close";
+        isShowingRecipe = false;
     }
 
     private void ClearRecipePage()
@@ -69,7 +78,14 @@ public class RecipeViewer : MonoBehaviour
 
     private void ShowRecipePage(ItemType itemType)
     {
-        panelSwitcher.SwitchPanel(recipePage.GetComponent<VisibilityHandler>());
+        tabSwitcher.SwitchPanel(recipePage.GetComponent<VisibilityHandler>());
         headerText.text = "Recipes > " + itemType.GetName();
+        returnText.text = "Back";
+        isShowingRecipe = true;
+    }
+
+    private void ClosePanel()
+    {
+        panelSwitcher.TogglePanel(GetComponent<VisibilityHandler>());
     }
 }
