@@ -181,8 +181,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 4f63728c777a65e4caf037f9ec9de83a, type: 3}
-    m_FontSize: 28
+    m_Font: {fileID: 12800000, guid: 79754a24cc4cfb54fa5d4ec659ee2674, type: 3}
+    m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -526,8 +526,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 4f63728c777a65e4caf037f9ec9de83a, type: 3}
-    m_FontSize: 28
+    m_Font: {fileID: 12800000, guid: 79754a24cc4cfb54fa5d4ec659ee2674, type: 3}
+    m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -731,8 +731,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 4f63728c777a65e4caf037f9ec9de83a, type: 3}
-    m_FontSize: 40
+    m_Font: {fileID: 12800000, guid: 79754a24cc4cfb54fa5d4ec659ee2674, type: 3}
+    m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -810,8 +810,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 4f63728c777a65e4caf037f9ec9de83a, type: 3}
-    m_FontSize: 28
+    m_Font: {fileID: 12800000, guid: 79754a24cc4cfb54fa5d4ec659ee2674, type: 3}
+    m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -1655,8 +1655,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 4f63728c777a65e4caf037f9ec9de83a, type: 3}
-    m_FontSize: 40
+    m_Font: {fileID: 12800000, guid: 79754a24cc4cfb54fa5d4ec659ee2674, type: 3}
+    m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -2317,8 +2317,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 4f63728c777a65e4caf037f9ec9de83a, type: 3}
-    m_FontSize: 40
+    m_Font: {fileID: 12800000, guid: 79754a24cc4cfb54fa5d4ec659ee2674, type: 3}
+    m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
