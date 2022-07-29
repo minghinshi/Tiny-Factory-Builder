@@ -1,62 +1,39 @@
 using System;
 using UnityEngine;
 
-//TODO: reduce code duplication (though I have no idea how)
 public class RecipeDisplay
 {
     private readonly Transform transform;
     private readonly Recipe recipe;
-    private Func<ItemStack, Transform> buildInputItemLabel;
-    private Func<ItemStack, Transform> buildOutputItemLabel;
-    private Func<ItemType, Transform> buildMachineLabel;
 
-    private RecipeDisplay(Transform transform,
-                          Recipe recipe,
-                          Func<ItemStack, Transform> buildInputItemLabel,
-                          Func<ItemStack, Transform> buildOutputItemLabel,
-                          Func<ItemType, Transform> buildMachineLabel)
+    private RecipeDisplay(Transform transform, Recipe recipe)
     {
         this.transform = transform;
         this.recipe = recipe;
-        this.buildInputItemLabel = buildInputItemLabel;
-        this.buildOutputItemLabel = buildOutputItemLabel;
-        this.buildMachineLabel = buildMachineLabel;
     }
 
-    public static RecipeDisplay Create(Transform parent,
-                                       Recipe recipe,
-                                       Func<ItemStack, Transform> buildInputItemLabel,
-                                       Func<ItemStack, Transform> buildOutputItemLabel,
-                                       Func<ItemType, Transform> buildMachineLabel)
+    public static RecipeDisplay Create(Transform parent, Recipe recipe)
     {
         Transform transform = UnityEngine.Object.Instantiate(PrefabLoader.recipeDisplay, parent);
-        RecipeDisplay recipeDisplay = new RecipeDisplay(transform, recipe, buildInputItemLabel, buildOutputItemLabel, buildMachineLabel);
-        recipeDisplay.ShowRecipe();
+        RecipeDisplay recipeDisplay = new RecipeDisplay(transform, recipe);
         return recipeDisplay;
     }
 
-    private void ShowRecipe()
-    {
-        ShowInputs();
-        ShowOutputs();
-        ShowMachines();
-    }
-
-    private void ShowInputs()
+    public void ShowInputs(Func<ItemStack, Transform> buildInputItemLabel)
     {
         ItemLabelGrid<ItemStack> inputGrid = new ItemLabelGrid<ItemStack>(transform.Find("Materials").Find("Inputs"));
         inputGrid.SetCreateLabelFunc(buildInputItemLabel);
         inputGrid.DisplayItems(recipe.GetInputs());
     }
 
-    private void ShowOutputs()
+    public void ShowOutputs(Func<ItemStack, Transform> buildOutputItemLabel)
     {
         ItemLabelGrid<ItemStack> outputGrid = new ItemLabelGrid<ItemStack>(transform.Find("Materials").Find("Outputs"));
         outputGrid.SetCreateLabelFunc(buildOutputItemLabel);
         outputGrid.DisplayItems(recipe.GetOutputs());
     }
 
-    private void ShowMachines()
+    public void ShowMachines(Func<ItemType, Transform> buildMachineLabel)
     {
         ItemLabelGrid<ItemType> machineGrid = new ItemLabelGrid<ItemType>(transform.Find("Machines"));
         machineGrid.SetCreateLabelFunc(buildMachineLabel);

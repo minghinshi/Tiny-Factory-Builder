@@ -49,6 +49,11 @@ public class ItemLabelBuilder
         result.GetComponentInChildren<Text>().color = color;
     }
 
+    public void SetScale(Vector2 scale)
+    {
+        result.localScale = new Vector3(scale.x, scale.y, 1);
+    }
+
     public Transform GetResult()
     {
         Transform result = this.result;

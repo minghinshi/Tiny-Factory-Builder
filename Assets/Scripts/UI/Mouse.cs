@@ -72,12 +72,7 @@ public class Mouse : MonoBehaviour
 
     private void UpdateTooltip()
     {
-        if (IsPointingAtBuilding()) tooltip.ShowTooltip(BuildTooltip);
+        if (IsPointingAtBuilding()) tooltip.ShowTooltip(new BuildingTooltipStrategy(targetBuilding));
         else tooltip.HideTooltip();
-    }
-
-    private void BuildTooltip()
-    {
-        if (IsPointingAtBuilding()) tooltip.BuildBuildingTooltip(GetTargetBuilding());
     }
 }

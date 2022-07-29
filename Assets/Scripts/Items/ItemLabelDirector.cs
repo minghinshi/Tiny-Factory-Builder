@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -38,13 +37,8 @@ public class ItemLabelDirector
 
     public static void BuildCraftingButton(Recipe recipe, UnityAction craftingAction)
     {
-        BuildItemButton(recipe.GetOutputs()[0].GetItemType(), craftingAction, () => Tooltip.instance.ShowTooltip(() => Tooltip.instance.BuildCraftingTooltip(recipe)));
-        AddHoverTooltip(() => Tooltip.instance.BuildCraftingTooltip(recipe));
-    }
-
-    public static void AddHoverTooltip(Action buildTooltipAction)
-    {
-        builder.AddPointerEnterAction(() => Tooltip.instance.ShowTooltip(buildTooltipAction));
+        BuildItemButton(recipe.GetOutputs()[0].GetItemType(), craftingAction);
+        builder.AddPointerEnterAction(() => Tooltip.instance.ShowTooltip(new CraftingTooltipStrategy(recipe)));
         builder.AddPointerExitAction(Tooltip.instance.HideTooltip);
     }
 }
