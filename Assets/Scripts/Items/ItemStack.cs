@@ -36,6 +36,11 @@ public class ItemStack : IDisplayableAsItem
         count -= amountToRemove;
     }
 
+    public ItemStack GetCopies(int multiplier)
+    {
+        return new ItemStack(itemType, count * multiplier);
+    }
+
     public bool IsEmpty()
     {
         return count == 0;
