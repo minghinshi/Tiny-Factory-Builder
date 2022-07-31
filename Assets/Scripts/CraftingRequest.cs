@@ -4,22 +4,34 @@ using System.Linq;
 public class CraftingRequest
 {
     private Recipe recipe;
-    private Inventory inputInventory;
+    private Inventory input;
+    private Inventory output;
 
-    public CraftingRequest(Recipe recipe, Inventory inputInventory)
+    public CraftingRequest(Recipe recipe, Inventory input, Inventory output)
     {
         this.recipe = recipe;
-        this.inputInventory = inputInventory;
+        this.input = input;
+        this.output = output;
+    }
+
+    public void SingleCraft()
+    {
+        Craft(GetSingleInput(), GetSingleOutput());
+    }
+
+    public void BatchCraft()
+    {
+        Craft(GetBatchInput(), GetBatchOutput());
     }
 
     public int GetMaximumCrafts()
     {
-        return GetSingleInput().ConvertAll(x => inputInventory.GetItemCount(x.GetItemType()) / x.GetCount()).Min();
+        return GetSingleInput().ConvertAll(x => input.GetItemCount(x.GetItemType()) / x.GetCount()).Min();
     }
 
     public bool CanCraft()
     {
-        return GetSingleInput().TrueForAll(x => inputInventory.Contains(x));
+        return GetSingleInput().TrueForAll(x => input.Contains(x));
     }
 
     public List<ItemStack> GetSingleInput()
@@ -52,6 +64,12 @@ public class CraftingRequest
         return GetInsufficientItems(GetNextBatchInput());
     }
 
+    private void Craft(List<ItemStack> inputs, List<ItemStack> outputs)
+    {
+        outputs.ForEach(x => output.StoreCopyOf(x));
+        inputs.ForEach(x => input.RemoveCopyOf(x));
+    }
+
     private List<ItemStack> GetNextBatchInput()
     {
         return GetBatchItemStacks(GetSingleInput(), GetMaximumCrafts() + 1);
@@ -64,6 +82,6 @@ public class CraftingRequest
 
     private List<ItemType> GetInsufficientItems(List<ItemStack> cost)
     {
-        return cost.FindAll(x => inputInventory.Contains(x)).ConvertAll(x => x.GetItemType());
+        return cost.FindAll(x => input.Contains(x)).ConvertAll(x => x.GetItemType());
     }
 }
