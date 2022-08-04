@@ -3,27 +3,34 @@ using UnityEngine;
 
 public class PlayerCrafting : MonoBehaviour
 {
-    private ItemLabelGrid<Recipe> itemDisplay;
-    private Inventory playerInventory = PlayerInventory.inventory;
     [SerializeField] private List<Recipe> craftingRecipes;
+
+    private ItemLabelGrid<Process> itemDisplay;
+    private Inventory playerInventory = PlayerInventory.inventory;
 
     private void Start()
     {
-        itemDisplay = new ItemLabelGrid<Recipe>(transform);
+        itemDisplay = new ItemLabelGrid<Process>(transform);
         itemDisplay.SetCreateLabelFunc(GenerateCraftingButton);
-        itemDisplay.DisplayItems(craftingRecipes);
+        itemDisplay.DisplayItems(GetProcesses());
     }
 
-    private Transform GenerateCraftingButton(Recipe recipe)
+    private Transform GenerateCraftingButton(Process process)
     {
-        ItemLabelDirector.BuildCraftingButton(recipe, () => Craft(recipe));
+        ItemLabelDirector.BuildCraftingButton(process, () => Craft(process));
         return ItemLabelDirector.builder.GetResult();
     }
 
-    private void Craft(Recipe recipe)
+    private void Craft(Process process)
     {
-        if (!recipe.CanCraft(playerInventory)) return;
-        if (Input.GetKey(KeyCode.LeftShift)) recipe.CraftAll(playerInventory, playerInventory);
-        else recipe.CraftOnce(playerInventory, playerInventory);
+        if (process.CanCraft())
+        {
+            if (Input.GetKey(KeyCode.LeftShift)) process.BatchCraft();
+            else process.CraftOnce();
+        }
+    }
+
+    private List<Process> GetProcesses() { 
+        return craftingRecipes.ConvertAll(x => new Process(x, playerInventory, playerInventory));
     }
 }

@@ -1,20 +1,20 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public class CraftingRequest
+public class Process
 {
-    private Recipe recipe;
-    private Inventory input;
-    private Inventory output;
+    private readonly Recipe recipe;
+    private readonly Inventory input;
+    private readonly Inventory output;
 
-    public CraftingRequest(Recipe recipe, Inventory input, Inventory output)
+    public Process(Recipe recipe, Inventory input, Inventory output)
     {
         this.recipe = recipe;
         this.input = input;
         this.output = output;
     }
 
-    public void SingleCraft()
+    public void CraftOnce()
     {
         Craft(GetSingleInput(), GetSingleOutput());
     }
@@ -82,6 +82,6 @@ public class CraftingRequest
 
     private List<ItemType> GetInsufficientItems(List<ItemStack> cost)
     {
-        return cost.FindAll(x => input.Contains(x)).ConvertAll(x => x.GetItemType());
+        return cost.FindAll(x => !input.Contains(x)).ConvertAll(x => x.GetItemType());
     }
 }

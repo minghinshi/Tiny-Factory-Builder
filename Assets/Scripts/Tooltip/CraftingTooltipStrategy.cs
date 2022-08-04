@@ -2,9 +2,12 @@ using UnityEngine;
 
 public class CraftingTooltipStrategy : TooltipStrategy
 {
-    private Recipe recipe;
+    private Process process;
 
-    public CraftingTooltipStrategy(Recipe recipe) => this.recipe = recipe;
+    public CraftingTooltipStrategy(Process process)
+    {
+        this.process = process;
+    }
 
     public override bool UpdatedThisFrame()
     {
@@ -13,6 +16,12 @@ public class CraftingTooltipStrategy : TooltipStrategy
 
     protected override void BuildTooltip()
     {
-        tooltipBuilder.AddSingleCraftDisplay(recipe);
+        if (ShowBatchCraft()) tooltipBuilder.AddBatchCraftDisplay(process);
+        else tooltipBuilder.AddSingleCraftDisplay(process);
+    }
+
+    private bool ShowBatchCraft()
+    {
+        return Input.GetKey(KeyCode.LeftShift) && process.CanCraft();
     }
 }

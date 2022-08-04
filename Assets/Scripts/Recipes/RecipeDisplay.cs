@@ -1,42 +1,45 @@
 using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class RecipeDisplay
 {
-    private readonly Transform transform;
-    private readonly Recipe recipe;
+    private readonly Transform inputTransform;
+    private readonly Transform outputTransform;
+    private readonly Transform machineTransform;
 
-    private RecipeDisplay(Transform transform, Recipe recipe)
+    private RecipeDisplay(Transform transform)
     {
-        this.transform = transform;
-        this.recipe = recipe;
+        inputTransform = transform.Find("Materials").Find("Inputs");
+        outputTransform = transform.Find("Materials").Find("Outputs");
+        machineTransform = transform.Find("Machines");
     }
 
-    public static RecipeDisplay Create(Transform parent, Recipe recipe)
+    public static RecipeDisplay Create(Transform parent)
     {
         Transform transform = UnityEngine.Object.Instantiate(PrefabLoader.recipeDisplay, parent);
-        RecipeDisplay recipeDisplay = new RecipeDisplay(transform, recipe);
+        RecipeDisplay recipeDisplay = new RecipeDisplay(transform);
         return recipeDisplay;
     }
 
-    public void ShowInputs(Func<ItemStack, Transform> buildInputItemLabel)
+    public void ShowInputs(Func<ItemStack, Transform> buildInputLabel, List<ItemStack> inputs)
     {
-        ItemLabelGrid<ItemStack> inputGrid = new ItemLabelGrid<ItemStack>(transform.Find("Materials").Find("Inputs"));
-        inputGrid.SetCreateLabelFunc(buildInputItemLabel);
-        inputGrid.DisplayItems(recipe.GetInputs());
+        CreateItemLabelGrid(inputTransform, buildInputLabel, inputs);
     }
 
-    public void ShowOutputs(Func<ItemStack, Transform> buildOutputItemLabel)
+    public void ShowOutputs(Func<ItemStack, Transform> buildOutputLabel, List<ItemStack> outputs)
     {
-        ItemLabelGrid<ItemStack> outputGrid = new ItemLabelGrid<ItemStack>(transform.Find("Materials").Find("Outputs"));
-        outputGrid.SetCreateLabelFunc(buildOutputItemLabel);
-        outputGrid.DisplayItems(recipe.GetOutputs());
+        CreateItemLabelGrid(outputTransform, buildOutputLabel, outputs);
     }
 
-    public void ShowMachines(Func<ItemType, Transform> buildMachineLabel)
+    public void ShowMachines(Func<MachineType, Transform> buildMachineLabel, List<MachineType> machines)
     {
-        ItemLabelGrid<ItemType> machineGrid = new ItemLabelGrid<ItemType>(transform.Find("Machines"));
-        machineGrid.SetCreateLabelFunc(buildMachineLabel);
-        machineGrid.DisplayItems(Finder.FindMachines(recipe).ConvertAll(x => (ItemType)x));
+        CreateItemLabelGrid(machineTransform, buildMachineLabel, machines);
     }
+
+    private void CreateItemLabelGrid<T>(Transform parent, Func<T, Transform> buildLabel, List<T> items) {
+        ItemLabelGrid<T> grid = new ItemLabelGrid<T>(parent);
+        grid.SetCreateLabelFunc(buildLabel);
+        grid.DisplayItems(items);
+     }
 }

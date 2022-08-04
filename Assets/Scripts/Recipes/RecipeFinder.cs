@@ -6,9 +6,4 @@ public class Finder
     {
         return DataLoader.allRecipes.FindAll(x => x.Produces(itemType));
     }
-
-    public static List<MachineType> FindMachines(Recipe recipe)
-    {
-        return DataLoader.allMachines.FindAll(x => x.CanDo(recipe));
-    }
 }

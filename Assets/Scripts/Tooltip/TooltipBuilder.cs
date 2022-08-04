@@ -16,26 +16,39 @@ public class TooltipBuilder : MonoBehaviour
     public void AddInventoryDisplay(Inventory target)
     {
         InventoryDisplay display = new InventoryDisplay(Instantiate(PrefabLoader.inventoryDisplay, transform));
-        display.SetCreateLabelFunc(CreateItemLabel);
+        display.SetCreateLabelFunc(BuildItemLabel);
         display.SetTargetInventory(target);
     }
 
-    public void AddSingleCraftDisplay(Recipe target)
+    public void AddSingleCraftDisplay(Process process)
     {
-        RecipeDisplay display = RecipeDisplay.Create(transform, target);
-        display.ShowInputs(CreateStockIndicator);
-        display.ShowOutputs(CreateItemLabel);
+        RecipeDisplay display = RecipeDisplay.Create(transform);
+        display.ShowInputs(x => BuildSingleCostLabel(x, process), process.GetSingleInput());
+        display.ShowOutputs(BuildItemLabel, process.GetSingleOutput());
     }
 
-    private Transform CreateItemLabel(ItemStack itemStack)
+    public void AddBatchCraftDisplay(Process process)
+    {
+        RecipeDisplay display = RecipeDisplay.Create(transform);
+        display.ShowInputs(x => BuildBatchCostLabel(x, process), process.GetBatchInput());
+        display.ShowOutputs(BuildItemLabel, process.GetBatchOutput());
+    }
+
+    private Transform BuildItemLabel(ItemStack itemStack)
     {
         ItemLabelDirector.BuildItemLabel(itemStack);
         return ItemLabelDirector.builder.GetResult();
     }
 
-    private Transform CreateStockIndicator(ItemStack itemStack)
+    private Transform BuildSingleCostLabel(ItemStack itemStack, Process process)
     {
-        ItemLabelDirector.BuildStockIndicator(itemStack);
+        ItemLabelDirector.BuildSingleCostLabel(itemStack, process);
+        return ItemLabelDirector.builder.GetResult();
+    }
+
+    private Transform BuildBatchCostLabel(ItemStack itemStack, Process process)
+    {
+        ItemLabelDirector.BuildBatchCostLabel(itemStack, process);
         return ItemLabelDirector.builder.GetResult();
     }
 }

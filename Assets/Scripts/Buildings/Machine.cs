@@ -4,7 +4,7 @@ public class Machine : Producer
 {
     private readonly MachineType machineType;
     private Inventory inputInventory = new Inventory();
-    private Recipe currentRecipe;
+    private Process currentProcess;
 
     public Machine(Vector2Int gridPosition, Direction direction, MachineType machineType) : base(gridPosition, direction, machineType)
     {
@@ -37,39 +37,42 @@ public class Machine : Producer
         return new Timer(150, false);
     }
 
-    protected override void StoreOutputs()
+    protected override void ProduceOutputs()
     {
-        currentRecipe.CraftOnce(inputInventory, outputInventory);
+        currentProcess.CraftOnce();
     }
 
     private void OnInputInventoryUpdated()
     {
         if (IsRunning() && CanProcess()) return;
-        StartNewRecipe();
+        StartNewProcess();
     }
 
-    private void StartNewRecipe()
+    private void StartNewProcess()
     {
         timer.Reset();
-        currentRecipe = GetCraftableRecipe();
-        if (currentRecipe == null) timer.Pause();
-        else timer.Resume();
+        currentProcess = FindCraftableProcess();
+        if (IsRunning()) timer.Resume();
+        else timer.Pause();
     }
 
     private bool CanProcess()
     {
-        return currentRecipe.CanCraft(inputInventory);
+        return currentProcess.CanCraft();
     }
 
     private bool IsRunning()
     {
-        return currentRecipe != null;
+        return currentProcess != null;
     }
 
-    private Recipe GetCraftableRecipe()
+    private Process FindCraftableProcess()
     {
         foreach (Recipe recipe in machineType.GetRecipes())
-            if (recipe.CanCraft(inputInventory)) return recipe;
+        {
+            Process craftingRequest = new Process(recipe, inputInventory, outputInventory);
+            if (craftingRequest.CanCraft()) return craftingRequest;
+        }
         return null;
     }
 }

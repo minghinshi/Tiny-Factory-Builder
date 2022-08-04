@@ -47,11 +47,11 @@ public abstract class Producer : Building
     }
 
     protected abstract Timer GetNewTimer();
-    protected abstract void StoreOutputs();
+    protected abstract void ProduceOutputs();
 
     private void OnTimerEnded()
     {
         timer.Reset();
-        StoreOutputs();
+        ProduceOutputs();
     }
 }

@@ -22,7 +22,7 @@ public class Gatherer : Producer
         return new Timer(150, true);
     }
 
-    protected override void StoreOutputs()
+    protected override void ProduceOutputs()
     {
         outputInventory.Store(producedItem, 1);
     }

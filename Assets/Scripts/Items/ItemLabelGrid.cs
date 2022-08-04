@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IDisplayableAsItem { }
-
-public class ItemLabelGrid<T> where T : IDisplayableAsItem
+public class ItemLabelGrid<T>
 {
     private Func<T, Transform> CreateLabel;
     private Transform transform;
