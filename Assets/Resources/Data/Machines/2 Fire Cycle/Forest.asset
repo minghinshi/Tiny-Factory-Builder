@@ -12,12 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83076e94c4af77849a4412bf505b7233, type: 3}
   m_Name: Forest
   m_EditorClassIdentifier: 
-  itemName: Logging Forest
+  itemName: Forest
   itemSprite: {fileID: 21300000, guid: b7399e6a28a36fb439324d8ef2e7fa9a, type: 3}
   size: {x: 3, y: 3}
-  outputPosition: {x: 3, y: 1}
-  inputPositions:
-  - {x: 0, y: 1}
   recipes:
   - {fileID: 11400000, guid: afde185604ab220448812cdc30d3f1b9, type: 2}
   - {fileID: 11400000, guid: 55195c4472dc8064eaacdd0943e2f57e, type: 2}
+  - {fileID: 11400000, guid: aa5f361d2f8cd1a40af0160658c4ad31, type: 2}

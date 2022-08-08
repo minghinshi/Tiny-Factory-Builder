@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83076e94c4af77849a4412bf505b7233, type: 3}
-  m_Name: TinyGlobe
+  m_Name: Landscape
   m_EditorClassIdentifier: 
-  itemName: Tiny Globe
+  itemName: Landscape
   itemSprite: {fileID: 21300000, guid: a7515bbc19d546e45b84f22a35fc351c, type: 3}
   size: {x: 3, y: 3}
-  outputPosition: {x: 3, y: 1}
-  inputPositions:
-  - {x: 0, y: 1}
   recipes:
   - {fileID: 11400000, guid: 2099fbb190b8f8749af80c4690ea763a, type: 2}
   - {fileID: 11400000, guid: 60fa7331e88fe1e49b4d5981e529b17e, type: 2}
   - {fileID: 11400000, guid: 38994ca356df5e747a655e91a5b36d2a, type: 2}
   - {fileID: 11400000, guid: c1c911a5e9467494fb89600446073244, type: 2}
+  - {fileID: 11400000, guid: 5cabeb7a66a920e468edb154784c00fd, type: 2}
+  - {fileID: 11400000, guid: bf41518db7258c742861f5671dd09fa6, type: 2}
+  - {fileID: 11400000, guid: 40cbf0556eabc7d4fba989b5fc04f2d2, type: 2}
