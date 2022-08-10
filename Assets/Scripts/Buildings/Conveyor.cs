@@ -76,26 +76,44 @@ public class Conveyor : Building
 
     private void MoveItem()
     {
-        if (!itemInsertedThisTick) DoInsertCycle();
-        DoExtractCycle();
+        if (storedItem != null && !itemInsertedThisTick) DoInsertCycle();
+        if (storedItem == null) DoExtractCycle();
     }
 
     private void DoInsertCycle()
     {
-        Building target = outputCells[currentOutput].GetContainedBuilding();
-        if (storedItem != null && target != null && target.CanInsert()) InsertTo(target);
+        for (int i = 0; i < outputCells.Count; i++)
+        {
+            Building target = CycleTarget();
+            if (target != null && target.CanInsert())
+            {
+                InsertTo(target);
+                break;
+            }
+        }
+    }
+
+    private Building CycleTarget()
+    {
+        Building building = GetTarget();
         SetNextOutput();
+        return building;
+    }
+
+    private Building GetTarget()
+    {
+        return outputCells[currentOutput].GetContainedBuilding();
+    }
+
+    private void SetNextOutput()
+    {
+        currentOutput = (currentOutput + 1) % outputCells.Count;
     }
 
     private void InsertTo(Building target)
     {
         target.Insert(new ItemStack(storedItem, 1));
         RemoveStoredItem();
-    }
-
-    private void SetNextOutput()
-    {
-        currentOutput = (currentOutput + 1) % outputCells.Count;
     }
 
     private void DoExtractCycle()
