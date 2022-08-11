@@ -82,49 +82,41 @@ public class Conveyor : Building
 
     private void DoInsertCycle()
     {
+        Building target = GetInsertionTarget();
+        if (target != null) InsertTo(target);
+    }
+
+    private void DoExtractCycle()
+    {
+        Building target = GetExtractionTarget();
+        if (target != null) ExtractFrom(target);
+    }
+
+    private Building GetInsertionTarget()
+    {
         for (int i = 0; i < outputCells.Count; i++)
         {
-            Building target = CycleTarget();
-            if (target != null && target.CanInsert())
-            {
-                InsertTo(target);
-                break;
-            }
+            Building building = outputCells[currentOutput].GetContainedBuilding();
+            currentOutput = (currentOutput + 1) % outputCells.Count;
+            if (building != null && building.CanInsert()) return building;
         }
+        return null;
     }
 
-    private Building CycleTarget()
+    private Building GetExtractionTarget()
     {
-        Building building = GetTarget();
-        SetNextOutput();
-        return building;
-    }
-
-    private Building GetTarget()
-    {
-        return outputCells[currentOutput].GetContainedBuilding();
-    }
-
-    private void SetNextOutput()
-    {
-        currentOutput = (currentOutput + 1) % outputCells.Count;
+        foreach (Cell inputCell in inputCells)
+        {
+            Building building = inputCell.GetContainedBuilding();
+            if (building != null && building.CanExtract()) return building;
+        }
+        return null;
     }
 
     private void InsertTo(Building target)
     {
         target.Insert(new ItemStack(storedItem, 1));
         RemoveStoredItem();
-    }
-
-    private void DoExtractCycle()
-    {
-        inputCells.ForEach(CheckInputCell);
-    }
-
-    private void CheckInputCell(Cell inputCell)
-    {
-        Building target = inputCell.GetContainedBuilding();
-        if (storedItem == null && target != null && target.CanExtract()) ExtractFrom(target);
     }
 
     private void ExtractFrom(Building target)
