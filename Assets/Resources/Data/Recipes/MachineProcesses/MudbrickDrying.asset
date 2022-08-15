@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 176c6a98500671842bd2137bf487fcca, type: 3}
-  m_Name: HandAxe
+  m_Name: MudbrickDrying
   m_EditorClassIdentifier: 
   inputs:
-  - itemType: {fileID: 11400000, guid: 03af7e846f974f44f8556f5ebf9eeb95, type: 2}
+  - itemType: {fileID: 11400000, guid: 1b3cf282f0d0a8947b867ee01ed73679, type: 2}
     count: 1
-  - itemType: {fileID: 11400000, guid: 82400f5133c1ac74c8a528163f0d667c, type: 2}
+  - itemType: {fileID: 11400000, guid: 4b13c31ccf88ed346b59fbc08941fe7c, type: 2}
     count: 1
   outputs:
-  - itemType: {fileID: 11400000, guid: 30e534a75945ace4bad54e78dda0d203, type: 2}
+  - itemType: {fileID: 11400000, guid: 2e53066d0ec774e4eb530f1b589c6d63, type: 2}
     count: 1

@@ -1792,15 +1792,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialItems:
-  - itemType: {fileID: 11400000, guid: a91c52e6d0ac34346bb2b9c8c655ba99, type: 2}
-    count: 1
-  - itemType: {fileID: 11400000, guid: 7a2bec6b5f8c89144906471061e78c1e, type: 2}
-    count: 1
-  - itemType: {fileID: 11400000, guid: c1a24a65d932fb342be104f15f3db30b, type: 2}
-    count: 1
-  - itemType: {fileID: 11400000, guid: bc5e09915d580d64cb938183367681cf, type: 2}
-    count: 1
-  - itemType: {fileID: 11400000, guid: 8ba1ab404439a4d49a6d68871d145af4, type: 2}
+  - itemType: {fileID: 11400000, guid: 2f32fb8086d3bb74683ef1d3b8589bb6, type: 2}
+    count: 1000
+  - itemType: {fileID: 11400000, guid: 63f642dfd507a954d84b3239ac42b1e3, type: 2}
+    count: 1000
+  - itemType: {fileID: 11400000, guid: 4b13c31ccf88ed346b59fbc08941fe7c, type: 2}
+    count: 1000
+  - itemType: {fileID: 11400000, guid: f0b2162ea2530df4486a5295d534a008, type: 2}
     count: 1000
   visibilityHandler: {fileID: 1008683271}
   panelSwitcher: {fileID: 1906871376}
@@ -2039,6 +2037,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ee6ef0686f91a6941a572df5347a3db0, type: 2}
   - {fileID: 11400000, guid: 435c02cad48be9347832f2e2ec015798, type: 2}
   - {fileID: 11400000, guid: 5dd4b1fe05491314386fbde018c9ef27, type: 2}
+  - {fileID: 11400000, guid: 334540dae0b7b4c4c823750d1c43e0ad, type: 2}
+  - {fileID: 11400000, guid: 78e0ace52f014844d91fd80baceea31d, type: 2}
+  - {fileID: 11400000, guid: b6483005723beed4da5d8c15c1fff656, type: 2}
 --- !u!114 &1724250517
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 176c6a98500671842bd2137bf487fcca, type: 3}
+  m_Name: Mudbrick
+  m_EditorClassIdentifier: 
+  inputs:
+  - itemType: {fileID: 11400000, guid: f0b2162ea2530df4486a5295d534a008, type: 2}
+    count: 1
+  - itemType: {fileID: 11400000, guid: 60cd5ebf031a0ee488284518d45ab90d, type: 2}
+    count: 1
+  - itemType: {fileID: 11400000, guid: 68e95119662a05f4ca6686129bfb0b1c, type: 2}
+    count: 1
+  - itemType: {fileID: 11400000, guid: 63f642dfd507a954d84b3239ac42b1e3, type: 2}
+    count: 1
+  - itemType: {fileID: 11400000, guid: 24c5c35d6f881fc4b8cf5829120f1e1f, type: 2}
+    count: 1
+  outputs:
+  - itemType: {fileID: 11400000, guid: 1b3cf282f0d0a8947b867ee01ed73679, type: 2}
+    count: 4

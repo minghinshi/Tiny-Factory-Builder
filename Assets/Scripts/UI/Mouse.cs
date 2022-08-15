@@ -53,11 +53,7 @@ public class Mouse : MonoBehaviour
     private void UpdateGridPosition()
     {
         Vector2Int newGridPosition = Grids.grid.GetGridPosition(worldPosition);
-        if (!newGridPosition.Equals(gridPosition))
-        {
-            gridPosition = newGridPosition;
-            hasTargetChanged = true;
-        }
+        if (!newGridPosition.Equals(gridPosition)) gridPosition = newGridPosition;
     }
 
     private void UpdateTargetBuilding()
