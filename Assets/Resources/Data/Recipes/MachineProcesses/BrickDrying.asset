@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 176c6a98500671842bd2137bf487fcca, type: 3}
-  m_Name: MudbrickDrying
+  m_Name: BrickDrying
   m_EditorClassIdentifier: 
   inputs:
   - itemType: {fileID: 11400000, guid: 1b3cf282f0d0a8947b867ee01ed73679, type: 2}

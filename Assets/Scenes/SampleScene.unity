@@ -303,9 +303,9 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 122557970}
   m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &122557977
 MonoBehaviour:
@@ -1792,14 +1792,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialItems:
-  - itemType: {fileID: 11400000, guid: 2f32fb8086d3bb74683ef1d3b8589bb6, type: 2}
-    count: 1000
-  - itemType: {fileID: 11400000, guid: 63f642dfd507a954d84b3239ac42b1e3, type: 2}
-    count: 1000
-  - itemType: {fileID: 11400000, guid: 4b13c31ccf88ed346b59fbc08941fe7c, type: 2}
-    count: 1000
-  - itemType: {fileID: 11400000, guid: f0b2162ea2530df4486a5295d534a008, type: 2}
-    count: 1000
+  - itemType: {fileID: 11400000, guid: a91c52e6d0ac34346bb2b9c8c655ba99, type: 2}
+    count: 1
+  - itemType: {fileID: 11400000, guid: 7a2bec6b5f8c89144906471061e78c1e, type: 2}
+    count: 1
+  - itemType: {fileID: 11400000, guid: c1a24a65d932fb342be104f15f3db30b, type: 2}
+    count: 1
+  - itemType: {fileID: 11400000, guid: bc5e09915d580d64cb938183367681cf, type: 2}
+    count: 1
   visibilityHandler: {fileID: 1008683271}
   panelSwitcher: {fileID: 1906871376}
 --- !u!1 &1713406302
@@ -2040,6 +2040,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 334540dae0b7b4c4c823750d1c43e0ad, type: 2}
   - {fileID: 11400000, guid: 78e0ace52f014844d91fd80baceea31d, type: 2}
   - {fileID: 11400000, guid: b6483005723beed4da5d8c15c1fff656, type: 2}
+  - {fileID: 11400000, guid: 74498327c10cc684eb7648b1746b314d, type: 2}
 --- !u!114 &1724250517
 MonoBehaviour:
   m_ObjectHideFlags: 0

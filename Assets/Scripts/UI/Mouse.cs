@@ -9,10 +9,10 @@ public class Mouse : MonoBehaviour
     private Vector2 worldPosition;
     private Vector2Int gridPosition;
     private Building targetBuilding;
-    private bool hasTargetChanged;
 
-    public delegate void TargetChangedHandler();
-    public event TargetChangedHandler TargetChanged;
+    public delegate void ValueChangedHandler<T>(T newValue);
+    public event ValueChangedHandler<Building> BuildingChanged;
+    public event ValueChangedHandler<Vector2Int> GridPositionChanged;
 
     private void Awake()
     {
@@ -22,13 +22,12 @@ public class Mouse : MonoBehaviour
     private void Start()
     {
         tooltip = Tooltip.instance;
-        TargetChanged += UpdateTooltip;
+        BuildingChanged += UpdateTooltip;
     }
 
     private void Update()
     {
         UpdateProperties();
-        if (hasTargetChanged && IsPointingAtWorld()) TargetChanged?.Invoke();
     }
 
     public Vector2 GetWorldPosition() => worldPosition;
@@ -39,7 +38,6 @@ public class Mouse : MonoBehaviour
 
     private void UpdateProperties()
     {
-        hasTargetChanged = false;
         UpdateWorldPosition();
         UpdateGridPosition();
         UpdateTargetBuilding();
@@ -53,22 +51,26 @@ public class Mouse : MonoBehaviour
     private void UpdateGridPosition()
     {
         Vector2Int newGridPosition = Grids.grid.GetGridPosition(worldPosition);
-        if (!newGridPosition.Equals(gridPosition)) gridPosition = newGridPosition;
+        if (!newGridPosition.Equals(gridPosition))
+        {
+            gridPosition = newGridPosition;
+            GridPositionChanged?.Invoke(newGridPosition);
+        }
     }
 
     private void UpdateTargetBuilding()
     {
-        Building newTarget = Grids.grid.GetBuildingAt(gridPosition);
+        Building newTarget = IsPointingAtWorld() ? Grids.grid.GetBuildingAt(gridPosition) : null;
         if (newTarget != targetBuilding)
         {
             targetBuilding = newTarget;
-            hasTargetChanged = true;
+            BuildingChanged?.Invoke(newTarget);
         }
     }
 
-    private void UpdateTooltip()
+    private void UpdateTooltip(Building building)
     {
-        if (IsPointingAtBuilding()) tooltip.ShowTooltip(new BuildingTooltipStrategy(targetBuilding));
+        if (IsPointingAtBuilding()) tooltip.ShowTooltip(new BuildingTooltipStrategy(building));
         else tooltip.HideTooltip();
     }
 }
