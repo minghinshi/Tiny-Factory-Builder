@@ -28,21 +28,26 @@ public class CameraHandler : MonoBehaviour
 
     private void MoveCamera()
     {
-        if (Input.GetKey(KeyCode.W))
-            transform.Translate(Vector3.up * GetMovementVelocity());
-        if (Input.GetKey(KeyCode.A))
-            transform.Translate(Vector3.left * GetMovementVelocity());
-        if (Input.GetKey(KeyCode.S))
-            transform.Translate(Vector3.down * GetMovementVelocity());
-        if (Input.GetKey(KeyCode.D))
-            transform.Translate(Vector3.right * GetMovementVelocity());
+        if (Input.GetKey(KeyCode.W)) transform.Translate(Vector3.up * GetMovementVelocity());
+        if (Input.GetKey(KeyCode.A)) transform.Translate(Vector3.left * GetMovementVelocity());
+        if (Input.GetKey(KeyCode.S)) transform.Translate(Vector3.down * GetMovementVelocity());
+        if (Input.GetKey(KeyCode.D)) transform.Translate(Vector3.right * GetMovementVelocity());
     }
 
     private void ZoomCamera()
     {
-        if (Input.mouseScrollDelta.y < 0)
-            target.orthographicSize = Mathf.Min(target.orthographicSize * zoomVelocity, maxZoomSize);
-        if (Input.mouseScrollDelta.y > 0)
-            target.orthographicSize = Mathf.Max(target.orthographicSize / zoomVelocity, minZoomSize);
+        if (Input.mouseScrollDelta.y < 0) ZoomOut();
+        if (Input.mouseScrollDelta.y > 0) ZoomIn();
+
+    }
+
+    private void ZoomIn()
+    {
+        target.orthographicSize = Mathf.Max(target.orthographicSize / zoomVelocity, minZoomSize);
+    }
+
+    private void ZoomOut()
+    {
+        target.orthographicSize = Mathf.Min(target.orthographicSize * zoomVelocity, maxZoomSize);
     }
 }
