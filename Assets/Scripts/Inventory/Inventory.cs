@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
+[Serializable]
 public class Inventory
 {
-    private readonly List<ItemStack> itemStacks;
+    [SerializeField] private List<ItemStack> itemStacks;
 
     public delegate void InventoryUpdatedHandler();
     public event InventoryUpdatedHandler Updated;

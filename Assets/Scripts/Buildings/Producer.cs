@@ -6,7 +6,7 @@ public abstract class Producer : Building
     protected Timer timer;
     protected Inventory outputInventory = new Inventory();
 
-    public Producer(Vector2Int gridPosition, Direction direction, ProducerType producerType) : base(gridPosition, direction, producerType)
+    public Producer(Vector2Int gridPosition, Direction direction, BuildingType buildingType) : base(gridPosition, direction, buildingType)
     {
         timer = GetNewTimer();
         timer.TimerEnded += OnTimerEnded;
@@ -17,13 +17,13 @@ public abstract class Producer : Building
     {
         timer.Destroy();
         timer.TimerEnded -= OnTimerEnded;
-        outputInventory.TransferTo(PlayerInventory.inventory);
+        outputInventory.TransferTo(SaveManager.PlayerInventory);
         base.Destroy();
     }
 
     public override void OnClick()
     {
-        outputInventory.TransferTo(PlayerInventory.inventory);
+        outputInventory.TransferTo(SaveManager.PlayerInventory);
     }
 
     public override bool CanExtract() => outputInventory.HasItems();

@@ -6,7 +6,6 @@ public class PlayerCrafting : MonoBehaviour
     [SerializeField] private List<Recipe> craftingRecipes;
 
     private ItemLabelGrid<Process> itemDisplay;
-    private Inventory playerInventory = PlayerInventory.inventory;
 
     private void Start()
     {
@@ -31,6 +30,6 @@ public class PlayerCrafting : MonoBehaviour
     }
 
     private List<Process> GetProcesses() { 
-        return craftingRecipes.ConvertAll(x => new Process(x, playerInventory, playerInventory));
+        return craftingRecipes.ConvertAll(x => new Process(x, SaveManager.PlayerInventory, SaveManager.PlayerInventory));
     }
 }

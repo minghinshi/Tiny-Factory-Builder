@@ -1,30 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+
 public class GridSystem
 {
-    private Vector2Int size;
-    private float cellSize;
-    private Cell[,] gridOfCells;
-
-    public GridSystem(int width, int height, float cellSize)
-    {
-        size = new Vector2Int(width, height);
-        this.cellSize = cellSize;
-        gridOfCells = new Cell[width, height];
-        CreateGridOfCells(width, height);
-    }
-
-    private void CreateGridOfCells(int width, int height)
-    {
-        for (int i = 0; i < width; i++)
-        {
-            for (int j = 0; j < height; j++)
-            {
-                Vector2Int gridPosition = new Vector2Int(i, j);
-                gridOfCells[i, j] = new Cell(gridPosition, GetCentreWorldPosition(gridPosition));
-            }
-        }
-    }
+    private const float cellSize = 1f;
+    private List<Building> buildings = new();
+    private Dictionary<Vector2Int, Building> buildingPositions = new();
 
     public Vector2Int GetGridPosition(Vector3 worldPosition)
     {
@@ -48,60 +29,39 @@ public class GridSystem
         return new Vector3((gridPosition.x + 0.5f * size.x) * cellSize, (gridPosition.y + 0.5f * size.y) * cellSize);
     }
 
-    public Cell GetCellAt(Vector2Int gridPosition)
+    public List<Vector2Int> GetCellsInBuilding(Building building)
     {
-        return gridOfCells[gridPosition.x, gridPosition.y];
-    }
-
-    public List<Cell> GetCellsInBuilding(Building building)
-    {
-        List<Cell> cells = new List<Cell>();
+        List<Vector2Int> cells = new List<Vector2Int>();
         Vector2Int size = building.GetSize();
         Vector2Int gridPosition = building.GetGridPosition();
         for (int i = gridPosition.x; i < gridPosition.x + size.x; i++)
             for (int j = gridPosition.y; j < gridPosition.y + size.y; j++)
-                cells.Add(gridOfCells[i, j]);
+                cells.Add(new Vector2Int(i, j));
         return cells;
-    }
-
-    public bool IsWithinBounds(int x, int y)
-    {
-        return (x >= 0 && y >= 0 && x < size.x && y < size.y);
-    }
-
-    public bool IsWithinBounds(Vector2Int position)
-    {
-        return IsWithinBounds(position.x, position.y);
-    }
-
-    public bool IsPositionOccupied(int x, int y)
-    {
-        return gridOfCells[x, y].IsOccupied();
     }
 
     public bool IsPositionOccupied(Vector2Int position)
     {
-        return IsPositionOccupied(position.x, position.y);
+        return buildingPositions.ContainsKey(position);
     }
 
     public bool CanPlace(Vector2Int position, Vector2Int size)
     {
         for (int i = position.x; i < position.x + size.x; i++)
             for (int j = position.y; j < position.y + size.y; j++)
-                if (!IsWithinBounds(i, j) || IsPositionOccupied(i, j))
-                    return false;
+                if (IsPositionOccupied(new Vector2Int(i, j))) return false;
         return true;
     }
 
-    public void OccupyCells(Building building)
+    public void AddBuilding(Building building)
     {
-        GetCellsInBuilding(building).ForEach(cell => cell.OccupyWith(building));
+        buildings.Add(building);
+        GetCellsInBuilding(building).ForEach(x => OccupyCell(building, x));
     }
 
     public Building GetBuildingAt(Vector2Int gridPosition)
     {
-        if (!IsWithinBounds(gridPosition)) return null;
-        return GetCellAt(gridPosition).GetContainedBuilding();
+        return IsPositionOccupied(gridPosition) ? buildingPositions[gridPosition] : null;
     }
 
     public Building GetBuildingAt(Vector3 worldPosition)
@@ -117,8 +77,14 @@ public class GridSystem
 
     private void DestroyBuilding(Building building)
     {
-        foreach (Cell cell in GetCellsInBuilding(building)) cell.Empty();
+        foreach (Vector2Int position in GetCellsInBuilding(building)) buildingPositions.Remove(position);
+        buildings.Remove(building);
         building.Destroy();
         AudioHandler.instance.PlayDestroy();
+    }
+
+    private void OccupyCell(Building building, Vector2Int position) {
+        bool alreadyOccupied = !buildingPositions.TryAdd(position, building);
+        if (alreadyOccupied) Debug.LogError("Cell has already been occupied!");
     }
 }

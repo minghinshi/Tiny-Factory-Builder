@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Gatherer", menuName = "Gatherer")]
-public class GathererType : ProducerType
+public class GathererType : BuildingType
 {
     //TEMPORARY
     public ItemType producedItem;

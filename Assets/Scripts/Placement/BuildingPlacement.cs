@@ -83,12 +83,12 @@ public class BuildingPlacement : Placement
 
     private void UpdateTargetPosition()
     {
-        previewTargetPosition = Grids.grid.GetCentreWorldPosition(Mouse.instance.GetGridPosition(), buildingType.GetSize());
+        previewTargetPosition = SaveManager.BuildingGrid.GetCentreWorldPosition(Mouse.instance.GetGridPosition(), buildingType.GetSize());
     }
 
     private void UpdateColor()
     {
-        if (Grids.grid.CanPlace(Mouse.instance.GetGridPosition(), buildingType.GetTransformedSize(direction))) SetCanPlaceColor();
+        if (SaveManager.BuildingGrid.CanPlace(Mouse.instance.GetGridPosition(), buildingType.GetTransformedSize(direction))) SetCanPlaceColor();
         else SetCannotPlaceColor();
     }
 

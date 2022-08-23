@@ -15,12 +15,12 @@ public class Machine : Producer
     public override void OnClick()
     {
         base.OnClick();
-        if (Input.GetKey(KeyCode.LeftShift)) inputInventory.TransferTo(PlayerInventory.inventory);
+        if (Input.GetKey(KeyCode.LeftShift)) inputInventory.TransferTo(SaveManager.PlayerInventory);
     }
 
     public override void Destroy()
     {
-        inputInventory.TransferTo(PlayerInventory.inventory);
+        inputInventory.TransferTo(SaveManager.PlayerInventory);
         base.Destroy();
     }
 

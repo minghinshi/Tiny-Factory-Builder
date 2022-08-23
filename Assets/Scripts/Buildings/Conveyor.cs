@@ -6,8 +6,8 @@ public class Conveyor : Building
     private ItemType storedItem;
     private SpriteRenderer itemRenderer;
 
-    private List<Cell> inputCells;
-    private List<Cell> outputCells;
+    private List<Vector2Int> inputPositions;
+    private List<Vector2Int> outputPositions;
 
     private int currentOutput = 0;
     private bool itemInsertedThisTick = false;
@@ -40,12 +40,12 @@ public class Conveyor : Building
 
     private void SetInputCells(List<Vector2Int> relativePositions)
     {
-        inputCells = RelativePositionsToCells(relativePositions);
+        inputPositions = relativePositions.ConvertAll(RelativeToAbsolute);
     }
 
     private void SetOutputCells(List<Vector2Int> relativePositions)
     {
-        outputCells = RelativePositionsToCells(relativePositions);
+        outputPositions = relativePositions.ConvertAll(RelativeToAbsolute);
     }
 
     private void CreateItemRenderer()
@@ -94,10 +94,10 @@ public class Conveyor : Building
 
     private Building GetInsertionTarget()
     {
-        for (int i = 0; i < outputCells.Count; i++)
+        for (int i = 0; i < outputPositions.Count; i++)
         {
-            Building building = outputCells[currentOutput].GetContainedBuilding();
-            currentOutput = (currentOutput + 1) % outputCells.Count;
+            Building building = SaveManager.BuildingGrid.GetBuildingAt(outputPositions[currentOutput]);
+            currentOutput = (currentOutput + 1) % outputPositions.Count;
             if (building != null && building.CanInsert()) return building;
         }
         return null;
@@ -105,9 +105,9 @@ public class Conveyor : Building
 
     private Building GetExtractionTarget()
     {
-        foreach (Cell inputCell in inputCells)
+        foreach (Vector2Int position in inputPositions)
         {
-            Building building = inputCell.GetContainedBuilding();
+            Building building = SaveManager.BuildingGrid.GetBuildingAt(position);
             if (building != null && building.CanExtract()) return building;
         }
         return null;
@@ -126,7 +126,7 @@ public class Conveyor : Building
 
     private void DestroyConveyor()
     {
-        if (storedItem) PlayerInventory.inventory.Store(storedItem, 1);
+        if (storedItem) SaveManager.PlayerInventory.Store(storedItem, 1);
         DisconnectEvents();
     }
 

@@ -40,21 +40,11 @@ public abstract class Building
 
     public virtual void Destroy()
     {
-        PlayerInventory.inventory.Store(buildingType, 1);
-        Object.Destroy(transform.gameObject);
+        SaveManager.PlayerInventory.Store(buildingType, 1);
+        UnityEngine.Object.Destroy(transform.gameObject);
     }
 
-    protected Cell RelativePositionToCell(Vector2Int relativePosition)
-    {
-        return Grids.grid.GetCellAt(RelativeToAbsolute(relativePosition));
-    }
-
-    protected List<Cell> RelativePositionsToCells(List<Vector2Int> relativePositions)
-    {
-        return relativePositions.ConvertAll(x => RelativePositionToCell(x));
-    }
-
-    private Vector2Int RelativeToAbsolute(Vector2Int relativePosition)
+    protected Vector2Int RelativeToAbsolute(Vector2Int relativePosition)
     {
         return gridPosition + direction.RotateVector(relativePosition) + GetDirectionalOffset();
     }

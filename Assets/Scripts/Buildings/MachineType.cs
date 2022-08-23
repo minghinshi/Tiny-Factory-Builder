@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Machine", menuName = "Machine")]
-public class MachineType : ProducerType
+public class MachineType : BuildingType
 {
     [SerializeField] private List<Recipe> recipes;
 

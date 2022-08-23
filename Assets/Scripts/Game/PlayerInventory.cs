@@ -2,29 +2,20 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public static readonly Inventory inventory = new Inventory();
-
-    [SerializeField] private ItemStack[] initialItems;
     [SerializeField] private VisibilityHandler visibilityHandler;
     [SerializeField] private PanelSwitcher panelSwitcher;
     private InventoryDisplay inventoryDisplay;
 
     private void Start()
     {
-        InitializeInventory();
         InitializeInventoryPanel();
-    }
-
-    private void InitializeInventory()
-    {
-        foreach (ItemStack stack in initialItems) inventory.StoreCopyOf(stack);
     }
 
     private void InitializeInventoryPanel()
     {
         inventoryDisplay = new InventoryDisplay(transform);
         inventoryDisplay.SetCreateLabelFunc(CreateItemButton);
-        inventoryDisplay.SetTargetInventory(inventory);
+        inventoryDisplay.SetTargetInventory(SaveManager.PlayerInventory);
     }
 
     private Transform CreateItemButton(ItemStack itemStack)

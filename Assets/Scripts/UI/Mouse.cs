@@ -50,7 +50,7 @@ public class Mouse : MonoBehaviour
 
     private void UpdateGridPosition()
     {
-        Vector2Int newGridPosition = Grids.grid.GetGridPosition(worldPosition);
+        Vector2Int newGridPosition = SaveManager.BuildingGrid.GetGridPosition(worldPosition);
         if (!newGridPosition.Equals(gridPosition))
         {
             gridPosition = newGridPosition;
@@ -60,7 +60,7 @@ public class Mouse : MonoBehaviour
 
     private void UpdateTargetBuilding()
     {
-        Building newTarget = IsPointingAtWorld() ? Grids.grid.GetBuildingAt(gridPosition) : null;
+        Building newTarget = IsPointingAtWorld() ? SaveManager.BuildingGrid.GetBuildingAt(gridPosition) : null;
         if (newTarget != targetBuilding)
         {
             targetBuilding = newTarget;
