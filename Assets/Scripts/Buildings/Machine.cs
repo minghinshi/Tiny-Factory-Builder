@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[System.Serializable]
 public class Machine : Producer
 {
     private readonly MachineType machineType;

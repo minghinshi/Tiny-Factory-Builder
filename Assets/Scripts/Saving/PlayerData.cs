@@ -1,6 +1,5 @@
 using System;
 
-[Serializable]
 public class PlayerData
 {
     public GridSystem gridSystem;

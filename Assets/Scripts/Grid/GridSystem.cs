@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
+[Serializable]
 public class GridSystem
 {
+    [SerializeField] private List<Building> buildings = new();
+
     private const float cellSize = 1f;
-    private List<Building> buildings = new();
     private Dictionary<Vector2Int, Building> buildingPositions = new();
 
     public Vector2Int GetGridPosition(Vector3 worldPosition)

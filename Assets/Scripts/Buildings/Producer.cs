@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 public abstract class Producer : Building
 {
     protected Timer timer;

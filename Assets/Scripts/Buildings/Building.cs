@@ -1,12 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
+[System.Serializable]
 public abstract class Building
 {
-    protected Vector2Int gridPosition;
-    protected Direction direction;
+    [SerializeField] protected Vector2Int gridPosition;
+    [SerializeField] protected Direction direction;
+    [SerializeField] protected BuildingType buildingType;
+
     protected Transform transform;
-    protected BuildingType buildingType;
 
     public Building(Vector2Int gridPosition, Direction direction, BuildingType buildingType)
     {
