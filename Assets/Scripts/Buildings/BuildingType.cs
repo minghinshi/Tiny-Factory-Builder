@@ -26,7 +26,7 @@ public abstract class BuildingType : ItemType
 
     public Vector3 GetWorldPosition(Vector2Int gridPosition, Direction direction)
     {
-        return SaveManager.BuildingGrid.GetCentreWorldPosition(gridPosition, GetTransformedSize(direction));
+        return GridSystem.instance.GetCentreWorldPosition(gridPosition, GetTransformedSize(direction));
     }
 
     //Creates a building object.
@@ -34,12 +34,12 @@ public abstract class BuildingType : ItemType
 
     public void PlaceBuilding(Vector2Int position, Direction direction)
     {
-        if (SaveManager.BuildingGrid.CanPlace(position, GetTransformedSize(direction)))
+        if (GridSystem.instance.CanPlace(position, GetTransformedSize(direction)))
         {
             Building building = CreateBuilding(position, direction);
-            SaveManager.BuildingGrid.AddBuilding(building);
+            GridSystem.instance.AddBuilding(building);
             AudioHandler.instance.PlayPlacement();
-            SaveManager.PlayerInventory.Remove(this, 1);
+            Inventory.playerInventory.Remove(this, 1);
         }
     }
 

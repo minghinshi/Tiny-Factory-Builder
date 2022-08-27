@@ -1,8 +1,5 @@
-using System.Collections.Generic;
 using UnityEngine;
-using System;
 
-[System.Serializable]
 public abstract class Building
 {
     [SerializeField] protected Vector2Int gridPosition;
@@ -43,7 +40,7 @@ public abstract class Building
 
     public virtual void Destroy()
     {
-        SaveManager.PlayerInventory.Store(buildingType, 1);
+        Inventory.playerInventory.Store(buildingType, 1);
         UnityEngine.Object.Destroy(transform.gameObject);
     }
 

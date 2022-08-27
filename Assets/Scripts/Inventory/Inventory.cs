@@ -5,6 +5,8 @@ using UnityEngine;
 [Serializable]
 public class Inventory
 {
+    public static Inventory playerInventory = new(DataLoader.starterMachines.ConvertAll(x => new ItemStack(x, 1)).ToArray());
+
     [SerializeField] private List<ItemStack> itemStacks;
 
     public delegate void InventoryUpdatedHandler();

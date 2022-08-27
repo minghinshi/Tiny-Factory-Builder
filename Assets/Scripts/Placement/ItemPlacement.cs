@@ -48,7 +48,7 @@ public class ItemPlacement : Placement
         {
             ItemStack itemToPlace = new ItemStack(itemType, GetItemCount());
             target.Insert(itemToPlace);
-            SaveManager.PlayerInventory.RemoveCopyOf(itemToPlace);
+            Inventory.playerInventory.RemoveCopyOf(itemToPlace);
         }
     }
 
@@ -57,6 +57,6 @@ public class ItemPlacement : Placement
         int count = 1;
         if (Input.GetKey(KeyCode.LeftShift)) count *= 10;
         if (Input.GetKey(KeyCode.LeftControl)) count *= 100;
-        return Mathf.Min(count, SaveManager.PlayerInventory.GetItemCount(itemType));
+        return Mathf.Min(count, Inventory.playerInventory.GetItemCount(itemType));
     }
 }

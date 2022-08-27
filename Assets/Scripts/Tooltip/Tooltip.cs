@@ -33,7 +33,8 @@ public class Tooltip : MonoBehaviour
         tooltipStrategy.Execute();
     }
 
-    public void ShowTooltip(TooltipStrategy strategy) {
+    public void ShowTooltip(TooltipStrategy strategy)
+    {
         SetStrategy(strategy);
         ShowTooltip();
     }

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 79754a24cc4cfb54fa5d4ec659ee2674
+guid: 10d2e225abedcbd4d880827f69693477
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Poppins
+  - Outfit
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

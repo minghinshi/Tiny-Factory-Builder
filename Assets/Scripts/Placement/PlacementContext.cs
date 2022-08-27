@@ -12,7 +12,7 @@ public class PlacementContext : MonoBehaviour
 
     private void Start()
     {
-        SaveManager.PlayerInventory.OutOfStock += OnInventoryItemOutOfStock;
+        Inventory.playerInventory.OutOfStock += OnInventoryItemOutOfStock;
     }
 
     private void Update()

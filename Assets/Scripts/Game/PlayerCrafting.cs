@@ -29,7 +29,8 @@ public class PlayerCrafting : MonoBehaviour
         }
     }
 
-    private List<Process> GetProcesses() { 
-        return craftingRecipes.ConvertAll(x => new Process(x, SaveManager.PlayerInventory, SaveManager.PlayerInventory));
+    private List<Process> GetProcesses()
+    {
+        return craftingRecipes.ConvertAll(x => new Process(x, Inventory.playerInventory, Inventory.playerInventory));
     }
 }

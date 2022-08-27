@@ -1,13 +1,14 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 [Serializable]
 public class GridSystem
 {
-    [SerializeField] private List<Building> buildings = new();
+    public static GridSystem instance = new GridSystem();
 
     private const float cellSize = 1f;
+    private List<Building> buildings = new();
     private Dictionary<Vector2Int, Building> buildingPositions = new();
 
     public Vector2Int GetGridPosition(Vector3 worldPosition)
@@ -58,8 +59,8 @@ public class GridSystem
 
     public void AddBuilding(Building building)
     {
-        buildings.Add(building);
         GetCellsInBuilding(building).ForEach(x => OccupyCell(building, x));
+        buildings.Add(building);
     }
 
     public Building GetBuildingAt(Vector2Int gridPosition)
@@ -78,15 +79,21 @@ public class GridSystem
         if (building != null) DestroyBuilding(building);
     }
 
+    public List<Building> GetBuildings()
+    {
+        return buildings;
+    }
+
     private void DestroyBuilding(Building building)
     {
         foreach (Vector2Int position in GetCellsInBuilding(building)) buildingPositions.Remove(position);
-        buildings.Remove(building);
         building.Destroy();
+        buildings.Remove(building);
         AudioHandler.instance.PlayDestroy();
     }
 
-    private void OccupyCell(Building building, Vector2Int position) {
+    private void OccupyCell(Building building, Vector2Int position)
+    {
         bool alreadyOccupied = !buildingPositions.TryAdd(position, building);
         if (alreadyOccupied) Debug.LogError("Cell has already been occupied!");
     }

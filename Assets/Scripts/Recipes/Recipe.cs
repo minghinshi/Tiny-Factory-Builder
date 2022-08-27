@@ -17,7 +17,8 @@ public class Recipe : ScriptableObject
         return outputs;
     }
 
-    public List<MachineType> GetMachines() { 
+    public List<MachineType> GetMachines()
+    {
         return DataLoader.allMachines.FindAll(x => x.CanDo(this));
     }
 

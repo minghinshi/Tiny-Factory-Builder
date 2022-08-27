@@ -1,17 +1,18 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class Conveyor : Building
 {
-    private ItemType storedItem;
-    private SpriteRenderer itemRenderer;
-
-    private List<Vector2Int> inputPositions;
-    private List<Vector2Int> outputPositions;
+    [SerializeField] private ItemType storedItem;
 
     private int currentOutput = 0;
     private bool itemInsertedThisTick = false;
+
+    private SpriteRenderer itemRenderer;
+    private List<Vector2Int> inputPositions;
+    private List<Vector2Int> outputPositions;
 
     public Conveyor(Vector2Int gridPosition, Direction direction, ConveyorType conveyorType) : base(gridPosition, direction, conveyorType)
     {
@@ -97,7 +98,7 @@ public class Conveyor : Building
     {
         for (int i = 0; i < outputPositions.Count; i++)
         {
-            Building building = SaveManager.BuildingGrid.GetBuildingAt(outputPositions[currentOutput]);
+            Building building = GridSystem.instance.GetBuildingAt(outputPositions[currentOutput]);
             currentOutput = (currentOutput + 1) % outputPositions.Count;
             if (building != null && building.CanInsert()) return building;
         }
@@ -108,7 +109,7 @@ public class Conveyor : Building
     {
         foreach (Vector2Int position in inputPositions)
         {
-            Building building = SaveManager.BuildingGrid.GetBuildingAt(position);
+            Building building = GridSystem.instance.GetBuildingAt(position);
             if (building != null && building.CanExtract()) return building;
         }
         return null;
@@ -127,7 +128,7 @@ public class Conveyor : Building
 
     private void DestroyConveyor()
     {
-        if (storedItem) SaveManager.PlayerInventory.Store(storedItem, 1);
+        if (storedItem) Inventory.playerInventory.Store(storedItem, 1);
         DisconnectEvents();
     }
 

@@ -30,7 +30,8 @@ public class ItemLabelDirector
         builder.AddCounter(itemStack.GetCount());
     }
 
-    public static void BuildSingleCostLabel(ItemStack itemStack, Process process) {
+    public static void BuildSingleCostLabel(ItemStack itemStack, Process process)
+    {
         BuildItemLabel(itemStack);
         if (process.GetMissingItems().Contains(itemStack.GetItemType())) builder.SetTextColor(red);
     }

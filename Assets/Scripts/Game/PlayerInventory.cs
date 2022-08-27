@@ -15,7 +15,7 @@ public class PlayerInventory : MonoBehaviour
     {
         inventoryDisplay = new InventoryDisplay(transform);
         inventoryDisplay.SetCreateLabelFunc(CreateItemButton);
-        inventoryDisplay.SetTargetInventory(SaveManager.PlayerInventory);
+        inventoryDisplay.SetTargetInventory(Inventory.playerInventory);
     }
 
     private Transform CreateItemButton(ItemStack itemStack)

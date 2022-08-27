@@ -1,11 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
 public abstract class Producer : Building
 {
+    [SerializeField] protected Inventory outputInventory = new Inventory();
+
     protected Timer timer;
-    protected Inventory outputInventory = new Inventory();
 
     public Producer(Vector2Int gridPosition, Direction direction, BuildingType buildingType) : base(gridPosition, direction, buildingType)
     {
@@ -18,13 +18,13 @@ public abstract class Producer : Building
     {
         timer.Destroy();
         timer.TimerEnded -= OnTimerEnded;
-        outputInventory.TransferTo(SaveManager.PlayerInventory);
+        outputInventory.TransferTo(Inventory.playerInventory);
         base.Destroy();
     }
 
     public override void OnClick()
     {
-        outputInventory.TransferTo(SaveManager.PlayerInventory);
+        outputInventory.TransferTo(Inventory.playerInventory);
     }
 
     public override bool CanExtract() => outputInventory.HasItems();

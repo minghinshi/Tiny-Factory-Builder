@@ -1,6 +1,6 @@
 using System;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class RecipeDisplay
 {
@@ -37,9 +37,10 @@ public class RecipeDisplay
         CreateItemLabelGrid(machineTransform, buildMachineLabel, machines);
     }
 
-    private void CreateItemLabelGrid<T>(Transform parent, Func<T, Transform> buildLabel, List<T> items) {
+    private void CreateItemLabelGrid<T>(Transform parent, Func<T, Transform> buildLabel, List<T> items)
+    {
         ItemLabelGrid<T> grid = new ItemLabelGrid<T>(parent);
         grid.SetCreateLabelFunc(buildLabel);
         grid.DisplayItems(items);
-     }
+    }
 }

@@ -13,6 +13,6 @@ public abstract class Placement
 
     protected virtual void DestroyBuilding()
     {
-        SaveManager.BuildingGrid.DestroyBuildingAt(Mouse.instance.GetGridPosition());
+        GridSystem.instance.DestroyBuildingAt(Mouse.instance.GetGridPosition());
     }
 }

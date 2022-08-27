@@ -1,11 +1,13 @@
+using System;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class Machine : Producer
 {
-    private readonly MachineType machineType;
-    private Inventory inputInventory = new Inventory();
+    [SerializeField] private Inventory inputInventory = new Inventory();
+
     private Process currentProcess;
+    private readonly MachineType machineType;
 
     public Machine(Vector2Int gridPosition, Direction direction, MachineType machineType) : base(gridPosition, direction, machineType)
     {
@@ -16,12 +18,12 @@ public class Machine : Producer
     public override void OnClick()
     {
         base.OnClick();
-        if (Input.GetKey(KeyCode.LeftShift)) inputInventory.TransferTo(SaveManager.PlayerInventory);
+        if (Input.GetKey(KeyCode.LeftShift)) inputInventory.TransferTo(Inventory.playerInventory);
     }
 
     public override void Destroy()
     {
-        inputInventory.TransferTo(SaveManager.PlayerInventory);
+        inputInventory.TransferTo(Inventory.playerInventory);
         base.Destroy();
     }
 

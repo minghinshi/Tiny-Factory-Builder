@@ -3,42 +3,30 @@ using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
-    public static PlayerData playerData;
-
     private const string fileName = "save.json";
-
-    public static GridSystem BuildingGrid => playerData.gridSystem;
-    public static Inventory PlayerInventory => playerData.inventory;
 
     private void Start()
     {
-        /*if (File.Exists(GetSaveFilePath())) LoadFile();
-        else*/ CreateNewGame();
+        if (File.Exists(GetSaveFilePath())) LoadGame();
     }
 
     private void OnApplicationQuit()
     {
-        SaveFile();
+        //SaveGame();
     }
 
-    private void SaveFile()
+    private void SaveGame()
     {
-        string json = JsonUtility.ToJson(playerData);
+        string json = JsonUtility.ToJson(SaveData.GetCurrentData());
         File.WriteAllText(GetSaveFilePath(), json);
         Debug.Log("Saving game...");
     }
 
-    private void LoadFile()
+    private void LoadGame()
     {
         string json = File.ReadAllText(GetSaveFilePath());
-        playerData = JsonUtility.FromJson<PlayerData>(json);
+        SaveData save = JsonUtility.FromJson<SaveData>(json);
         Debug.Log("Loading game...");
-    }
-
-    private void CreateNewGame()
-    {
-        playerData = PlayerData.GetNew();
-        Debug.Log("New game created.");
     }
 
     private string GetSaveFilePath()
