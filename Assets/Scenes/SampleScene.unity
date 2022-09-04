@@ -992,8 +992,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 439e1ab3a74994e42ae88a466b504b9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placementSound: {fileID: 8300000, guid: 19fba0853ef94bd408295e8fd108419d, type: 3}
-  destroySound: {fileID: 8300000, guid: 1757b72e9b6af20499808537dad55fc2, type: 3}
+  placementSound: {fileID: 8300000, guid: a497884ab247fc84fa2009fe614236b6, type: 3}
+  destroySound: {fileID: 8300000, guid: 19fba0853ef94bd408295e8fd108419d, type: 3}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0

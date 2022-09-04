@@ -41,7 +41,6 @@ public abstract class Building
     {
         transform = GetBuildingType().GetNewBuildingTransform(gridPosition, direction);
         GridSystem.instance.AddBuilding(this);
-        Debug.Log(GetBuildingType().GetName());
     }
 
     public virtual void Destroy()
