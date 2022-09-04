@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 176c6a98500671842bd2137bf487fcca, type: 3}
-  m_Name: Rice
+  m_Name: WoodPyrolysis
   m_EditorClassIdentifier: 
   inputs:
-  - itemType: {fileID: 11400000, guid: 7314e3cb59e2e3149ab0c0fb98b43868, type: 2}
+  - itemType: {fileID: 11400000, guid: 327ee48be950ea448b8f1b47eae1a104, type: 2}
     count: 1
+  - itemType: {fileID: 11400000, guid: 2f32fb8086d3bb74683ef1d3b8589bb6, type: 2}
+    count: 4
   outputs:
-  - itemType: {fileID: 11400000, guid: 389a2b68e9ea103459129e8ea0dfe4eb, type: 2}
-    count: 1
-  - itemType: {fileID: 11400000, guid: 24c5c35d6f881fc4b8cf5829120f1e1f, type: 2}
+  - itemType: {fileID: 11400000, guid: c67b44e2c8479764790a4401a3239b9d, type: 2}
     count: 1

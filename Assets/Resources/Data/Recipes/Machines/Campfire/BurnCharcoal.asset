@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 176c6a98500671842bd2137bf487fcca, type: 3}
-  m_Name: Kiln 1
+  m_Name: BurnCharcoal
   m_EditorClassIdentifier: 
   inputs:
-  - itemType: {fileID: 11400000, guid: 2e53066d0ec774e4eb530f1b589c6d63, type: 2}
-    count: 250
-  outputs:
-  - itemType: {fileID: 11400000, guid: 34d0c9a07820da449ab47e19cfb192fb, type: 2}
+  - itemType: {fileID: 11400000, guid: c67b44e2c8479764790a4401a3239b9d, type: 2}
     count: 1
+  outputs:
+  - itemType: {fileID: 11400000, guid: 2f32fb8086d3bb74683ef1d3b8589bb6, type: 2}
+    count: 16

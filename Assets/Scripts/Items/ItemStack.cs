@@ -1,19 +1,18 @@
 using System;
 using UnityEngine;
+using Newtonsoft.Json;
 
 [Serializable]
 public class ItemStack
 {
-    [SerializeField] private ItemType itemType;
-    [SerializeField] private int count;
+    [SerializeField] [JsonProperty] private ItemType itemType;
+    [SerializeField] [JsonProperty] private int count;
 
     public ItemStack(ItemType itemType, int count)
     {
         this.itemType = itemType;
         this.count = count;
     }
-
-    public ItemStack(ItemType itemType) : this(itemType, 0) { }
 
     public ItemType GetItemType()
     {

@@ -1,4 +1,5 @@
 using UnityEngine;
+using Newtonsoft.Json;
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Item")]
 public class ItemType : ScriptableObject

@@ -11,7 +11,7 @@ public class BuildingTooltipStrategy : TooltipStrategy
 
     protected override void BuildTooltip()
     {
-        tooltipBuilder.AddText("<b>" + building.GetBuildingType().GetName() + "</b>");
+        tooltipBuilder.AddText(building.GetBuildingType().GetName());
         if (building is Machine machine) BuildInventoryTooltip(machine.GetInputInventory(), "Inputs");
         if (building is Producer producer) BuildInventoryTooltip(producer.GetOutputInventory(), "Outputs");
     }

@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
+using Newtonsoft.Json;
 
-[Serializable]
 public class Inventory
 {
     public static Inventory playerInventory = new(DataLoader.starterMachines.ConvertAll(x => new ItemStack(x, 1)).ToArray());
 
-    [SerializeField] private List<ItemStack> itemStacks;
+    [JsonProperty] private List<ItemStack> itemStacks;
 
     public delegate void InventoryUpdatedHandler();
     public event InventoryUpdatedHandler Updated;
@@ -102,7 +101,7 @@ public class Inventory
 
     private ItemStack AddItemStack(ItemType itemType)
     {
-        ItemStack itemStack = new ItemStack(itemType);
+        ItemStack itemStack = new(itemType, 0);
         itemStacks.Add(itemStack);
         return itemStack;
     }

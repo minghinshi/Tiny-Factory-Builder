@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum Direction { North, East, South, West };
+public enum Direction { North, East, South, West }
 
 public static class DirectionHelper
 {

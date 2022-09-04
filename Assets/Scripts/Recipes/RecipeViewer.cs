@@ -57,7 +57,7 @@ public class RecipeViewer : MonoBehaviour
 
     private void CreateButtons()
     {
-        DataLoader.allItemTypes.ForEach(CreateButton);
+        DataLoader.itemTypeLoader.GetAllItemTypes().ForEach(CreateButton);
     }
 
     private void CreateButton(ItemType itemType)

@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
 
-[Serializable]
 public class Conveyor : Building
 {
-    [SerializeField] private ItemType storedItem;
+    [JsonProperty] private ConveyorType conveyorType;
+    [JsonProperty] private ItemType storedItem;
 
     private int currentOutput = 0;
     private bool itemInsertedThisTick = false;
@@ -14,12 +15,9 @@ public class Conveyor : Building
     private List<Vector2Int> inputPositions;
     private List<Vector2Int> outputPositions;
 
-    public Conveyor(Vector2Int gridPosition, Direction direction, ConveyorType conveyorType) : base(gridPosition, direction, conveyorType)
+    public Conveyor(Vector2Int gridPosition, Direction direction, ConveyorType conveyorType) : base(gridPosition, direction)
     {
-        SetInputCells(conveyorType.GetInputPositions());
-        SetOutputCells(conveyorType.GetOutputPositions());
-        CreateItemRenderer();
-        ConnectEvents();
+        this.conveyorType = conveyorType;
     }
 
     public override void OnClick() { }
@@ -34,10 +32,25 @@ public class Conveyor : Building
         itemInsertedThisTick = true;
     }
 
+    public override void Initialize()
+    {
+        base.Initialize();
+        SetInputCells(conveyorType.GetInputPositions());
+        SetOutputCells(conveyorType.GetOutputPositions());
+        CreateItemRenderer();
+        ConnectEvents();
+    }
+
     public override void Destroy()
     {
-        DestroyConveyor();
+        if (storedItem) Inventory.playerInventory.Store(storedItem, 1);
+        DisconnectEvents();
         base.Destroy();
+    }
+
+    public override BuildingType GetBuildingType()
+    {
+        return conveyorType;
     }
 
     private void SetInputCells(List<Vector2Int> relativePositions)
@@ -124,12 +137,6 @@ public class Conveyor : Building
     private void ExtractFrom(Building target)
     {
         SetStoredItem(target.Extract().GetItemType());
-    }
-
-    private void DestroyConveyor()
-    {
-        if (storedItem) Inventory.playerInventory.Store(storedItem, 1);
-        DisconnectEvents();
     }
 
     private void ConnectEvents()

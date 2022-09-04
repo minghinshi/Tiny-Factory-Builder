@@ -1,36 +1,51 @@
+using Newtonsoft.Json;
 using System.IO;
 using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
-    private const string fileName = "save.json";
+    private JsonSerializerSettings serializerSettings;
 
     private void Start()
     {
+        serializerSettings = GetSerializerSettings();
         if (File.Exists(GetSaveFilePath())) LoadGame();
     }
 
     private void OnApplicationQuit()
     {
-        //SaveGame();
+        SaveGame();
     }
 
-    private void SaveGame()
+    private JsonSerializerSettings GetSerializerSettings()
     {
-        string json = JsonUtility.ToJson(SaveData.GetCurrentData());
-        File.WriteAllText(GetSaveFilePath(), json);
-        Debug.Log("Saving game...");
+        JsonSerializerSettings settings = new();
+        settings.Converters.Add(new ItemTypeConverter());
+        settings.Converters.Add(new Vector2IntConverter());
+        return settings;
+    }
+
+    private string GetSaveFilePath()
+    {
+        return GetDataPath() + "/save.json";
+    }
+
+    private string GetDataPath()
+    {
+        return Application.isEditor ? Application.dataPath + "/Tests" : Application.persistentDataPath;
     }
 
     private void LoadGame()
     {
         string json = File.ReadAllText(GetSaveFilePath());
-        SaveData save = JsonUtility.FromJson<SaveData>(json);
+        JsonConvert.DeserializeObject<FileData>(json, serializerSettings).LoadFile();
         Debug.Log("Loading game...");
     }
 
-    private string GetSaveFilePath()
+    private void SaveGame()
     {
-        return Application.persistentDataPath + "/" + fileName;
+        string json = JsonConvert.SerializeObject(FileData.GetCurrentData(), serializerSettings);
+        File.WriteAllText(GetSaveFilePath(), json);
+        Debug.Log("Saving game...");
     }
 }

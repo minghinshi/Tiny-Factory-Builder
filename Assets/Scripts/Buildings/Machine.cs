@@ -1,18 +1,17 @@
 using System;
 using UnityEngine;
+using Newtonsoft.Json;
 
-[Serializable]
 public class Machine : Producer
 {
-    [SerializeField] private Inventory inputInventory = new Inventory();
+    [JsonProperty] private MachineType machineType;
+    [JsonProperty] private Inventory inputInventory = new();
 
     private Process currentProcess;
-    private readonly MachineType machineType;
 
-    public Machine(Vector2Int gridPosition, Direction direction, MachineType machineType) : base(gridPosition, direction, machineType)
+    public Machine(Vector2Int gridPosition, Direction direction, MachineType machineType) : base(gridPosition, direction)
     {
         this.machineType = machineType;
-        inputInventory.Updated += OnInputInventoryUpdated;
     }
 
     public override void OnClick()
@@ -21,10 +20,23 @@ public class Machine : Producer
         if (Input.GetKey(KeyCode.LeftShift)) inputInventory.TransferTo(Inventory.playerInventory);
     }
 
+    public override void Initialize()
+    {
+        base.Initialize();
+        OnInputInventoryUpdated();
+        inputInventory.Updated += OnInputInventoryUpdated;
+    }
+
     public override void Destroy()
     {
         inputInventory.TransferTo(Inventory.playerInventory);
+        inputInventory.Updated -= OnInputInventoryUpdated;
         base.Destroy();
+    }
+
+    public override BuildingType GetBuildingType()
+    {
+        return machineType;
     }
 
     public override bool CanInsert() => true;

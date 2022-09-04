@@ -11,8 +11,8 @@ public class BuildingPlacement : Placement
     private Vector3 previewTargetPosition;
     private float targetRotation;
 
-    private readonly Color canPlaceColor = new Color(46 / 255f, 204 / 255f, 113 / 255f, .5f);
-    private readonly Color cannotPlaceColor = new Color(231 / 255f, 76 / 255f, 60 / 255f, .5f);
+    private readonly Color canPlaceColor = new Color(130 / 255f, 224 / 255f, 170 / 255f, .75f);
+    private readonly Color cannotPlaceColor = new Color(241 / 255f, 148 / 255f, 138 / 255f, .75f);
 
     private bool placedBuildingHere;
 

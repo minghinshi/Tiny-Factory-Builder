@@ -15,7 +15,7 @@ public class TooltipBuilder : MonoBehaviour
 
     public void AddInventoryDisplay(Inventory target)
     {
-        InventoryDisplay display = new InventoryDisplay(Instantiate(PrefabLoader.inventoryDisplay, transform));
+        InventoryDisplay display = new(Instantiate(PrefabLoader.inventoryDisplay, transform));
         display.SetCreateLabelFunc(BuildItemLabel);
         display.SetTargetInventory(target);
     }

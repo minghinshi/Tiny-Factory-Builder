@@ -17,3 +17,4 @@ MonoBehaviour:
   size: {x: 3, y: 3}
   recipes:
   - {fileID: 11400000, guid: 25d54bf1d13f7ec43968318b6278003d, type: 2}
+  - {fileID: 11400000, guid: 88b1be1365eafe84eb2ba141cafe0953, type: 2}

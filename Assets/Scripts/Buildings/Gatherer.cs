@@ -1,14 +1,14 @@
 using System;
 using UnityEngine;
+using Newtonsoft.Json;
 
-[Serializable]
 public class Gatherer : Producer
 {
-    private ItemType producedItem;
+    [JsonProperty] private GathererType gathererType;
 
-    public Gatherer(Vector2Int gridPosition, Direction direction, GathererType gathererType) : base(gridPosition, direction, gathererType)
+    public Gatherer(Vector2Int gridPosition, Direction direction, GathererType gathererType) : base(gridPosition, direction)
     {
-        producedItem = gathererType.producedItem;
+        this.gathererType = gathererType;
     }
 
     public override bool CanInsert() => false;
@@ -18,6 +18,11 @@ public class Gatherer : Producer
         throw new InvalidOperationException();
     }
 
+    public override BuildingType GetBuildingType()
+    {
+        return gathererType;
+    }
+
     protected override Timer GetNewTimer()
     {
         return new Timer(150, true);
@@ -25,6 +30,6 @@ public class Gatherer : Producer
 
     protected override void ProduceOutputs()
     {
-        outputInventory.Store(producedItem, 1);
+        outputInventory.Store(gathererType.GetProducedItem(), 1);
     }
 }

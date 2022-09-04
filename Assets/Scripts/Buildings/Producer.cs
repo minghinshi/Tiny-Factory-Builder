@@ -1,14 +1,18 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Newtonsoft.Json;
 
 public abstract class Producer : Building
 {
-    [SerializeField] protected Inventory outputInventory = new Inventory();
+    [JsonProperty] protected Inventory outputInventory = new();
 
     protected Timer timer;
 
-    public Producer(Vector2Int gridPosition, Direction direction, BuildingType buildingType) : base(gridPosition, direction, buildingType)
+    protected Producer(Vector2Int gridPosition, Direction direction) : base(gridPosition, direction) { }
+
+    public override void Initialize()
     {
+        base.Initialize();
         timer = GetNewTimer();
         timer.TimerEnded += OnTimerEnded;
         AddProgressBar();

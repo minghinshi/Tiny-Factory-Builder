@@ -10,11 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 176c6a98500671842bd2137bf487fcca, type: 3}
-  m_Name: Kiln 1
+  m_Name: Straw
   m_EditorClassIdentifier: 
   inputs:
-  - itemType: {fileID: 11400000, guid: 2e53066d0ec774e4eb530f1b589c6d63, type: 2}
-    count: 250
+  - itemType: {fileID: 11400000, guid: 7314e3cb59e2e3149ab0c0fb98b43868, type: 2}
+    count: 1
   outputs:
-  - itemType: {fileID: 11400000, guid: 34d0c9a07820da449ab47e19cfb192fb, type: 2}
+  - itemType: {fileID: 11400000, guid: 24c5c35d6f881fc4b8cf5829120f1e1f, type: 2}
+    count: 1
+  - itemType: {fileID: 11400000, guid: 389a2b68e9ea103459129e8ea0dfe4eb, type: 2}
     count: 1
