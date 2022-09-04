@@ -3,6 +3,12 @@ A tiny factory game. Games like modded Minecraft, Factorio, shapez.io and more l
 
 After 3 months of work, the game is playable with saving and loading implemented. There's lots of polishing and adding features to do still, but I'm proud of what I've managed to do so far. 
 
+## How to Install
+- Download the release shown to the right of this page.
+- Scroll down and click on the .zip file that starts with "TFB" to download it.
+- Unzip the file, find the application called "Tiny Factory Builder" inside it, and the run the game.
+- Enjoy!
+
 ## How to Play
 Objective:
 - Craft the **Waterway** to enable transportation of resources and initial automation.
