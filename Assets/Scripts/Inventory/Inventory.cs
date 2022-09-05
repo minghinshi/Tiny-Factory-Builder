@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 public class Inventory
 {
-    public static Inventory playerInventory = new(DataLoader.starterMachines.ConvertAll(x => new ItemStack(x, 1)).ToArray());
+    public static Inventory playerInventory = new(ScriptableObjectLoader.starterMachines.ConvertAll(x => new ItemStack(x, 1)).ToArray());
 
     [JsonProperty] private List<ItemStack> itemStacks;
 

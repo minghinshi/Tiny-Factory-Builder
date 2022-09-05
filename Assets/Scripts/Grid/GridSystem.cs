@@ -30,7 +30,7 @@ public class GridSystem
 
     public Vector3 GetCentreWorldPosition(Vector2Int gridPosition, Vector2Int size)
     {
-        return new Vector3((gridPosition.x + 0.5f * size.x) * cellSize, (gridPosition.y + 0.5f * size.y) * cellSize);
+        return new Vector3((gridPosition.x + (0.5f * size.x)) * cellSize, (gridPosition.y + (0.5f * size.y)) * cellSize);
     }
 
     public List<Vector2Int> GetCellsInBuilding(Building building)

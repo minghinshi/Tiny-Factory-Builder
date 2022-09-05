@@ -19,7 +19,7 @@ public class Recipe : ScriptableObject
 
     public List<MachineType> GetMachines()
     {
-        return DataLoader.allMachines.FindAll(x => x.CanDo(this));
+        return ScriptableObjectLoader.allMachines.FindAll(x => x.CanDo(this));
     }
 
     public bool Produces(ItemType itemType)
