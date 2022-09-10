@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class PlayerCrafting : MonoBehaviour
 {
-    [SerializeField] private List<Recipe> craftingRecipes;
-
     private ItemLabelGrid<Process> itemDisplay;
 
     private void Start()
@@ -31,6 +29,7 @@ public class PlayerCrafting : MonoBehaviour
 
     private List<Process> GetProcesses()
     {
-        return craftingRecipes.ConvertAll(x => new Process(x, Inventory.playerInventory, Inventory.playerInventory));
+        List<Recipe> recipes = ScriptableObjectLoader.allCraftingRecipes;
+        return recipes.ConvertAll(x => new Process(x, Inventory.playerInventory, Inventory.playerInventory));
     }
 }

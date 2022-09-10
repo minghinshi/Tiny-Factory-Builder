@@ -14,7 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputs:
   - itemType: {fileID: 11400000, guid: 2e53066d0ec774e4eb530f1b589c6d63, type: 2}
-    count: 250
+    count: 500
   outputs:
-  - itemType: {fileID: 11400000, guid: 34d0c9a07820da449ab47e19cfb192fb, type: 2}
-    count: 1
+  - rid: 3275671836004974595
+  references:
+    version: 2
+    RefIds:
+    - rid: 3275671836004974595
+      type: {class: ItemStack, ns: , asm: Assembly-CSharp}
+      data:
+        itemType: {fileID: 11400000, guid: 34d0c9a07820da449ab47e19cfb192fb, type: 2}
+        count: 1

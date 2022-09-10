@@ -1,17 +1,24 @@
+using Newtonsoft.Json;
 using System;
 using UnityEngine;
-using Newtonsoft.Json;
 
 [Serializable]
-public class ItemStack
+public class ItemStack : IRecipeOutput
 {
-    [SerializeField] [JsonProperty] private ItemType itemType;
-    [SerializeField] [JsonProperty] private int count;
+    [SerializeField, JsonProperty] private ItemType itemType;
+    [SerializeField, JsonProperty] private int count;
 
     public ItemStack(ItemType itemType, int count)
     {
         this.itemType = itemType;
         this.count = count;
+    }
+
+    public ItemStack() : this(null, 0) { }
+
+    public ItemStack GetItemStack()
+    {
+        return this;
     }
 
     public ItemType GetItemType()
@@ -35,7 +42,7 @@ public class ItemStack
         count -= amountToRemove;
     }
 
-    public ItemStack GetCopies(int multiplier)
+    public IRecipeOutput MultiplyBy(int multiplier)
     {
         return new ItemStack(itemType, count * multiplier);
     }

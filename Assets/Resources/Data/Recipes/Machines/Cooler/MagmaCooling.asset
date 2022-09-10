@@ -10,11 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 176c6a98500671842bd2137bf487fcca, type: 3}
-  m_Name: CollectWater
+  m_Name: MagmaCooling
   m_EditorClassIdentifier: 
   inputs:
-  - itemType: {fileID: 11400000, guid: d0ddabd51f4cb384eb5b6c6d923ad381, type: 2}
+  - itemType: {fileID: 11400000, guid: 6351a090d91dcc547bdc9a96dca991ac, type: 2}
     count: 1
-  outputs:
   - itemType: {fileID: 11400000, guid: 63f642dfd507a954d84b3239ac42b1e3, type: 2}
-    count: 64
+    count: 4
+  outputs:
+  - rid: 3275671836004974629
+  references:
+    version: 2
+    RefIds:
+    - rid: 3275671836004974629
+      type: {class: ItemStack, ns: , asm: Assembly-CSharp}
+      data:
+        itemType: {fileID: 11400000, guid: 03af7e846f974f44f8556f5ebf9eeb95, type: 2}
+        count: 1

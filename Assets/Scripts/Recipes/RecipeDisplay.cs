@@ -27,7 +27,7 @@ public class RecipeDisplay
         CreateItemLabelGrid(inputTransform, buildInputLabel, inputs);
     }
 
-    public void ShowOutputs(Func<ItemStack, Transform> buildOutputLabel, List<ItemStack> outputs)
+    public void ShowOutputs(Func<IRecipeOutput, Transform> buildOutputLabel, List<IRecipeOutput> outputs)
     {
         CreateItemLabelGrid(outputTransform, buildOutputLabel, outputs);
     }
@@ -39,7 +39,7 @@ public class RecipeDisplay
 
     private void CreateItemLabelGrid<T>(Transform parent, Func<T, Transform> buildLabel, List<T> items)
     {
-        ItemLabelGrid<T> grid = new ItemLabelGrid<T>(parent);
+        ItemLabelGrid<T> grid = new(parent);
         grid.SetCreateLabelFunc(buildLabel);
         grid.DisplayItems(items);
     }

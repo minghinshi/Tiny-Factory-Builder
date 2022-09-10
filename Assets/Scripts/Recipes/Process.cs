@@ -41,17 +41,27 @@ public class Process
 
     public List<ItemStack> GetSingleOutput()
     {
-        return recipe.GetOutputs();
+        return GetAverageSingleOutput().ConvertAll(x => x.GetItemStack());
+    }
+
+    public List<IRecipeOutput> GetAverageSingleOutput()
+    {
+        return recipe.GetAverageOutputs();
     }
 
     public List<ItemStack> GetBatchInput()
     {
-        return GetBatchItemStacks(GetSingleInput(), GetMaximumCrafts());
+        return GetBatchItems(GetSingleInput(), GetMaximumCrafts());
     }
 
     public List<ItemStack> GetBatchOutput()
     {
-        return GetBatchItemStacks(GetSingleOutput(), GetMaximumCrafts());
+        return GetAverageBatchOutput().ConvertAll(x => x.GetItemStack());
+    }
+
+    public List<IRecipeOutput> GetAverageBatchOutput()
+    {
+        return GetBatchItems(GetAverageSingleOutput(), GetMaximumCrafts());
     }
 
     public List<ItemType> GetMissingItems()
@@ -72,12 +82,12 @@ public class Process
 
     private List<ItemStack> GetNextBatchInput()
     {
-        return GetBatchItemStacks(GetSingleInput(), GetMaximumCrafts() + 1);
+        return GetBatchItems(GetSingleInput(), GetMaximumCrafts() + 1);
     }
 
-    private List<ItemStack> GetBatchItemStacks(List<ItemStack> original, int multiplier)
+    private List<T> GetBatchItems<T>(List<T> original, int multiplier) where T : IRecipeOutput
     {
-        return original.ConvertAll(x => x.GetCopies(multiplier));
+        return original.ConvertAll(x => (T)x.MultiplyBy(multiplier));
     }
 
     private List<ItemType> GetInsufficientItems(List<ItemStack> cost)

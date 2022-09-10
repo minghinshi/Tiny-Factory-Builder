@@ -39,19 +39,14 @@ public class ItemLabelBuilder
         Object.Instantiate(PrefabLoader.image, result).GetComponent<Image>().sprite = itemSprite;
     }
 
-    public void AddCounter(int itemCount)
+    public void AddCounter(string itemCount)
     {
-        Object.Instantiate(PrefabLoader.counter, result).GetComponent<Text>().text = itemCount.ToString("N0");
+        Object.Instantiate(PrefabLoader.counter, result).GetComponent<Text>().text = itemCount;
     }
 
-    public void SetTextColor(Color color)
+    public void SetCounterColor(Color color)
     {
         result.GetComponentInChildren<Text>().color = color;
-    }
-
-    public void SetScale(Vector2 scale)
-    {
-        result.localScale = new Vector3(scale.x, scale.y, 1);
     }
 
     public Transform GetResult()
@@ -64,7 +59,7 @@ public class ItemLabelBuilder
     private void AddPointerAction(EventTriggerType eventTriggerType, UnityAction action)
     {
         EventTrigger trigger = result.GetComponentInChildren<EventTrigger>();
-        EventTrigger.Entry entry = new EventTrigger.Entry { eventID = eventTriggerType };
+        EventTrigger.Entry entry = new() { eventID = eventTriggerType };
         entry.callback.AddListener(x => { action.Invoke(); });
         trigger.triggers.Add(entry);
     }

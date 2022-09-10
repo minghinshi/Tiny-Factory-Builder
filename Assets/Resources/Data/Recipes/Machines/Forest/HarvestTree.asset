@@ -18,7 +18,18 @@ MonoBehaviour:
   - itemType: {fileID: 11400000, guid: 30e534a75945ace4bad54e78dda0d203, type: 2}
     count: 1
   outputs:
-  - itemType: {fileID: 11400000, guid: 327ee48be950ea448b8f1b47eae1a104, type: 2}
-    count: 4
-  - itemType: {fileID: 11400000, guid: 82400f5133c1ac74c8a528163f0d667c, type: 2}
-    count: 16
+  - rid: 3275671836004974616
+  - rid: 3275671836004974617
+  references:
+    version: 2
+    RefIds:
+    - rid: 3275671836004974616
+      type: {class: ItemStack, ns: , asm: Assembly-CSharp}
+      data:
+        itemType: {fileID: 11400000, guid: 82400f5133c1ac74c8a528163f0d667c, type: 2}
+        count: 16
+    - rid: 3275671836004974617
+      type: {class: ItemStack, ns: , asm: Assembly-CSharp}
+      data:
+        itemType: {fileID: 11400000, guid: 327ee48be950ea448b8f1b47eae1a104, type: 2}
+        count: 4

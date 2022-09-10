@@ -10,11 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 176c6a98500671842bd2137bf487fcca, type: 3}
-  m_Name: HarvestSapling
+  m_Name: TreeGrowing
   m_EditorClassIdentifier: 
   inputs:
+  - itemType: {fileID: 11400000, guid: 806d32f256ad8f94d86ee6304e56d303, type: 2}
+    count: 4
   - itemType: {fileID: 11400000, guid: 25d9cbcb6de0a5541a4a19eafd7259ee, type: 2}
     count: 1
   outputs:
-  - itemType: {fileID: 11400000, guid: 82400f5133c1ac74c8a528163f0d667c, type: 2}
-    count: 4
+  - rid: 3275671836004974627
+  references:
+    version: 2
+    RefIds:
+    - rid: 3275671836004974627
+      type: {class: ItemStack, ns: , asm: Assembly-CSharp}
+      data:
+        itemType: {fileID: 11400000, guid: 84803b6194f2b5f4aace45c7d6fbc564, type: 2}
+        count: 1

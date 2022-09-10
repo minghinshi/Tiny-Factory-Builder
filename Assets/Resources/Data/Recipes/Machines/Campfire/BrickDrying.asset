@@ -10,15 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 176c6a98500671842bd2137bf487fcca, type: 3}
-  m_Name: WeatherSand
+  m_Name: BrickDrying
   m_EditorClassIdentifier: 
   inputs:
-  - itemType: {fileID: 11400000, guid: 68e95119662a05f4ca6686129bfb0b1c, type: 2}
-    count: 2
-  - itemType: {fileID: 11400000, guid: 63f642dfd507a954d84b3239ac42b1e3, type: 2}
+  - itemType: {fileID: 11400000, guid: 1b3cf282f0d0a8947b867ee01ed73679, type: 2}
     count: 1
   - itemType: {fileID: 11400000, guid: 4b13c31ccf88ed346b59fbc08941fe7c, type: 2}
     count: 1
   outputs:
-  - itemType: {fileID: 11400000, guid: 60cd5ebf031a0ee488284518d45ab90d, type: 2}
-    count: 4
+  - rid: 3275671836004974612
+  references:
+    version: 2
+    RefIds:
+    - rid: 3275671836004974612
+      type: {class: ItemStack, ns: , asm: Assembly-CSharp}
+      data:
+        itemType: {fileID: 11400000, guid: 2e53066d0ec774e4eb530f1b589c6d63, type: 2}
+        count: 1

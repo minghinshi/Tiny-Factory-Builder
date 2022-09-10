@@ -10,13 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 176c6a98500671842bd2137bf487fcca, type: 3}
-  m_Name: CloudForming
+  m_Name: RainForming
   m_EditorClassIdentifier: 
   inputs:
-  - itemType: {fileID: 11400000, guid: fd7b93c227f68ce49b64fdc98ddfafec, type: 2}
-    count: 4
-  - itemType: {fileID: 11400000, guid: 4b13c31ccf88ed346b59fbc08941fe7c, type: 2}
-    count: 4
-  outputs:
   - itemType: {fileID: 11400000, guid: 6b980fefbfa9ae4488350d401073d362, type: 2}
-    count: 1
+    count: 2
+  outputs:
+  - rid: 3275671836004974620
+  references:
+    version: 2
+    RefIds:
+    - rid: 3275671836004974620
+      type: {class: ItemStack, ns: , asm: Assembly-CSharp}
+      data:
+        itemType: {fileID: 11400000, guid: fd2ff64896651d449b01349125b9ba1b, type: 2}
+        count: 1

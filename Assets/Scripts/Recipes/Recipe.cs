@@ -1,19 +1,22 @@
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Recipe", menuName = "Recipe")]
 public class Recipe : ScriptableObject
 {
-    [SerializeField] private List<ItemStack> inputs;
-    [SerializeField] private List<ItemStack> outputs;
+    [SerializeField] 
+    private List<ItemStack> inputs;
+
+    [SerializeReference, SerializeReferenceButton] 
+    private List<IRecipeOutput> outputs;
 
     public List<ItemStack> GetInputs()
     {
         return inputs;
     }
 
-    public List<ItemStack> GetOutputs()
-    {
+    public List<IRecipeOutput> GetAverageOutputs() {
         return outputs;
     }
 
@@ -24,7 +27,6 @@ public class Recipe : ScriptableObject
 
     public bool Produces(ItemType itemType)
     {
-        foreach (ItemStack itemStack in outputs) if (itemStack.GetItemType().Equals(itemType)) return true;
-        return false;
+        return outputs.ConvertAll(x => x.GetItemType()).Contains(itemType);
     }
 }

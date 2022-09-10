@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 176c6a98500671842bd2137bf487fcca, type: 3}
+  m_Name: AirProduction
+  m_EditorClassIdentifier: 
+  inputs:
+  - itemType: {fileID: 11400000, guid: 84803b6194f2b5f4aace45c7d6fbc564, type: 2}
+    count: 1
+  - itemType: {fileID: 11400000, guid: 806d32f256ad8f94d86ee6304e56d303, type: 2}
+    count: 1
+  outputs:
+  - rid: 3275671836004974613
+  - rid: 3275671836004974614
+  references:
+    version: 2
+    RefIds:
+    - rid: 3275671836004974613
+      type: {class: ItemStack, ns: , asm: Assembly-CSharp}
+      data:
+        itemType: {fileID: 11400000, guid: 84803b6194f2b5f4aace45c7d6fbc564, type: 2}
+        count: 1
+    - rid: 3275671836004974614
+      type: {class: ItemStack, ns: , asm: Assembly-CSharp}
+      data:
+        itemType: {fileID: 11400000, guid: 4b13c31ccf88ed346b59fbc08941fe7c, type: 2}
+        count: 4

@@ -10,13 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 176c6a98500671842bd2137bf487fcca, type: 3}
-  m_Name: TreeGrowing
+  m_Name: RiceGrowing
   m_EditorClassIdentifier: 
   inputs:
+  - itemType: {fileID: 11400000, guid: 389a2b68e9ea103459129e8ea0dfe4eb, type: 2}
+    count: 8
   - itemType: {fileID: 11400000, guid: 806d32f256ad8f94d86ee6304e56d303, type: 2}
     count: 4
-  - itemType: {fileID: 11400000, guid: 25d9cbcb6de0a5541a4a19eafd7259ee, type: 2}
-    count: 1
+  - itemType: {fileID: 11400000, guid: 63f642dfd507a954d84b3239ac42b1e3, type: 2}
+    count: 4
   outputs:
-  - itemType: {fileID: 11400000, guid: 84803b6194f2b5f4aace45c7d6fbc564, type: 2}
-    count: 1
+  - rid: 3275671836004974628
+  references:
+    version: 2
+    RefIds:
+    - rid: 3275671836004974628
+      type: {class: ItemStack, ns: , asm: Assembly-CSharp}
+      data:
+        itemType: {fileID: 11400000, guid: 7314e3cb59e2e3149ab0c0fb98b43868, type: 2}
+        count: 8

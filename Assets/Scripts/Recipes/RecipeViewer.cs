@@ -39,19 +39,22 @@ public class RecipeViewer : MonoBehaviour
     {
         RecipeDisplay display = RecipeDisplay.Create(recipePage);
         display.ShowInputs(BuildItemButton, recipe.GetInputs());
-        display.ShowOutputs(BuildItemButton, recipe.GetOutputs());
+        display.ShowOutputs(BuildItemButton, recipe.GetAverageOutputs());
         display.ShowMachines(BuildMachineButton, recipe.GetMachines());
     }
 
-    private Transform BuildItemButton(ItemStack itemStack)
+    private Transform BuildItemButton(IRecipeOutput item)
     {
-        ItemLabelDirector.BuildItemButton(itemStack, () => ViewRecipes(itemStack.GetItemType()));
+        ItemLabelDirector.builder.AddButton(() => ViewRecipes(item.GetItemType()));
+        if (item is ItemStack itemStack) ItemLabelDirector.BuildItemLabel(itemStack);
+        else if (item is ChanceOutput chanceOutput) ItemLabelDirector.BuildItemLabel(chanceOutput);
         return ItemLabelDirector.builder.GetResult();
     }
 
     private Transform BuildMachineButton(ItemType itemType)
     {
-        ItemLabelDirector.BuildItemButton(itemType, () => ViewRecipes(itemType));
+        ItemLabelDirector.builder.AddButton(() => ViewRecipes(itemType));
+        ItemLabelDirector.BuildItemLabel(itemType);
         return ItemLabelDirector.builder.GetResult();
     }
 
@@ -62,7 +65,8 @@ public class RecipeViewer : MonoBehaviour
 
     private void CreateButton(ItemType itemType)
     {
-        ItemLabelDirector.BuildItemButton(itemType, () => ViewRecipes(itemType));
+        ItemLabelDirector.builder.AddButton(() => ViewRecipes(itemType));
+        ItemLabelDirector.BuildItemLabel(itemType);
         ItemLabelDirector.builder.GetResult().SetParent(itemPage);
     }
 

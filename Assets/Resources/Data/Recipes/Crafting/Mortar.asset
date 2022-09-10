@@ -16,5 +16,12 @@ MonoBehaviour:
   - itemType: {fileID: 11400000, guid: 03af7e846f974f44f8556f5ebf9eeb95, type: 2}
     count: 2
   outputs:
-  - itemType: {fileID: 11400000, guid: da6e9d71a3c166b429eb564dca3ea1d9, type: 2}
-    count: 8
+  - rid: 3275671836004974599
+  references:
+    version: 2
+    RefIds:
+    - rid: 3275671836004974599
+      type: {class: ItemStack, ns: , asm: Assembly-CSharp}
+      data:
+        itemType: {fileID: 11400000, guid: da6e9d71a3c166b429eb564dca3ea1d9, type: 2}
+        count: 8

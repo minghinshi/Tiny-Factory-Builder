@@ -24,19 +24,19 @@ public class TooltipBuilder : MonoBehaviour
     {
         RecipeDisplay display = RecipeDisplay.Create(transform);
         display.ShowInputs(x => BuildSingleCostLabel(x, process), process.GetSingleInput());
-        display.ShowOutputs(BuildItemLabel, process.GetSingleOutput());
+        display.ShowOutputs(BuildItemLabel, process.GetAverageSingleOutput());
     }
 
     public void AddBatchCraftDisplay(Process process)
     {
         RecipeDisplay display = RecipeDisplay.Create(transform);
         display.ShowInputs(x => BuildBatchCostLabel(x, process), process.GetBatchInput());
-        display.ShowOutputs(BuildItemLabel, process.GetBatchOutput());
+        display.ShowOutputs(BuildItemLabel, process.GetAverageBatchOutput());
     }
 
-    private Transform BuildItemLabel(ItemStack itemStack)
+    private Transform BuildItemLabel(IRecipeOutput recipeOutput)
     {
-        ItemLabelDirector.BuildItemLabel(itemStack);
+        ItemLabelDirector.BuildItemLabel(recipeOutput);
         return ItemLabelDirector.builder.GetResult();
     }
 
