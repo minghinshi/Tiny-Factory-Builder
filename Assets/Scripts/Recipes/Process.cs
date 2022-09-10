@@ -24,11 +24,6 @@ public class Process
         Craft(GetBatchInput(), GetBatchOutput());
     }
 
-    public int GetMaximumCrafts()
-    {
-        return GetSingleInput().ConvertAll(x => input.GetItemCount(x.GetItemType()) / x.GetCount()).Min();
-    }
-
     public bool CanCraft()
     {
         return GetSingleInput().TrueForAll(x => input.Contains(x));
@@ -39,11 +34,6 @@ public class Process
         return recipe.GetInputs();
     }
 
-    public List<ItemStack> GetSingleOutput()
-    {
-        return GetAverageSingleOutput().ConvertAll(x => x.GetItemStack());
-    }
-
     public List<IRecipeOutput> GetAverageSingleOutput()
     {
         return recipe.GetAverageOutputs();
@@ -52,11 +42,6 @@ public class Process
     public List<ItemStack> GetBatchInput()
     {
         return GetBatchItems(GetSingleInput(), GetMaximumCrafts());
-    }
-
-    public List<ItemStack> GetBatchOutput()
-    {
-        return GetAverageBatchOutput().ConvertAll(x => x.GetItemStack());
     }
 
     public List<IRecipeOutput> GetAverageBatchOutput()
@@ -72,6 +57,21 @@ public class Process
     public List<ItemType> GetLimitingItems()
     {
         return GetInsufficientItems(GetNextBatchInput());
+    }
+
+    private int GetMaximumCrafts()
+    {
+        return GetSingleInput().ConvertAll(x => input.GetItemCount(x.GetItemType()) / x.GetCount()).Min();
+    }
+
+    private List<ItemStack> GetSingleOutput()
+    {
+        return GetAverageSingleOutput().ConvertAll(x => x.GetItemStack());
+    }
+
+    private List<ItemStack> GetBatchOutput()
+    {
+        return GetAverageBatchOutput().ConvertAll(x => x.GetItemStack());
     }
 
     private void Craft(List<ItemStack> inputs, List<ItemStack> outputs)

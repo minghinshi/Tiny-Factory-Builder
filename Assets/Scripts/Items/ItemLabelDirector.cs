@@ -46,7 +46,7 @@ public class ItemLabelDirector
     public static void BuildCraftingButton(Process process, UnityAction craftingAction)
     {
         builder.AddButton(craftingAction);
-        BuildItemLabel(process.GetSingleOutput()[0].GetItemType());
+        BuildItemLabel(process.GetAverageSingleOutput()[0].GetItemType());
         builder.AddPointerEnterAction(() => Tooltip.instance.ShowTooltip(new CraftingTooltipStrategy(process)));
         builder.AddPointerExitAction(Tooltip.instance.HideTooltip);
     }
