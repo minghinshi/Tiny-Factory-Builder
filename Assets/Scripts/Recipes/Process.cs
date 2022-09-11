@@ -16,12 +16,12 @@ public class Process
 
     public void CraftOnce()
     {
-        Craft(GetSingleInput(), GetSingleOutput());
+        Craft(GetSingleInput(), RollOutput(GetAverageSingleOutput()));
     }
 
     public void BatchCraft()
     {
-        Craft(GetBatchInput(), GetBatchOutput());
+        Craft(GetBatchInput(), RollOutput(GetAverageBatchOutput()));
     }
 
     public bool CanCraft()
@@ -64,14 +64,9 @@ public class Process
         return GetSingleInput().ConvertAll(x => input.GetItemCount(x.GetItemType()) / x.GetCount()).Min();
     }
 
-    private List<ItemStack> GetSingleOutput()
+    private List<ItemStack> RollOutput(List<IRecipeOutput> recipeOutputs)
     {
-        return GetAverageSingleOutput().ConvertAll(x => x.GetItemStack());
-    }
-
-    private List<ItemStack> GetBatchOutput()
-    {
-        return GetAverageBatchOutput().ConvertAll(x => x.GetItemStack());
+        return recipeOutputs.ConvertAll(x => x.GetItemStack()).FindAll(x => !x.IsEmpty());
     }
 
     private void Craft(List<ItemStack> inputs, List<ItemStack> outputs)
