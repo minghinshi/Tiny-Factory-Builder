@@ -1,10 +1,10 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(TooltipBuilder))]
 public class Tooltip : MonoBehaviour
 {
     public static Tooltip instance;
-    private TooltipStrategy tooltipStrategy;
     private VisibilityHandler visibilityHandler;
 
     private void Awake()
@@ -17,29 +17,14 @@ public class Tooltip : MonoBehaviour
         visibilityHandler = GetComponent<VisibilityHandler>();
     }
 
-    private void Update()
-    {
-        if (tooltipStrategy != null && tooltipStrategy.UpdatedThisFrame()) tooltipStrategy.Execute();
-    }
-
-    public void SetStrategy(TooltipStrategy strategy)
-    {
-        tooltipStrategy = strategy;
-    }
-
-    public void ShowTooltip()
+    public void Show(params Action[] buildingSteps)
     {
         visibilityHandler.SetVisibleImmediately();
-        tooltipStrategy.Execute();
+        TooltipBuilder.instance.ResetTooltip();
+        foreach (Action buildingStep in buildingSteps) buildingStep.Invoke();
     }
 
-    public void ShowTooltip(TooltipStrategy strategy)
-    {
-        SetStrategy(strategy);
-        ShowTooltip();
-    }
-
-    public void HideTooltip()
+    public void Hide()
     {
         visibilityHandler.SetInvisibleImmediately();
     }

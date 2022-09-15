@@ -34,7 +34,7 @@ public class Process
         return recipe.GetInputs();
     }
 
-    public List<IRecipeOutput> GetAverageSingleOutput()
+    public List<ICountableItem> GetAverageSingleOutput()
     {
         return recipe.GetAverageOutputs();
     }
@@ -44,17 +44,27 @@ public class Process
         return GetBatchItems(GetSingleInput(), GetMaximumCrafts());
     }
 
-    public List<IRecipeOutput> GetAverageBatchOutput()
+    public List<ICountableItem> GetAverageBatchOutput()
     {
         return GetBatchItems(GetAverageSingleOutput(), GetMaximumCrafts());
     }
 
-    public List<ItemType> GetMissingItems()
+    public bool IsMissing(ItemType itemType)
+    {
+        return GetMissingItems().Contains(itemType);
+    }
+
+    public bool IsLimiting(ItemType itemType)
+    {
+        return GetLimitingItems().Contains(itemType);
+    }
+
+    private List<ItemType> GetMissingItems()
     {
         return GetInsufficientItems(GetSingleInput());
     }
 
-    public List<ItemType> GetLimitingItems()
+    private List<ItemType> GetLimitingItems()
     {
         return GetInsufficientItems(GetNextBatchInput());
     }
@@ -64,7 +74,7 @@ public class Process
         return GetSingleInput().ConvertAll(x => input.GetItemCount(x.GetItemType()) / x.GetCount()).Min();
     }
 
-    private List<ItemStack> RollOutput(List<IRecipeOutput> recipeOutputs)
+    private List<ItemStack> RollOutput(List<ICountableItem> recipeOutputs)
     {
         return recipeOutputs.ConvertAll(x => x.GetItemStack()).FindAll(x => !x.IsEmpty());
     }
@@ -80,7 +90,7 @@ public class Process
         return GetBatchItems(GetSingleInput(), GetMaximumCrafts() + 1);
     }
 
-    private List<T> GetBatchItems<T>(List<T> original, int multiplier) where T : IRecipeOutput
+    private List<T> GetBatchItems<T>(List<T> original, int multiplier) where T : ICountableItem
     {
         return original.ConvertAll(x => (T)x.MultiplyBy(multiplier));
     }

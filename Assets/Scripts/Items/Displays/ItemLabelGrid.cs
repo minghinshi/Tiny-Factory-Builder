@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ItemLabelGrid<T>
 {
-    private Func<T, Transform> CreateLabel;
+    private Func<T, ItemLabel> CreateLabel;
     private Transform transform;
 
     public ItemLabelGrid(Transform transform)
@@ -12,7 +12,7 @@ public class ItemLabelGrid<T>
         this.transform = transform;
     }
 
-    public void SetCreateLabelFunc(Func<T, Transform> func)
+    public void SetCreateLabelFunc(Func<T, ItemLabel> func)
     {
         CreateLabel = func;
     }
@@ -36,6 +36,6 @@ public class ItemLabelGrid<T>
 
     private void DisplayItem(T item)
     {
-        CreateLabel.Invoke(item).SetParent(transform);
+        CreateLabel.Invoke(item).transform.SetParent(transform);
     }
 }

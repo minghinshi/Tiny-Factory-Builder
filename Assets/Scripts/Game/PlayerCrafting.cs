@@ -12,19 +12,17 @@ public class PlayerCrafting : MonoBehaviour
         itemDisplay.DisplayItems(GetProcesses());
     }
 
-    private Transform GenerateCraftingButton(Process process)
+    private ItemLabel GenerateCraftingButton(Process process)
     {
-        ItemLabelDirector.BuildCraftingButton(process, () => Craft(process));
-        return ItemLabelDirector.builder.GetResult();
+        ItemLabelBuilder.instance.BuildCraftingButton(process, () => Craft(process));
+        return ItemLabelBuilder.instance.GetFinishedLabel();
     }
 
     private void Craft(Process process)
     {
-        if (process.CanCraft())
-        {
-            if (Input.GetKey(KeyCode.LeftShift)) process.BatchCraft();
-            else process.CraftOnce();
-        }
+        if (!process.CanCraft()) return;
+        if (Input.GetKey(KeyCode.LeftShift)) process.BatchCraft();
+        else process.CraftOnce();
     }
 
     private List<Process> GetProcesses()

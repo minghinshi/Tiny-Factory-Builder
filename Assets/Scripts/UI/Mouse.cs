@@ -70,7 +70,7 @@ public class Mouse : MonoBehaviour
 
     private void UpdateTooltip(Building building)
     {
-        if (IsPointingAtBuilding()) tooltip.ShowTooltip(new BuildingTooltipStrategy(building));
-        else tooltip.HideTooltip();
+        if (IsPointingAtBuilding()) Tooltip.instance.Show(() => TooltipBuilder.instance.BuildBuildingTooltip(building));
+        else tooltip.Hide();
     }
 }

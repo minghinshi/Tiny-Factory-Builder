@@ -18,11 +18,10 @@ public class PlayerInventory : MonoBehaviour
         inventoryDisplay.SetTargetInventory(Inventory.playerInventory);
     }
 
-    private Transform CreateItemButton(ItemStack itemStack)
+    private ItemLabel CreateItemButton(ItemStack itemStack)
     {
-        ItemLabelDirector.builder.AddButton(() => OnItemButtonPressed(itemStack.GetItemType()));
-        ItemLabelDirector.BuildItemLabel(itemStack);
-        return ItemLabelDirector.builder.GetResult();
+        ItemLabelBuilder.instance.BuildGenericButton(itemStack, () => OnItemButtonPressed(itemStack.GetItemType()));
+        return ItemLabelBuilder.instance.GetFinishedLabel();
     }
 
     private void OnItemButtonPressed(ItemType itemType)

@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class ItemStack : IRecipeOutput
+public class ItemStack : ICountableItem
 {
     [SerializeField, JsonProperty] private ItemType itemType;
     [SerializeField, JsonProperty] private int count;
@@ -31,6 +31,11 @@ public class ItemStack : IRecipeOutput
         return count;
     }
 
+    public string GetCountAsString()
+    {
+        return count.ToString("N0");
+    }
+
     public void Store(int amountToStore)
     {
         count += amountToStore;
@@ -42,7 +47,7 @@ public class ItemStack : IRecipeOutput
         count -= amountToRemove;
     }
 
-    public IRecipeOutput MultiplyBy(int multiplier)
+    public ICountableItem MultiplyBy(int multiplier)
     {
         return new ItemStack(itemType, count * multiplier);
     }

@@ -40,22 +40,19 @@ public class RecipeViewer : MonoBehaviour
         RecipeDisplay display = RecipeDisplay.Create(recipePage);
         display.ShowInputs(BuildItemButton, recipe.GetInputs());
         display.ShowOutputs(BuildItemButton, recipe.GetAverageOutputs());
-        display.ShowMachines(BuildMachineButton, recipe.GetMachines());
+        display.ShowMachines(BuildItemButton, recipe.GetMachines());
     }
 
-    private Transform BuildItemButton(IRecipeOutput item)
+    private ItemLabel BuildItemButton(ICountableItem item)
     {
-        ItemLabelDirector.builder.AddButton(() => ViewRecipes(item.GetItemType()));
-        if (item is ItemStack itemStack) ItemLabelDirector.BuildItemLabel(itemStack);
-        else if (item is ChanceOutput chanceOutput) ItemLabelDirector.BuildItemLabel(chanceOutput);
-        return ItemLabelDirector.builder.GetResult();
+        ItemLabelBuilder.instance.BuildGenericButton(item, () => ViewRecipes(item.GetItemType()));
+        return ItemLabelBuilder.instance.GetFinishedLabel();
     }
 
-    private Transform BuildMachineButton(ItemType itemType)
+    private ItemLabel BuildItemButton(ItemType itemType)
     {
-        ItemLabelDirector.builder.AddButton(() => ViewRecipes(itemType));
-        ItemLabelDirector.BuildItemLabel(itemType);
-        return ItemLabelDirector.builder.GetResult();
+        ItemLabelBuilder.instance.BuildGenericButton(itemType, () => ViewRecipes(itemType));
+        return ItemLabelBuilder.instance.GetFinishedLabel();
     }
 
     private void CreateButtons()
@@ -65,9 +62,7 @@ public class RecipeViewer : MonoBehaviour
 
     private void CreateButton(ItemType itemType)
     {
-        ItemLabelDirector.builder.AddButton(() => ViewRecipes(itemType));
-        ItemLabelDirector.BuildItemLabel(itemType);
-        ItemLabelDirector.builder.GetResult().SetParent(itemPage);
+        BuildItemButton(itemType).transform.SetParent(itemPage);
     }
 
     private void ShowItemPage()

@@ -9,14 +9,14 @@ public class Recipe : ScriptableObject
     private List<ItemStack> inputs;
 
     [SerializeReference, SerializeReferenceButton] 
-    private List<IRecipeOutput> outputs;
+    private List<ICountableItem> outputs;
 
     public List<ItemStack> GetInputs()
     {
         return inputs;
     }
 
-    public List<IRecipeOutput> GetAverageOutputs() {
+    public List<ICountableItem> GetAverageOutputs() {
         return outputs;
     }
 

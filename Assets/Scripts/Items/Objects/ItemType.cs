@@ -1,10 +1,10 @@
 using UnityEngine;
-using Newtonsoft.Json;
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Item")]
 public class ItemType : ScriptableObject
 {
     [SerializeField] private string itemName;
+    [SerializeField] private string itemDescription;
     [SerializeField] private Sprite itemSprite;
 
     public Transform GetNewItemTransform(Vector3 worldPosition)
@@ -23,6 +23,11 @@ public class ItemType : ScriptableObject
     public string GetName()
     {
         return itemName;
+    }
+
+    public string GetDescription()
+    {
+        return itemDescription;
     }
 
     protected Transform CreateTransform()

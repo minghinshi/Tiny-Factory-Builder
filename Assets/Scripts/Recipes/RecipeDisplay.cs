@@ -18,26 +18,26 @@ public class RecipeDisplay
     public static RecipeDisplay Create(Transform parent)
     {
         Transform transform = UnityEngine.Object.Instantiate(PrefabLoader.recipeDisplay, parent);
-        RecipeDisplay recipeDisplay = new RecipeDisplay(transform);
+        RecipeDisplay recipeDisplay = new(transform);
         return recipeDisplay;
     }
 
-    public void ShowInputs(Func<ItemStack, Transform> buildInputLabel, List<ItemStack> inputs)
+    public void ShowInputs(Func<ItemStack, ItemLabel> buildInputLabel, List<ItemStack> inputs)
     {
         CreateItemLabelGrid(inputTransform, buildInputLabel, inputs);
     }
 
-    public void ShowOutputs(Func<IRecipeOutput, Transform> buildOutputLabel, List<IRecipeOutput> outputs)
+    public void ShowOutputs(Func<ICountableItem, ItemLabel> buildOutputLabel, List<ICountableItem> outputs)
     {
         CreateItemLabelGrid(outputTransform, buildOutputLabel, outputs);
     }
 
-    public void ShowMachines(Func<MachineType, Transform> buildMachineLabel, List<MachineType> machines)
+    public void ShowMachines(Func<MachineType, ItemLabel> buildMachineLabel, List<MachineType> machines)
     {
         CreateItemLabelGrid(machineTransform, buildMachineLabel, machines);
     }
 
-    private void CreateItemLabelGrid<T>(Transform parent, Func<T, Transform> buildLabel, List<T> items)
+    private void CreateItemLabelGrid<T>(Transform parent, Func<T, ItemLabel> buildLabel, List<T> items)
     {
         ItemLabelGrid<T> grid = new(parent);
         grid.SetCreateLabelFunc(buildLabel);

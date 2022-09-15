@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class ChanceOutput : IRecipeOutput
+public class ChanceOutput : ICountableItem
 {
     [SerializeField] private ItemType itemType;
     [SerializeField] private float averageItems;
@@ -25,7 +25,12 @@ public class ChanceOutput : IRecipeOutput
         return averageItems;
     }
 
-    public IRecipeOutput MultiplyBy(int multiplier)
+    public string GetCountAsString()
+    {
+        return averageItems.ToString("N2");
+    }
+
+    public ICountableItem MultiplyBy(int multiplier)
     {
         return new ChanceOutput(itemType, averageItems * multiplier);
     }
