@@ -11,7 +11,9 @@ public class ItemLabel : MonoBehaviour
     private Button button;
 
     private bool generateTooltips = false;
+    private bool isHoveredOver = false;
     private readonly List<Action> tooltipBuildingSteps = new();
+    private readonly List<EventHandler> tooltipUpdateEvents = new();
 
     public static ItemLabel Create()
     {
@@ -20,11 +22,18 @@ public class ItemLabel : MonoBehaviour
 
     public void OnPointerEnter()
     {
-        if (generateTooltips) Tooltip.instance.Show(tooltipBuildingSteps.ToArray());
+        isHoveredOver = true;
+        if (generateTooltips) DisplayTooltip();
+    }
+
+    public void UpdateTooltip()
+    {
+        if (isHoveredOver && generateTooltips) DisplayTooltip();
     }
 
     public void OnPointerExit()
     {
+        isHoveredOver = false;
         if (generateTooltips) Tooltip.instance.Hide();
     }
 
@@ -60,5 +69,10 @@ public class ItemLabel : MonoBehaviour
     {
         generateTooltips = true;
         tooltipBuildingSteps.AddRange(actions);
+    }
+
+    private void DisplayTooltip()
+    {
+        Tooltip.instance.Show(tooltipBuildingSteps.ToArray());
     }
 }

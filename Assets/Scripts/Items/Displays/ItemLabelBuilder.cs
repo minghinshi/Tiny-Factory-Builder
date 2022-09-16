@@ -1,4 +1,3 @@
-using UnityEngine;
 using UnityEngine.Events;
 
 public class ItemLabelBuilder
@@ -53,11 +52,8 @@ public class ItemLabelBuilder
     {
         BuildGenericButton(process.GetAverageSingleOutput()[0].GetItemType(), onClick);
         GetLabel().AddTooltipBuildingSteps(() => TooltipBuilder.instance.AddCraftingDisplay(process));
-        //GetLabel().AddTooltipUpdateConditions(UpdateCraftingButton);
+        GetLabel().AddButtonAction(GetLabel().UpdateTooltip);
+        KeyboardHandler.instance.ShiftPressed += GetLabel().UpdateTooltip;
+        KeyboardHandler.instance.ShiftReleased += GetLabel().UpdateTooltip;
     }
-
-    /*private bool UpdateCraftingButton()
-    {
-        return Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.LeftShift);
-    }*/
 }
