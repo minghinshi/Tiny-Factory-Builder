@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Tree
   m_EditorClassIdentifier: 
   itemName: Tree
+  itemDescription: 
   itemSprite: {fileID: 21300000, guid: ebb39245d3a4e75408d8aaab354f9bc5, type: 3}

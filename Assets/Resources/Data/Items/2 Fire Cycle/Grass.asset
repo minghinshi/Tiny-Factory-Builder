@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Grass
   m_EditorClassIdentifier: 
   itemName: Grass
+  itemDescription: 
   itemSprite: {fileID: 21300000, guid: 5c75b78741bf24b438b3b9916675a2e6, type: 3}

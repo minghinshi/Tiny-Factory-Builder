@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: Conveyor
   m_EditorClassIdentifier: 
   itemName: Waterway
+  itemDescription: 'A channel of water with canoes to transport items, in the direction
+    of the arrow.
+
+    When next to a machine, it can extract from and insert into
+    them.'
   itemSprite: {fileID: 21300000, guid: 73532b652c8584e4695eb2435967c5c4, type: 3}
   size: {x: 1, y: 1}
   inputPositions:

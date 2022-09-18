@@ -23,7 +23,7 @@ public class TooltipBuilder : MonoBehaviour
     public void AddItemInfo(ItemType itemType)
     {
         AddText(itemType.GetName());
-        AddText(itemType.GetDescription());
+        if(itemType.GetDescription() != "") AddText(itemType.GetDescription());
     }
 
     public void AddInventoryDisplay(Inventory target)

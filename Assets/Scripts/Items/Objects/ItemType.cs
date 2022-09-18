@@ -4,7 +4,7 @@ using UnityEngine;
 public class ItemType : ScriptableObject
 {
     [SerializeField] private string itemName;
-    [SerializeField] private string itemDescription;
+    [SerializeField, TextArea] private string itemDescription;
     [SerializeField] private Sprite itemSprite;
 
     public Transform GetNewItemTransform(Vector3 worldPosition)

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AirJar
   m_EditorClassIdentifier: 
   itemName: Air Jar
+  itemDescription: Generates air out of nothing.
   itemSprite: {fileID: 21300000, guid: ea352b02219b6f943a2f4ca0db4c4036, type: 3}
   size: {x: 1, y: 1}
-  outputPosition: {x: 0, y: 1}
   producedItem: {fileID: 11400000, guid: 4b13c31ccf88ed346b59fbc08941fe7c, type: 2}

@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Fire
   m_EditorClassIdentifier: 
   itemName: Fire
+  itemDescription: 
   itemSprite: {fileID: 21300000, guid: 1dabe9e8d6c928240aa9c97dfbc3ecd1, type: 3}

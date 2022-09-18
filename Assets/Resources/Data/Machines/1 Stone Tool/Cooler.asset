@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: Cooler
   m_EditorClassIdentifier: 
   itemName: Cooler
+  itemDescription: Cools down hot materials with water.
   itemSprite: {fileID: 21300000, guid: c6da9accf9b09b5469165a47999a1f65, type: 3}
   size: {x: 3, y: 3}
-  outputPosition: {x: 3, y: 1}
-  inputPositions:
-  - {x: 0, y: 1}
   recipes:
   - {fileID: 11400000, guid: fe34b10e4833677419a109100338c101, type: 2}

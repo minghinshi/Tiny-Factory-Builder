@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Splitter
   m_EditorClassIdentifier: 
   itemName: Split Waterway
+  itemDescription: Items input from the side with an arrow will be distributed to
+    the other 3 sides.
   itemSprite: {fileID: 21300000, guid: 52e164cddcef6bb498547534a22c1bba, type: 3}
   size: {x: 1, y: 1}
   inputPositions:

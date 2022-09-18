@@ -40,12 +40,14 @@ public class ItemLabelBuilder
     {
         GetLabel().AddButton(onClick);
         GetLabel().AddImage(itemType);
+        GetLabel().AddTooltipBuildingSteps(() => TooltipBuilder.instance.AddItemInfo(itemType));
     }
 
     public void BuildGenericButton(ICountableItem countableItem, params UnityAction[] onClick)
     {
         GetLabel().AddButton(onClick);
         BuildLabelWithCounter(countableItem);
+        GetLabel().AddTooltipBuildingSteps(() => TooltipBuilder.instance.AddItemInfo(countableItem.GetItemType()));
     }
 
     public void BuildCraftingButton(Process process, params UnityAction[] onClick)

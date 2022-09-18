@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Rock
   m_EditorClassIdentifier: 
   itemName: Rock
+  itemDescription: 
   itemSprite: {fileID: 21300000, guid: 243ca7cfc695be744bb72eb7820b56b9, type: 3}

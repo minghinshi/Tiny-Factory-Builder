@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Soil
   m_EditorClassIdentifier: 
   itemName: Soil
+  itemDescription: 
   itemSprite: {fileID: 21300000, guid: 81101681a3a16324895708ab6a5c853e, type: 3}

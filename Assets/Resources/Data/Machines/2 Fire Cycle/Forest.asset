@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Forest
   m_EditorClassIdentifier: 
   itemName: Forest
+  itemDescription: Provides space to grow and harvest trees.
   itemSprite: {fileID: 21300000, guid: b7399e6a28a36fb439324d8ef2e7fa9a, type: 3}
   size: {x: 3, y: 3}
   recipes:

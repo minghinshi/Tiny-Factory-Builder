@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Branch
   m_EditorClassIdentifier: 
   itemName: Branch
+  itemDescription: 
   itemSprite: {fileID: 21300000, guid: e79fc29814851f840ac0b3fed90bae1a, type: 3}

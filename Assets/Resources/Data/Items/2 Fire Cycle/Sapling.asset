@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Sapling
   m_EditorClassIdentifier: 
   itemName: Sapling
+  itemDescription: 
   itemSprite: {fileID: 21300000, guid: 56b658db1b230b34882b469d91d6db7c, type: 3}

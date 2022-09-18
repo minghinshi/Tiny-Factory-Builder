@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EarthJar
   m_EditorClassIdentifier: 
   itemName: Earth Jar
+  itemDescription: Generates soil out of nothing.
   itemSprite: {fileID: 21300000, guid: 74d7bf75b66586a4cb24cbb20a77a5a5, type: 3}
   size: {x: 1, y: 1}
-  outputPosition: {x: 0, y: 1}
   producedItem: {fileID: 11400000, guid: f0b2162ea2530df4486a5295d534a008, type: 2}

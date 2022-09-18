@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Water
   m_EditorClassIdentifier: 
   itemName: Water
+  itemDescription: 
   itemSprite: {fileID: 21300000, guid: 8841df025766aad43b63c158f2a3f484, type: 3}

@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Log
   m_EditorClassIdentifier: 
   itemName: Log
+  itemDescription: 
   itemSprite: {fileID: 21300000, guid: 0ff3d237c50384343b68606c58aff6e4, type: 3}

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Campfire
   m_EditorClassIdentifier: 
   itemName: Campfire
+  itemDescription: Heats up, dries and burns materials.
   itemSprite: {fileID: 21300000, guid: 46cd99a2e0a93f348b46fb73fc58838f, type: 3}
   size: {x: 3, y: 3}
   recipes:

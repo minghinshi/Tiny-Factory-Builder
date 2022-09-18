@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: GrowthEssence
   m_EditorClassIdentifier: 
   itemName: Growth Essence
+  itemDescription: 
   itemSprite: {fileID: 21300000, guid: 53f7132aa5f2f6f4b8dc0a5f8f7d0382, type: 3}
