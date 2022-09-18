@@ -1,7 +1,6 @@
-using System;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using UnityEngine;
-using Newtonsoft.Json;
 
 public class Conveyor : Building
 {

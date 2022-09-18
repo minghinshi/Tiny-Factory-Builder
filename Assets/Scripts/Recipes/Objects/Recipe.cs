@@ -1,14 +1,13 @@
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Recipe", menuName = "Recipe")]
 public class Recipe : ScriptableObject
 {
-    [SerializeField] 
+    [SerializeField]
     private List<ItemStack> inputs;
 
-    [SerializeReference, SerializeReferenceButton] 
+    [SerializeReference, SerializeReferenceButton]
     private List<ICountableItem> outputs;
 
     public List<ItemStack> GetInputs()
@@ -16,7 +15,8 @@ public class Recipe : ScriptableObject
         return inputs;
     }
 
-    public List<ICountableItem> GetAverageOutputs() {
+    public List<ICountableItem> GetAverageOutputs()
+    {
         return outputs;
     }
 

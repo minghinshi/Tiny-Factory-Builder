@@ -1,6 +1,6 @@
+using Newtonsoft.Json;
 using System;
 using UnityEngine;
-using Newtonsoft.Json;
 
 public class Gatherer : Producer
 {

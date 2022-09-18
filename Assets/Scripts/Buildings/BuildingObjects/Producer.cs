@@ -1,6 +1,6 @@
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.UI;
-using Newtonsoft.Json;
 
 public abstract class Producer : Building
 {

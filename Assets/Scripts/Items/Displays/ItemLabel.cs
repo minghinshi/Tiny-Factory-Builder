@@ -13,7 +13,6 @@ public class ItemLabel : MonoBehaviour
     private bool generateTooltips = false;
     private bool isHoveredOver = false;
     private readonly List<Action> tooltipBuildingSteps = new();
-    private readonly List<EventHandler> tooltipUpdateEvents = new();
 
     public static ItemLabel Create()
     {

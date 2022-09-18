@@ -1,6 +1,6 @@
-using UnityEngine;
-using Newtonsoft.Json;
 using JsonSubTypes;
+using Newtonsoft.Json;
+using UnityEngine;
 
 [JsonConverter(typeof(JsonSubtypes))]
 [JsonSubtypes.KnownSubTypeWithProperty(typeof(Conveyor), "conveyorType")]
