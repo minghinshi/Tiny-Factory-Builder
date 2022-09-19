@@ -45,9 +45,8 @@ public class ItemLabelBuilder
 
     public void BuildGenericButton(ICountableItem countableItem, params UnityAction[] onClick)
     {
-        GetLabel().AddButton(onClick);
-        BuildLabelWithCounter(countableItem);
-        GetLabel().AddTooltipBuildingSteps(() => TooltipBuilder.instance.AddItemInfo(countableItem.GetItemType()));
+        BuildGenericButton(countableItem.GetItemType(), onClick);
+        GetLabel().GetCounter().ShowCountOf(countableItem);
     }
 
     public void BuildCraftingButton(Process process, params UnityAction[] onClick)
