@@ -44,4 +44,8 @@ While placing items:
 ## Acknowledgements  
 Building placing sound: https://freesound.org/s/537709/  
 Building removing sound: https://freesound.org/s/512138/  
+
+Background music: Easy Lemon by Kevin MacLeod (https://incompetech.com)  
+Licensed under Creative Commons: By Attribution 3.0 License (http://creativecommons.org/licenses/by/3.0/)  
+
 Font: https://fonts.google.com/specimen/Outfit  
