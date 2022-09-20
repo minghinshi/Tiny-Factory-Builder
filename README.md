@@ -42,8 +42,11 @@ While placing items:
 - Hold both to insert 1,000
 
 ## Acknowledgements  
-Building placing sound: https://freesound.org/s/537709/  
+Building/Item placing sound: https://freesound.org/s/537709/  
 Building removing sound: https://freesound.org/s/512138/  
+Item removing sound: https://freesound.org/s/540568/  
+Crafting sound: https://freesound.org/s/506052/  
+Error sound: https://freesound.org/s/565133/  
 
 Background music: Easy Lemon by Kevin MacLeod (https://incompetech.com)  
 Licensed under Creative Commons: By Attribution 3.0 License (http://creativecommons.org/licenses/by/3.0/)  
