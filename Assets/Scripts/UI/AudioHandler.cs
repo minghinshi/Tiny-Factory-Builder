@@ -5,28 +5,34 @@ public class AudioHandler : MonoBehaviour
     public static AudioHandler instance;
 
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip placementSound;
-    [SerializeField] private AudioClip destroySound;
+    private bool isPlaying = false;
+
+    public AudioClip placementSound;
+    public AudioClip destroySound;
+    public AudioClip pickUpSound;
+    public AudioClip craftingSound;
+    public AudioClip errorSound;
 
     private void Awake()
     {
         instance = this;
     }
 
-    public void RandomizePitch()
+    private void Update()
     {
-        audioSource.pitch = Random.Range(0.9f, 1.1f);
+        isPlaying = false;
     }
 
-    public void PlayPlacement()
+    public void PlaySound(AudioClip sound, bool randomizePitch = true)
     {
-        RandomizePitch();
-        audioSource.PlayOneShot(placementSound);
+        if (isPlaying) return;
+        isPlaying = true;
+        SetPitch(randomizePitch);
+        audioSource.PlayOneShot(sound);
     }
 
-    public void PlayDestroy()
+    private void SetPitch(bool randomizePitch)
     {
-        RandomizePitch();
-        audioSource.PlayOneShot(destroySound);
+        audioSource.pitch = randomizePitch ? Random.Range(0.9f, 1.1f) : 1f;
     }
 }

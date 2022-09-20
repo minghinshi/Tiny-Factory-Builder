@@ -32,7 +32,7 @@ public class ItemPlacement : Placement
 
     protected override void CheckInputs()
     {
-        if (Input.GetMouseButtonDown(0) && Mouse.instance.IsPointingAtWorld()) PlaceItem();
+        if (Input.GetMouseButtonDown(0) && Mouse.instance.IsPointingAtWorld()) OnClick();
         base.CheckInputs();
     }
 
@@ -41,15 +41,17 @@ public class ItemPlacement : Placement
         previewTransform.position = Vector3.Lerp(previewTransform.position, Mouse.instance.GetWorldPosition(), Time.deltaTime * 20f);
     }
 
-    private void PlaceItem()
+    private void OnClick()
     {
         Building target = Mouse.instance.GetTargetBuilding();
-        if (target != null && target.CanInsertByPlayer())
-        {
-            ItemStack itemToPlace = new ItemStack(itemType, GetItemCount());
-            target.Insert(itemToPlace);
-            Inventory.playerInventory.RemoveCopyOf(itemToPlace);
-        }
+        if (target != null && target.CanInsertByPlayer()) PlaceItem(target);
+    }
+
+    private void PlaceItem(Building target) {
+        ItemStack itemToPlace = new(itemType, GetItemCount());
+        target.Insert(itemToPlace);
+        Inventory.playerInventory.RemoveCopyOf(itemToPlace);
+        AudioHandler.instance.PlaySound(AudioHandler.instance.placementSound);
     }
 
     private int GetItemCount()

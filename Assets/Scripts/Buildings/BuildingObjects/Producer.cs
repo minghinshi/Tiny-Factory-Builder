@@ -28,7 +28,7 @@ public abstract class Producer : Building
 
     public override void OnClick()
     {
-        outputInventory.TransferTo(Inventory.playerInventory);
+        if (outputInventory.HasItems()) GiveOutputsToPlayer();
     }
 
     public override bool CanExtract() => outputInventory.HasItems();
@@ -58,5 +58,11 @@ public abstract class Producer : Building
     {
         timer.Reset();
         ProduceOutputs();
+    }
+
+    private void GiveOutputsToPlayer()
+    {
+        outputInventory.TransferTo(Inventory.playerInventory);
+        AudioHandler.instance.PlaySound(AudioHandler.instance.pickUpSound);
     }
 }

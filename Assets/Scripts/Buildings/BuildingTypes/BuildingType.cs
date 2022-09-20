@@ -37,7 +37,7 @@ public abstract class BuildingType : ItemType
         if (GridSystem.instance.CanPlace(position, GetTransformedSize(direction)))
         {
             CreateBuilding(position, direction).Initialize();
-            AudioHandler.instance.PlayPlacement();
+            AudioHandler.instance.PlaySound(AudioHandler.instance.placementSound);
             Inventory.playerInventory.Remove(this, 1);
         }
     }

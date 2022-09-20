@@ -89,7 +89,7 @@ public class GridSystem
         foreach (Vector2Int position in GetCellsInBuilding(building)) buildingPositions.Remove(position);
         building.Destroy();
         buildings.Remove(building);
-        AudioHandler.instance.PlayDestroy();
+        AudioHandler.instance.PlaySound(AudioHandler.instance.destroySound);
     }
 
     private void OccupyCell(Building building, Vector2Int position)

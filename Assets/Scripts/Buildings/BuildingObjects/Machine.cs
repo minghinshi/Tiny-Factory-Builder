@@ -16,7 +16,7 @@ public class Machine : Producer
     public override void OnClick()
     {
         base.OnClick();
-        if (Input.GetKey(KeyCode.LeftShift)) inputInventory.TransferTo(Inventory.playerInventory);
+        if (Input.GetKey(KeyCode.LeftShift) && inputInventory.HasItems()) GiveInputsToPlayer();
     }
 
     public override void Initialize()
@@ -88,5 +88,11 @@ public class Machine : Producer
             if (craftingRequest.CanCraft()) return craftingRequest;
         }
         return null;
+    }
+
+    private void GiveInputsToPlayer()
+    {
+        inputInventory.TransferTo(Inventory.playerInventory);
+        AudioHandler.instance.PlaySound(AudioHandler.instance.pickUpSound);
     }
 }

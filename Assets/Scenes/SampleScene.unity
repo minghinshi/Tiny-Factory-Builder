@@ -913,6 +913,7 @@ GameObject:
   - component: {fileID: 462353161}
   - component: {fileID: 462353163}
   - component: {fileID: 462353162}
+  - component: {fileID: 462353164}
   m_Layer: 5
   m_Name: TooltipContainer
   m_TagString: Untagged
@@ -981,6 +982,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!225 &462353164
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 462353160}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1024,6 +1037,9 @@ MonoBehaviour:
   audioSource: {fileID: 360772167}
   placementSound: {fileID: 8300000, guid: a497884ab247fc84fa2009fe614236b6, type: 3}
   destroySound: {fileID: 8300000, guid: 19fba0853ef94bd408295e8fd108419d, type: 3}
+  pickUpSound: {fileID: 8300000, guid: 3915f8b543f9194429cafa65e5ec4541, type: 3}
+  craftingSound: {fileID: 8300000, guid: 171f2571ebef19f41b5d19606fe88fac, type: 3}
+  errorSound: {fileID: 8300000, guid: 1986018889b14a94b90c12a6cde0cbbf, type: 3}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
