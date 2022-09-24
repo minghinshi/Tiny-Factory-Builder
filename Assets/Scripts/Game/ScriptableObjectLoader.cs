@@ -5,8 +5,15 @@ using UnityEngine;
 public static class ScriptableObjectLoader
 {
     public static readonly ItemTypeLoader itemTypeLoader = ItemTypeLoader.Create();
-    public static readonly List<MachineType> allMachines = Resources.LoadAll<MachineType>("Data/Machines").ToList();
-    public static readonly List<GathererType> starterMachines = Resources.LoadAll<GathererType>("Data/Machines/Starters").ToList();
-    public static readonly List<Recipe> allRecipes = Resources.LoadAll<Recipe>("Data/Recipes").ToList();
-    public static readonly List<Recipe> allCraftingRecipes = Resources.LoadAll<Recipe>("Data/Recipes/Crafting").ToList();
+    public static readonly List<MachineType> allMachines = GetObjects<MachineType>("Machines");
+    public static readonly List<GathererType> starterMachines = GetObjects<GathererType>("Machines/Starters");
+    public static readonly List<Recipe> allRecipes = GetObjects<Recipe>("Recipes");
+    public static readonly List<Recipe> allCraftingRecipes = GetObjects<Recipe>("Recipes/Crafting");
+    public static readonly List<DefaultStage> allDefaultStages = GetObjects<DefaultStage>("Stages");
+    public static readonly List<LockedStage> allLockedStages = GetObjects<LockedStage>("Stages");
+
+    private static List<T> GetObjects<T>(string path) where T : Object
+    {
+        return Resources.LoadAll<T>("Data/" + path).ToList();
+    }
 }

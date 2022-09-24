@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 
-public class FileData
+public class SaveFile
 {
     public Inventory PlayerInventory { get; set; }
     public List<Building> Buildings { get; set; }
 
-    public static FileData GetCurrentData()
+    public static SaveFile GetCurrentData()
     {
         return new()
         {
