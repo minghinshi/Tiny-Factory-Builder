@@ -39,13 +39,11 @@ public class SaveManager : MonoBehaviour
     {
         string json = File.ReadAllText(GetSaveFilePath());
         JsonConvert.DeserializeObject<SaveFile>(json, serializerSettings).LoadFile();
-        Debug.Log("Loading game...");
     }
 
     private void SaveGame()
     {
         string json = JsonConvert.SerializeObject(SaveFile.GetCurrentData(), serializerSettings);
         File.WriteAllText(GetSaveFilePath(), json);
-        Debug.Log("Saving game...");
     }
 }

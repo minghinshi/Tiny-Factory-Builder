@@ -3,12 +3,23 @@ using UnityEngine;
 
 public class PlayerCrafting : MonoBehaviour
 {
+    public static PlayerCrafting instance;
+
     private ItemLabelGrid<Process> itemDisplay;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
         itemDisplay = new ItemLabelGrid<Process>(transform);
         itemDisplay.SetCreateLabelFunc(GenerateCraftingButton);
+    }
+
+    public void UpdateDisplay()
+    {
         itemDisplay.DisplayItems(GetProcesses());
     }
 
@@ -37,7 +48,7 @@ public class PlayerCrafting : MonoBehaviour
 
     private List<Process> GetProcesses()
     {
-        List<Recipe> recipes = ScriptableObjectLoader.allCraftingRecipes;
+        List<Recipe> recipes = UnlockHandler.instance.GetUnlockedCraftingRecipes();
         return recipes.ConvertAll(x => new Process(x, Inventory.playerInventory, Inventory.playerInventory));
     }
 }

@@ -5,8 +5,8 @@ using UnityEngine.UI;
 public abstract class Producer : Building
 {
     [JsonProperty] protected Inventory outputInventory = new();
-
     protected Timer timer;
+    private ProducerVisual visual;
 
     protected Producer(Vector2Int gridPosition, Direction direction) : base(gridPosition, direction) { }
 
@@ -40,19 +40,34 @@ public abstract class Producer : Building
         return itemStack;
     }
 
-    public void AddProgressBar()
-    {
-        Transform progressBar = Object.Instantiate(PrefabLoader.progressBar, transform);
-        timer.SetSlider(progressBar.GetComponent<Slider>());
-    }
-
     public Inventory GetOutputInventory()
     {
         return outputInventory;
     }
 
+    public Timer GetTimer()
+    {
+        return timer;
+    }
+
     protected abstract Timer GetNewTimer();
     protected abstract void ProduceOutputs();
+
+    protected override void CreateVisuals()
+    {
+        visual = ProducerVisual.Create(this);
+    }
+
+    protected override BuildingVisual GetVisuals()
+    {
+        return visual;
+    }
+
+    private void AddProgressBar()
+    {
+        Transform progressBar = Object.Instantiate(PrefabLoader.progressBar, visual.transform);
+        timer.SetSlider(progressBar.GetComponent<Slider>());
+    }
 
     private void OnTimerEnded()
     {

@@ -47,7 +47,8 @@ public class ItemPlacement : Placement
         if (target != null && target.CanInsertByPlayer()) PlaceItem(target);
     }
 
-    private void PlaceItem(Building target) {
+    private void PlaceItem(Building target)
+    {
         ItemStack itemToPlace = new(itemType, GetItemCount());
         target.Insert(itemToPlace);
         Inventory.playerInventory.RemoveCopyOf(itemToPlace);

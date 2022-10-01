@@ -14,6 +14,11 @@ public class ItemLabel : MonoBehaviour
     private bool isHoveredOver = false;
     private readonly List<Action> tooltipBuildingSteps = new();
 
+    private void OnDestroy()
+    {
+        if (IsTooltipActive()) OnPointerExit();
+    }
+
     public static ItemLabel Create()
     {
         return Instantiate(PrefabLoader.emptyLabel).GetComponent<ItemLabel>();
@@ -27,7 +32,7 @@ public class ItemLabel : MonoBehaviour
 
     public void UpdateTooltip()
     {
-        if (isHoveredOver && generateTooltips) DisplayTooltip();
+        if (IsTooltipActive()) DisplayTooltip();
     }
 
     public void OnPointerExit()
@@ -73,5 +78,10 @@ public class ItemLabel : MonoBehaviour
     private void DisplayTooltip()
     {
         Tooltip.instance.Show(tooltipBuildingSteps.ToArray());
+    }
+
+    private bool IsTooltipActive()
+    {
+        return isHoveredOver && generateTooltips;
     }
 }

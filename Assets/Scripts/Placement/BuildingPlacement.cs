@@ -3,44 +3,38 @@ using UnityEngine;
 public class BuildingPlacement : Placement
 {
     private readonly BuildingType buildingType;
-    private readonly Transform previewTransform;
-    private readonly SpriteRenderer spriteRenderer;
-
     private Direction direction = Direction.North;
-
-    private Vector3 previewTargetPosition;
-    private float targetRotation;
-
-    private readonly Color canPlaceColor = new Color(130 / 255f, 224 / 255f, 170 / 255f, .75f);
-    private readonly Color cannotPlaceColor = new Color(241 / 255f, 148 / 255f, 138 / 255f, .75f);
-
+    private readonly GhostBuildingVisual visual;
     private bool placedBuildingHere;
 
     public BuildingPlacement(BuildingType buildingType)
     {
         this.buildingType = buildingType;
-        previewTransform = buildingType.GetNewBuildingTransform(Mouse.instance.GetGridPosition(), Direction.North);
-        spriteRenderer = previewTransform.GetComponent<SpriteRenderer>();
+        visual = GhostBuildingVisual.Create(this);
 
-        UpdatePreview();
+        UpdateVisual();
         Mouse.instance.GridPositionChanged += OnMousePositionChanged;
     }
 
     public override void Update()
     {
-        RenderPreview();
         CheckInputs();
     }
 
     public override void Destroy()
     {
         Mouse.instance.GridPositionChanged -= OnMousePositionChanged;
-        Object.Destroy(previewTransform.gameObject);
+        visual.Destroy();
     }
 
     public override ItemType GetItemType()
     {
         return buildingType;
+    }
+
+    public Direction GetDirection()
+    {
+        return direction;
     }
 
     protected override void CheckInputs()
@@ -50,10 +44,16 @@ public class BuildingPlacement : Placement
         base.CheckInputs();
     }
 
-    protected override void DestroyBuilding()
+    private void OnMousePositionChanged(Vector2Int _)
     {
-        base.DestroyBuilding();
+        UpdateVisual();
         placedBuildingHere = false;
+    }
+
+    private void RotateBuilding()
+    {
+        direction = direction.RotateClockwise();
+        UpdateVisual();
     }
 
     private void PlaceBuilding()
@@ -63,48 +63,15 @@ public class BuildingPlacement : Placement
         placedBuildingHere = true;
     }
 
-    private void RotateBuilding()
+    protected override void DestroyBuilding()
     {
-        direction = direction.RotateClockwise();
-        targetRotation = direction.GetRotationInDegrees();
-    }
-
-    private void OnMousePositionChanged(Vector2Int gridPosition)
-    {
-        UpdatePreview();
+        base.DestroyBuilding();
         placedBuildingHere = false;
     }
 
-    private void UpdatePreview()
+    private void UpdateVisual()
     {
-        UpdateTargetPosition();
-        UpdateColor();
-    }
-
-    private void UpdateTargetPosition()
-    {
-        previewTargetPosition = GridSystem.instance.GetCentreWorldPosition(Mouse.instance.GetGridPosition(), buildingType.GetSize());
-    }
-
-    private void UpdateColor()
-    {
-        if (GridSystem.instance.CanPlace(Mouse.instance.GetGridPosition(), buildingType.GetTransformedSize(direction))) SetCanPlaceColor();
-        else SetCannotPlaceColor();
-    }
-
-    private void SetCanPlaceColor()
-    {
-        spriteRenderer.color = canPlaceColor;
-    }
-
-    private void SetCannotPlaceColor()
-    {
-        spriteRenderer.color = cannotPlaceColor;
-    }
-
-    private void RenderPreview()
-    {
-        previewTransform.position = Vector3.Lerp(previewTransform.position, previewTargetPosition, Time.deltaTime * 20f);
-        previewTransform.eulerAngles = new Vector3(0f, 0f, Mathf.LerpAngle(previewTransform.eulerAngles.z, targetRotation, Time.deltaTime * 20f));
+        visual.UpdateTarget(Mouse.instance.GetGridPosition(), direction);
+        visual.SetColor(GridSystem.instance.CanPlace(Mouse.instance.GetGridPosition(), buildingType.GetTransformedSize(direction)));
     }
 }

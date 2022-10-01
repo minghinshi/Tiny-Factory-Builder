@@ -7,41 +7,19 @@ public class GridSystem
 {
     public static GridSystem instance = new GridSystem();
 
-    private const float cellSize = 1f;
     private List<Building> buildings = new();
     private Dictionary<Vector2Int, Building> buildingPositions = new();
 
     public Vector2Int GetGridPosition(Vector3 worldPosition)
     {
-        int x = Mathf.FloorToInt(worldPosition.x / cellSize);
-        int y = Mathf.FloorToInt(worldPosition.y / cellSize);
+        int x = Mathf.FloorToInt(worldPosition.x);
+        int y = Mathf.FloorToInt(worldPosition.y);
         return new Vector2Int(x, y);
     }
 
-    public Vector3 GetCornerWorldPosition(Vector2Int gridPosition)
+    public Vector3 GetWorldPosition(Vector2Int gridPosition, Vector2Int size)
     {
-        return new Vector3(gridPosition.x * cellSize, gridPosition.y * cellSize);
-    }
-
-    public Vector3 GetCentreWorldPosition(Vector2Int gridPosition)
-    {
-        return new Vector3((gridPosition.x + 0.5f) * cellSize, (gridPosition.y + 0.5f) * cellSize);
-    }
-
-    public Vector3 GetCentreWorldPosition(Vector2Int gridPosition, Vector2Int size)
-    {
-        return new Vector3((gridPosition.x + (0.5f * size.x)) * cellSize, (gridPosition.y + (0.5f * size.y)) * cellSize);
-    }
-
-    public List<Vector2Int> GetCellsInBuilding(Building building)
-    {
-        List<Vector2Int> cells = new List<Vector2Int>();
-        Vector2Int size = building.GetSize();
-        Vector2Int gridPosition = building.GetGridPosition();
-        for (int i = gridPosition.x; i < gridPosition.x + size.x; i++)
-            for (int j = gridPosition.y; j < gridPosition.y + size.y; j++)
-                cells.Add(new Vector2Int(i, j));
-        return cells;
+        return new Vector3(gridPosition.x + (0.5f * size.x), gridPosition.y + (0.5f * size.y));
     }
 
     public bool IsPositionOccupied(Vector2Int position)
@@ -59,7 +37,7 @@ public class GridSystem
 
     public void AddBuilding(Building building)
     {
-        GetCellsInBuilding(building).ForEach(x => OccupyCell(building, x));
+        building.GetContainedCells().ForEach(x => OccupyCell(building, x));
         buildings.Add(building);
     }
 
@@ -86,7 +64,7 @@ public class GridSystem
 
     private void DestroyBuilding(Building building)
     {
-        foreach (Vector2Int position in GetCellsInBuilding(building)) buildingPositions.Remove(position);
+        foreach (Vector2Int position in building.GetContainedCells()) buildingPositions.Remove(position);
         building.Destroy();
         buildings.Remove(building);
         AudioHandler.instance.PlaySound(AudioHandler.instance.destroySound);

@@ -1,5 +1,6 @@
 using JsonSubTypes;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using UnityEngine;
 
 [JsonConverter(typeof(JsonSubtypes))]
@@ -10,7 +11,6 @@ public abstract class Building
 {
     [JsonProperty] protected Vector2Int gridPosition;
     [JsonProperty] protected Direction direction;
-    protected Transform transform;
 
     public Building(Vector2Int gridPosition, Direction direction)
     {
@@ -30,24 +30,42 @@ public abstract class Building
         return gridPosition;
     }
 
+    public Direction GetDirection()
+    {
+        return direction;
+    }
+
     public Vector2Int GetSize()
     {
         return GetBuildingType().GetTransformedSize(direction);
+    }
+
+    public List<Vector2Int> GetContainedCells()
+    {
+        List<Vector2Int> cells = new();
+        Vector2Int size = GetSize();
+        for (int i = gridPosition.x; i < gridPosition.x + size.x; i++)
+            for (int j = gridPosition.y; j < gridPosition.y + size.y; j++)
+                cells.Add(new Vector2Int(i, j));
+        return cells;
     }
 
     public abstract BuildingType GetBuildingType();
 
     public virtual void Initialize()
     {
-        transform = GetBuildingType().GetNewBuildingTransform(gridPosition, direction);
         GridSystem.instance.AddBuilding(this);
+        CreateVisuals();
     }
 
     public virtual void Destroy()
     {
         Inventory.playerInventory.Store(GetBuildingType(), 1);
-        Object.Destroy(transform.gameObject);
+        GetVisuals().Destroy();
     }
+
+    protected abstract void CreateVisuals();
+    protected abstract BuildingVisual GetVisuals();
 
     protected Vector2Int RelativeToAbsolute(Vector2Int relativePosition)
     {

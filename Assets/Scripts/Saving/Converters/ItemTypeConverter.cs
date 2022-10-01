@@ -5,7 +5,7 @@ public class ItemTypeConverter : JsonConverter<ItemType>
 {
     public override ItemType ReadJson(JsonReader reader, Type objectType, ItemType existingValue, bool hasExistingValue, JsonSerializer serializer)
     {
-        return ScriptableObjectLoader.itemTypeLoader.GetItemType((string)reader.Value);
+        return GameDataHelper.itemTypeLoader.GetItemType((string)reader.Value);
     }
 
     public override void WriteJson(JsonWriter writer, ItemType value, JsonSerializer serializer)

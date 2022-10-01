@@ -22,11 +22,20 @@ public class Recipe : ScriptableObject
 
     public List<MachineType> GetMachines()
     {
-        return ScriptableObjectLoader.allMachines.FindAll(x => x.CanDo(this));
+        return GameDataHelper.allMachines.FindAll(x => x.CanDo(this));
     }
 
     public bool Produces(ItemType itemType)
     {
         return outputs.ConvertAll(x => x.GetItemType()).Contains(itemType);
+    }
+
+    public HashSet<ItemType> GetRequiredItems()
+    {
+        HashSet<ItemType> itemTypes = new();
+        itemTypes.UnionWith(inputs.ConvertAll(x => x.GetItemType()));
+        itemTypes.UnionWith(outputs.ConvertAll(x => x.GetItemType()));
+        itemTypes.UnionWith(GetMachines());
+        return itemTypes;
     }
 }

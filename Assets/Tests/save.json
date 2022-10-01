@@ -1,0 +1,1 @@
+{"PlayerInventory":{"itemStacks":[{"itemType":"AirJar","count":1},{"itemType":"WaterJar","count":1},{"itemType":"Soil","count":1},{"itemType":"EarthJar","count":1},{"itemType":"Fire","count":2}]},"Buildings":[{"gathererType":"FireJar","outputInventory":{"itemStacks":[]},"gridPosition":{"x":-4,"y":0},"direction":0}]}

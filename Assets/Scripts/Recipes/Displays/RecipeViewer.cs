@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,16 +18,10 @@ public class RecipeViewer : MonoBehaviour
         instance = this;
     }
 
-    private void Start()
+    public void ShowItems(List<ItemType> items)
     {
-        CreateButtons();
-    }
-
-    public void ViewRecipes(ItemType itemType)
-    {
-        ShowRecipePage(itemType);
-        ClearRecipePage();
-        Finder.FindRecipes(itemType).ForEach(CreateRecipeDisplay);
+        foreach (Transform child in itemPage) Destroy(child.gameObject);
+        items.FindAll(UnlockHandler.instance.CanProduce).ForEach(CreateButton);
     }
 
     public void OnReturn()
@@ -35,12 +30,9 @@ public class RecipeViewer : MonoBehaviour
         else ClosePanel();
     }
 
-    private void CreateRecipeDisplay(Recipe recipe)
+    private void CreateButton(ItemType itemType)
     {
-        RecipeDisplay display = RecipeDisplay.Create(recipePage);
-        display.ShowInputs(BuildItemButton, recipe.GetInputs());
-        display.ShowOutputs(BuildItemButton, recipe.GetAverageOutputs());
-        display.ShowMachines(BuildItemButton, recipe.GetMachines());
+        BuildItemButton(itemType).transform.SetParent(itemPage);
     }
 
     private ItemLabel BuildItemButton(ICountableItem item)
@@ -55,14 +47,19 @@ public class RecipeViewer : MonoBehaviour
         return ItemLabelBuilder.instance.GetFinishedLabel();
     }
 
-    private void CreateButtons()
+    private void ViewRecipes(ItemType itemType)
     {
-        ScriptableObjectLoader.itemTypeLoader.GetAllItemTypes().ForEach(CreateButton);
+        ShowRecipePage(itemType);
+        ClearRecipePage();
+        UnlockHandler.instance.GetUnlockedRecipesFor(itemType).ForEach(CreateRecipeDisplay);
     }
 
-    private void CreateButton(ItemType itemType)
+    private void CreateRecipeDisplay(Recipe recipe)
     {
-        BuildItemButton(itemType).transform.SetParent(itemPage);
+        RecipeDisplay display = RecipeDisplay.Create(recipePage);
+        display.ShowInputs(BuildItemButton, recipe.GetInputs());
+        display.ShowOutputs(BuildItemButton, recipe.GetAverageOutputs());
+        display.ShowMachines(BuildItemButton, recipe.GetMachines());
     }
 
     private void ShowItemPage()

@@ -53,7 +53,17 @@ public class ItemLabelBuilder
     {
         BuildGenericButton(process.GetAverageSingleOutput()[0].GetItemType(), onClick);
         GetLabel().AddTooltipBuildingSteps(() => TooltipBuilder.instance.AddCraftingDisplay(process));
+        UpdateTooltipOnClick();
+        UpdateTooltipOnShift();
+    }
+
+    private void UpdateTooltipOnClick()
+    {
         GetLabel().AddButtonAction(GetLabel().UpdateTooltip);
+    }
+
+    private void UpdateTooltipOnShift()
+    {
         KeyboardHandler.instance.ShiftPressed += GetLabel().UpdateTooltip;
         KeyboardHandler.instance.ShiftReleased += GetLabel().UpdateTooltip;
     }

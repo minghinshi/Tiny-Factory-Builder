@@ -4,15 +4,16 @@ using System.Collections.Generic;
 
 public class Inventory
 {
-    public static Inventory playerInventory = new(ScriptableObjectLoader.starterMachines.ConvertAll(x => new ItemStack(x, 1)).ToArray());
+    public static Inventory playerInventory = new(GameDataHelper.starterMachines.ConvertAll(x => new ItemStack(x, 1)).ToArray());
 
     [JsonProperty] private List<ItemStack> itemStacks;
 
     public delegate void InventoryUpdatedHandler();
     public event InventoryUpdatedHandler Updated;
 
-    public delegate void OutOfStockHandler(ItemType itemType);
-    public event OutOfStockHandler OutOfStock;
+    public delegate void ItemStacksChangedHandler(ItemType itemType);
+    public event ItemStacksChangedHandler ItemAdded;
+    public event ItemStacksChangedHandler ItemRemoved;
 
     public Inventory(params ItemStack[] itemStacks)
     {
@@ -103,6 +104,7 @@ public class Inventory
     {
         ItemStack itemStack = new(itemType, 0);
         itemStacks.Add(itemStack);
+        ItemAdded?.Invoke(itemType);
         return itemStack;
     }
 
@@ -114,7 +116,7 @@ public class Inventory
     private void RemoveItemStack(ItemStack itemStack)
     {
         itemStacks.Remove(itemStack);
-        OutOfStock?.Invoke(itemStack.GetItemType());
+        ItemRemoved?.Invoke(itemStack.GetItemType());
     }
 
     private void NotifyUpdate()
