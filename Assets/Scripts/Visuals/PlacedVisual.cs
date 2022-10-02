@@ -1,14 +1,8 @@
 ﻿using UnityEngine;
 
-public abstract class PlacedBuildingVisual : BuildingVisual
+public abstract class PlacedVisual : BuildingVisual
 {
     private Building building;
-
-    protected void Initialize(Building building)
-    {
-        this.building = building;
-        Initialize();
-    }
 
     protected override BuildingType GetBuildingType()
     {
@@ -23,5 +17,11 @@ public abstract class PlacedBuildingVisual : BuildingVisual
     protected override Vector2Int GetGridPosition()
     {
         return building.GetGridPosition();
+    }
+
+    protected void Initialize(Building building)
+    {
+        this.building = building;
+        Initialize();
     }
 }

@@ -17,8 +17,4 @@ public class Stage : ScriptableObject
         unlockedItems.ForEach(x => Debug.Log(x.GetName() + " has been unlocked!"));
         return unlockedItems;
     }
-
-    public void Unlock() { 
-        
-    }
 }

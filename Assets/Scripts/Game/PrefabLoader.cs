@@ -10,7 +10,10 @@ public static class PrefabLoader
     public static readonly Transform tooltipText = GetPrefab("Displays/Text");
     public static readonly Transform inventoryDisplay = GetPrefab("Displays/InventoryDisplay");
     public static readonly Transform recipeDisplay = GetPrefab("Displays/RecipeDisplay");
-    public static readonly Transform progressBar = GetPrefab("Displays/ProgressSlider");
+
+    public static readonly Transform ghostVisuals = GetPrefab("Visuals/GhostVisuals");
+    public static readonly Transform conveyorVisuals = GetPrefab("Visuals/ConveyorVisuals");
+    public static readonly Transform producerVisuals = GetPrefab("Visuals/ProducerVisuals");
 
     private static Transform GetPrefab(string path)
     {

@@ -1,9 +1,15 @@
-﻿public class ProducerVisual : PlacedBuildingVisual
+﻿using UnityEngine.UI;
+
+public class ProducerVisual : PlacedVisual
 {
-    public static ProducerVisual Create(Building building)
+    public static ProducerVisual Create()
     {
-        ProducerVisual visual = CreateGameObject().AddComponent<ProducerVisual>();
-        visual.Initialize(building);
-        return visual;
+        return Instantiate(PrefabLoader.producerVisuals, TransformFinder.worldTransform).GetComponent<ProducerVisual>();
+    }
+
+    public void Initialize(Producer producer)
+    {
+        base.Initialize(producer);
+        producer.GetTimer().SetSlider(GetComponentInChildren<Slider>());
     }
 }

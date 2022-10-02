@@ -24,6 +24,7 @@ public abstract class Building
     public abstract bool CanExtract();
     public abstract void Insert(ItemStack itemStack);
     public abstract ItemStack Extract();
+    public abstract BuildingType GetBuildingType();
 
     public Vector2Int GetGridPosition()
     {
@@ -50,11 +51,8 @@ public abstract class Building
         return cells;
     }
 
-    public abstract BuildingType GetBuildingType();
-
-    public virtual void Initialize()
-    {
-        GridSystem.instance.AddBuilding(this);
+    public void Initialize() {
+        InitializeData();
         CreateVisuals();
     }
 
@@ -66,6 +64,11 @@ public abstract class Building
 
     protected abstract void CreateVisuals();
     protected abstract BuildingVisual GetVisuals();
+
+    protected virtual void InitializeData()
+    {
+        GridSystem.instance.AddBuilding(this);
+    }
 
     protected Vector2Int RelativeToAbsolute(Vector2Int relativePosition)
     {

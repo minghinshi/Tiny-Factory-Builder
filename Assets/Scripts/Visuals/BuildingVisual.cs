@@ -2,8 +2,6 @@
 
 public abstract class BuildingVisual : MonoBehaviour
 {
-    public static readonly Transform worldTransform = GameObject.Find("WorldCanvas").transform;
-
     protected SpriteRenderer spriteRenderer;
 
     public void Destroy()
@@ -14,14 +12,6 @@ public abstract class BuildingVisual : MonoBehaviour
     protected abstract BuildingType GetBuildingType();
     protected abstract Vector2Int GetGridPosition();
     protected abstract Direction GetDirection();
-
-    protected static GameObject CreateGameObject()
-    {
-        GameObject gameObject = new();
-        gameObject.AddComponent<RectTransform>();
-        gameObject.AddComponent<SpriteRenderer>();
-        return gameObject;
-    }
 
     protected void Initialize()
     {
@@ -38,9 +28,7 @@ public abstract class BuildingVisual : MonoBehaviour
     private void InitializeTransform()
     {
         transform.SetPositionAndRotation(GetPosition(), GetRotation());
-        transform.SetParent(worldTransform);
         transform.localScale = (Vector3)(Vector3Int)GetBuildingType().GetSize();
-        GetComponent<RectTransform>().sizeDelta = Vector2.one;
     }
 
     private Vector3 GetPosition()

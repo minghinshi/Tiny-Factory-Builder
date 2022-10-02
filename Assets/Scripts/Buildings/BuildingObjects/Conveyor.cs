@@ -32,14 +32,6 @@ public class Conveyor : Building
         itemInsertedThisTick = true;
     }
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        CalculateCells(inputPositions, conveyorType.GetInputPositions());
-        CalculateCells(outputPositions, conveyorType.GetOutputPositions());
-        ConnectEvents();
-    }
-
     public override void Destroy()
     {
         if (storedItem) Inventory.playerInventory.Store(storedItem, 1);
@@ -52,9 +44,18 @@ public class Conveyor : Building
         return conveyorType;
     }
 
+    protected override void InitializeData()
+    {
+        base.InitializeData();
+        CalculateCells(inputPositions, conveyorType.GetInputPositions());
+        CalculateCells(outputPositions, conveyorType.GetOutputPositions());
+        ConnectEvents();
+    }
+
     protected override void CreateVisuals()
     {
-        visual = ConveyorVisual.Create(this);
+        visual = ConveyorVisual.Create();
+        visual.Initialize(this);
     }
 
     protected override BuildingVisual GetVisuals()

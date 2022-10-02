@@ -19,13 +19,6 @@ public class Machine : Producer
         if (Input.GetKey(KeyCode.LeftShift) && inputInventory.HasItems()) GiveInputsToPlayer();
     }
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        OnInputInventoryUpdated();
-        inputInventory.Updated += OnInputInventoryUpdated;
-    }
-
     public override void Destroy()
     {
         inputInventory.TransferTo(Inventory.playerInventory);
@@ -44,6 +37,13 @@ public class Machine : Producer
     public Inventory GetInputInventory()
     {
         return inputInventory;
+    }
+
+    protected override void InitializeData()
+    {
+        base.InitializeData();
+        OnInputInventoryUpdated();
+        inputInventory.Updated += OnInputInventoryUpdated;
     }
 
     protected override Timer GetNewTimer()

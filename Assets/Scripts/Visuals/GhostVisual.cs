@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class GhostBuildingVisual : BuildingVisual
+public class GhostVisual : BuildingVisual
 {
     private BuildingPlacement placement;
 
@@ -9,6 +9,17 @@ public class GhostBuildingVisual : BuildingVisual
 
     private readonly Color canPlaceColor = new(130 / 255f, 224 / 255f, 170 / 255f, .75f);
     private readonly Color cannotPlaceColor = new(241 / 255f, 148 / 255f, 138 / 255f, .75f);
+
+    public static GhostVisual Create()
+    {
+        return Instantiate(PrefabLoader.ghostVisuals, TransformFinder.worldTransform).GetComponent<GhostVisual>();
+    }
+
+    public void Initialize(BuildingPlacement placement)
+    {
+        this.placement = placement;
+        Initialize();
+    }
 
     protected override BuildingType GetBuildingType()
     {
@@ -23,19 +34,6 @@ public class GhostBuildingVisual : BuildingVisual
     protected override Vector2Int GetGridPosition()
     {
         return Mouse.instance.GetGridPosition();
-    }
-
-    public static GhostBuildingVisual Create(BuildingPlacement placement)
-    {
-        GhostBuildingVisual visual = CreateGameObject().AddComponent<GhostBuildingVisual>();
-        visual.Initialize(placement);
-        return visual;
-    }
-
-    private void Initialize(BuildingPlacement placement)
-    {
-        this.placement = placement;
-        Initialize();
     }
 
     private void Update()

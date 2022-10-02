@@ -10,14 +10,6 @@ public abstract class Producer : Building
 
     protected Producer(Vector2Int gridPosition, Direction direction) : base(gridPosition, direction) { }
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        timer = GetNewTimer();
-        timer.TimerEnded += OnTimerEnded;
-        AddProgressBar();
-    }
-
     public override void Destroy()
     {
         timer.Destroy();
@@ -53,20 +45,22 @@ public abstract class Producer : Building
     protected abstract Timer GetNewTimer();
     protected abstract void ProduceOutputs();
 
+    protected override void InitializeData()
+    {
+        base.InitializeData();
+        timer = GetNewTimer();
+        timer.TimerEnded += OnTimerEnded;
+    }
+
     protected override void CreateVisuals()
     {
-        visual = ProducerVisual.Create(this);
+        visual = ProducerVisual.Create();
+        visual.Initialize(this);
     }
 
     protected override BuildingVisual GetVisuals()
     {
         return visual;
-    }
-
-    private void AddProgressBar()
-    {
-        Transform progressBar = Object.Instantiate(PrefabLoader.progressBar, visual.transform);
-        timer.SetSlider(progressBar.GetComponent<Slider>());
     }
 
     private void OnTimerEnded()

@@ -1,33 +1,22 @@
 ﻿using UnityEngine;
 
-public class ConveyorVisual : PlacedBuildingVisual
+public class ConveyorVisual : PlacedVisual
 {
     private SpriteRenderer itemRenderer;
 
-    public static ConveyorVisual Create(Building building)
+    public static ConveyorVisual Create()
     {
-        ConveyorVisual visual = CreateGameObject().AddComponent<ConveyorVisual>();
-        visual.Initialize(building);
-        return visual;
+        return Instantiate(PrefabLoader.conveyorVisuals, TransformFinder.worldTransform).GetComponent<ConveyorVisual>();
+    }
+
+    public void Initialize(Conveyor conveyor)
+    {
+        base.Initialize(conveyor);
+        itemRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     public void RenderItem(ItemType itemType)
     {
         itemRenderer.sprite = itemType ? itemType.GetSprite() : null;
-    }
-
-    private new void Initialize(Building building)
-    {
-        base.Initialize(building);
-        CreateItemRenderer();
-    }
-
-    private void CreateItemRenderer()
-    {
-        Transform transform = new GameObject().transform;
-        transform.SetParent(this.transform);
-        transform.position = this.transform.position;
-        itemRenderer = transform.gameObject.AddComponent<SpriteRenderer>();
-        itemRenderer.sortingOrder = 1;
     }
 }

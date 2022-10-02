@@ -4,15 +4,13 @@ public class BuildingPlacement : Placement
 {
     private readonly BuildingType buildingType;
     private Direction direction = Direction.North;
-    private readonly GhostBuildingVisual visual;
+    private GhostVisual visual;
     private bool placedBuildingHere;
 
     public BuildingPlacement(BuildingType buildingType)
     {
         this.buildingType = buildingType;
-        visual = GhostBuildingVisual.Create(this);
-
-        UpdateVisual();
+        CreateVisual();
         Mouse.instance.GridPositionChanged += OnMousePositionChanged;
     }
 
@@ -42,6 +40,12 @@ public class BuildingPlacement : Placement
         if (Input.GetKeyDown(KeyCode.R)) RotateBuilding();
         if (Input.GetMouseButton(0) && Mouse.instance.IsPointingAtWorld()) PlaceBuilding();
         base.CheckInputs();
+    }
+
+    private void CreateVisual() {
+        visual = GhostVisual.Create();
+        visual.Initialize(this);
+        UpdateVisual();
     }
 
     private void OnMousePositionChanged(Vector2Int _)
