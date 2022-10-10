@@ -6,7 +6,7 @@ public class ConveyorVisual : PlacedVisual
 
     public static ConveyorVisual Create()
     {
-        return Instantiate(PrefabLoader.conveyorVisuals, TransformFinder.worldTransform).GetComponent<ConveyorVisual>();
+        return Instantiate(Prefabs.conveyorVisuals, Transforms.worldTransform).GetComponent<ConveyorVisual>();
     }
 
     public void Initialize(Conveyor conveyor)

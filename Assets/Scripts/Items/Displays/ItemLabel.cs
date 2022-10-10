@@ -21,7 +21,7 @@ public class ItemLabel : MonoBehaviour
 
     public static ItemLabel Create()
     {
-        return Instantiate(PrefabLoader.emptyLabel).GetComponent<ItemLabel>();
+        return Instantiate(Prefabs.emptyLabel).GetComponent<ItemLabel>();
     }
 
     public void OnPointerEnter()
@@ -43,19 +43,19 @@ public class ItemLabel : MonoBehaviour
 
     public void AddImage(ItemType itemType)
     {
-        image = Instantiate(PrefabLoader.image, transform).GetComponent<Image>();
+        image = Instantiate(Prefabs.image, transform).GetComponent<Image>();
         image.sprite = itemType.GetSprite();
     }
 
     public Counter GetCounter()
     {
-        if (counter == null) counter = Instantiate(PrefabLoader.counter, transform).GetComponent<Counter>();
+        if (counter == null) counter = Instantiate(Prefabs.counter, transform).GetComponent<Counter>();
         return counter;
     }
 
     public void AddButton()
     {
-        button = Instantiate(PrefabLoader.button, transform).GetComponent<Button>();
+        button = Instantiate(Prefabs.button, transform).GetComponent<Button>();
     }
 
     public void AddButton(params UnityAction[] onClick)

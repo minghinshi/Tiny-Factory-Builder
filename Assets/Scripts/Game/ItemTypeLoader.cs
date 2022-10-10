@@ -2,30 +2,28 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ItemTypeLoader
+public class DataLoader<T> where T : ScriptableObject
 {
-    private readonly Dictionary<string, ItemType> itemTypes = new();
+    private readonly Dictionary<string, T> itemTypes = new();
 
-    public static ItemTypeLoader Create()
+    public DataLoader(string path)
     {
-        ItemTypeLoader loader = new();
-        loader.LoadItemTypes();
-        return loader;
+        LoadItemTypes(path);
     }
 
-    public ItemType GetItemType(string itemName)
+    public T GetItemType(string itemName)
     {
         if (itemName == null) return null;
         return itemTypes[itemName];
     }
 
-    public List<ItemType> GetAllItemTypes()
+    public List<T> GetAllItemTypes()
     {
         return itemTypes.Values.ToList();
     }
 
-    private void LoadItemTypes()
+    private void LoadItemTypes(string path)
     {
-        Resources.LoadAll<ItemType>("Data").ToList().ForEach(x => itemTypes.Add(x.name, x));
+        Resources.LoadAll<T>(path).ToList().ForEach(x => itemTypes.Add(x.name, x));
     }
 }

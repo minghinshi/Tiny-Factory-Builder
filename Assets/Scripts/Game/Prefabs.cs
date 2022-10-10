@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public static class PrefabLoader
+public static class Prefabs
 {
     public static readonly Transform button = GetPrefab("ItemLabel/Button");
     public static readonly Transform image = GetPrefab("ItemLabel/Image");

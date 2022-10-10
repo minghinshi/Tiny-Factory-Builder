@@ -6,6 +6,8 @@ public class UnlockHandler : MonoBehaviour
 {
     public static UnlockHandler instance;
 
+    [SerializeField] private Stage defaultStage;
+
     private HashSet<Stage> lockedStages;
     private HashSet<ItemType> unlockedItems = new();
     private HashSet<Recipe> unlockedRecipes = new();
@@ -17,8 +19,7 @@ public class UnlockHandler : MonoBehaviour
 
     private void Start()
     {
-        lockedStages = new(GameDataHelper.allStages);
-        lockedStages.ToList().FindAll(x => !x.GetRequiredItem()).ForEach(UnlockStage);
+        lockedStages = new(GameData.allStages);
         Inventory.playerInventory.ItemAdded += OnPlayerInventoryItemAdded;
     }
 
@@ -29,7 +30,7 @@ public class UnlockHandler : MonoBehaviour
 
     public List<Recipe> GetUnlockedCraftingRecipes()
     {
-        return GameDataHelper.allCraftingRecipes.FindAll(x => unlockedRecipes.Contains(x));
+        return GameData.allCraftingRecipes.FindAll(x => unlockedRecipes.Contains(x));
     }
 
     public bool CanProduce(ItemType itemType)
@@ -37,12 +38,12 @@ public class UnlockHandler : MonoBehaviour
         return !unlockedRecipes.All(x => !x.Produces(itemType));
     }
 
-    private void OnPlayerInventoryItemAdded(ItemType itemType)
+    public List<Stage> GetUnlockedStages()
     {
-        lockedStages.ToList().FindAll(x => x.GetRequiredItem() == itemType).ForEach(UnlockStage);
+        return GameData.allStages.Except(lockedStages).ToList();
     }
 
-    private void UnlockStage(Stage stage)
+    public void UnlockStage(Stage stage)
     {
         lockedStages.Remove(stage);
         unlockedItems.UnionWith(stage.GetUnlockedItems());
@@ -51,9 +52,19 @@ public class UnlockHandler : MonoBehaviour
         PlayerCrafting.instance.UpdateDisplay();
     }
 
+    public void UnlockDefaultStage()
+    {
+        UnlockStage(defaultStage);
+    }
+
+    private void OnPlayerInventoryItemAdded(ItemType itemType)
+    {
+        lockedStages.ToList().FindAll(x => x.GetRequiredItem() == itemType).ForEach(UnlockStage);
+    }
+
     private void UpdateUnlockedRecipes()
     {
-        unlockedRecipes.UnionWith(GameDataHelper.allRecipes.FindAll(IsRecipeUnlocked));
+        unlockedRecipes.UnionWith(GameData.allRecipes.FindAll(IsRecipeUnlocked));
     }
 
     private bool IsRecipeUnlocked(Recipe recipe)

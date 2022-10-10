@@ -10,6 +10,7 @@ public class SaveManager : MonoBehaviour
     {
         serializerSettings = GetSerializerSettings();
         if (File.Exists(GetSaveFilePath())) LoadGame();
+        else InitializeGame();
     }
 
     private void OnApplicationQuit()
@@ -45,5 +46,10 @@ public class SaveManager : MonoBehaviour
     {
         string json = JsonConvert.SerializeObject(SaveFile.GetCurrentData(), serializerSettings);
         File.WriteAllText(GetSaveFilePath(), json);
+    }
+
+    private void InitializeGame()
+    {
+        UnlockHandler.instance.UnlockDefaultStage();
     }
 }

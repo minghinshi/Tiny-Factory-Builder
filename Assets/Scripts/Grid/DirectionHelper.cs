@@ -61,9 +61,4 @@ public static class DirectionHelper
             _ => throw new System.Exception("Direction does not exist!"),
         };
     }
-
-    public static Vector2Int GetUnitVector(this Direction direction)
-    {
-        return direction.RotateVector(new Vector2Int(0, 1));
-    }
 }

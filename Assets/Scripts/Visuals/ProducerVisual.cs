@@ -4,7 +4,7 @@ public class ProducerVisual : PlacedVisual
 {
     public static ProducerVisual Create()
     {
-        return Instantiate(PrefabLoader.producerVisuals, TransformFinder.worldTransform).GetComponent<ProducerVisual>();
+        return Instantiate(Prefabs.producerVisuals, Transforms.worldTransform).GetComponent<ProducerVisual>();
     }
 
     public void Initialize(Producer producer)

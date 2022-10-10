@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Inventory
 {
-    public static Inventory playerInventory = new(GameDataHelper.starterMachines.ConvertAll(x => new ItemStack(x, 1)).ToArray());
+    public static Inventory playerInventory = new(GameData.starterMachines.ConvertAll(x => new ItemStack(x, 1)).ToArray());
 
     [JsonProperty] private List<ItemStack> itemStacks;
 

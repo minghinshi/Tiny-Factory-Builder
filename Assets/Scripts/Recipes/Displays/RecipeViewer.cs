@@ -23,7 +23,7 @@ public class RecipeViewer : MonoBehaviour
         foreach (Transform child in itemPage) Destroy(child.gameObject);
         items.FindAll(UnlockHandler.instance.CanProduce).ForEach(CreateButton);
     }
-
+    
     public void OnReturn()
     {
         if (isShowingRecipe) ShowItemPage();

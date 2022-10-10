@@ -17,7 +17,7 @@ public class RecipeDisplay
 
     public static RecipeDisplay Create(Transform parent)
     {
-        Transform transform = UnityEngine.Object.Instantiate(PrefabLoader.recipeDisplay, parent);
+        Transform transform = UnityEngine.Object.Instantiate(Prefabs.recipeDisplay, parent);
         RecipeDisplay recipeDisplay = new(transform);
         return recipeDisplay;
     }

@@ -2,9 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public static class GameDataHelper
+public static class GameData
 {
-    public static readonly ItemTypeLoader itemTypeLoader = ItemTypeLoader.Create();
+    public static readonly DataLoader<ItemType> itemTypeLoader = new("Data");
+    public static readonly DataLoader<Stage> stageLoader = new("Data/Stages");
+
     public static readonly List<MachineType> allMachines = GetObjects<MachineType>("Machines");
     public static readonly List<GathererType> starterMachines = GetObjects<GathererType>("Machines/Starters");
     public static readonly List<Recipe> allRecipes = GetObjects<Recipe>("Recipes");

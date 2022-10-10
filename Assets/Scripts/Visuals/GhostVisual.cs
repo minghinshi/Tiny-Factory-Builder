@@ -12,7 +12,7 @@ public class GhostVisual : BuildingVisual
 
     public static GhostVisual Create()
     {
-        return Instantiate(PrefabLoader.ghostVisuals, TransformFinder.worldTransform).GetComponent<GhostVisual>();
+        return Instantiate(Prefabs.ghostVisuals, Transforms.worldTransform).GetComponent<GhostVisual>();
     }
 
     public void Initialize(BuildingPlacement placement)

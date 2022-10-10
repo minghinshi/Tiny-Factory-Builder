@@ -17,7 +17,7 @@ public class TooltipBuilder : MonoBehaviour
 
     public Text AddText(string str)
     {
-        Text text = Instantiate(PrefabLoader.tooltipText, transform).GetComponent<Text>();
+        Text text = Instantiate(Prefabs.tooltipText, transform).GetComponent<Text>();
         text.text = str;
         return text;
     }
@@ -30,7 +30,7 @@ public class TooltipBuilder : MonoBehaviour
 
     public void AddInventoryDisplay(Inventory target)
     {
-        InventoryDisplay display = new(Instantiate(PrefabLoader.inventoryDisplay, transform));
+        InventoryDisplay display = new(Instantiate(Prefabs.inventoryDisplay, transform));
         display.SetCreateLabelFunc(BuildItemLabel);
         display.SetTargetInventory(target);
     }
