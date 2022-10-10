@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Item")]
+[HasDataFolder("Data/Items", "Data/Machines")]
 public class ItemType : ScriptableObject
 {
     [SerializeField] private string itemName;

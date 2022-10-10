@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Stage")]
+[HasDataFolder("Data/Stages")]
 public class Stage : ScriptableObject
 {
     [SerializeField] private ItemType requiredItem;
