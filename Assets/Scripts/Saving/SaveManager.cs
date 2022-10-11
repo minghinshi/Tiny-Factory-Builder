@@ -9,8 +9,7 @@ public class SaveManager : MonoBehaviour
     private void Start()
     {
         serializerSettings = GetSerializerSettings();
-        if (File.Exists(GetSaveFilePath())) LoadGame();
-        else InitializeGame();
+        LoadGame();
     }
 
     private void OnApplicationQuit()
@@ -21,7 +20,7 @@ public class SaveManager : MonoBehaviour
     private JsonSerializerSettings GetSerializerSettings()
     {
         JsonSerializerSettings settings = new();
-        settings.Converters.Add(new ItemTypeConverter());
+        settings.Converters.Add(new ScriptableObjectConverter());
         settings.Converters.Add(new Vector2IntConverter());
         return settings;
     }
@@ -38,8 +37,7 @@ public class SaveManager : MonoBehaviour
 
     private void LoadGame()
     {
-        string json = File.ReadAllText(GetSaveFilePath());
-        JsonConvert.DeserializeObject<SaveFile>(json, serializerSettings).LoadFile();
+        GetSaveFile().LoadFile();
     }
 
     private void SaveGame()
@@ -48,8 +46,10 @@ public class SaveManager : MonoBehaviour
         File.WriteAllText(GetSaveFilePath(), json);
     }
 
-    private void InitializeGame()
+    private SaveFile GetSaveFile()
     {
-        UnlockHandler.instance.UnlockDefaultStage();
+        return File.Exists(GetSaveFilePath())
+            ? JsonConvert.DeserializeObject<SaveFile>(File.ReadAllText(GetSaveFilePath()), serializerSettings)
+            : SaveFile.GetNewData();
     }
 }

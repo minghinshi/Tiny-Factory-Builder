@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Stage")]
-[HasDataFolder("Data/Stages")]
+[DataLoader("Data/Stages")]
 public class Stage : ScriptableObject
 {
     [SerializeField] private ItemType requiredItem;
@@ -15,7 +15,6 @@ public class Stage : ScriptableObject
 
     public List<ItemType> GetUnlockedItems()
     {
-        unlockedItems.ForEach(x => Debug.Log(x.GetName() + " has been unlocked!"));
         return unlockedItems;
     }
 }

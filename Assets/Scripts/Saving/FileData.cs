@@ -16,6 +16,16 @@ public class SaveFile
         };
     }
 
+    public static SaveFile GetNewData()
+    {
+        return new()
+        {
+            PlayerInventory = new(GameData.starterMachines.ConvertAll(x => new ItemStack(x, 1)).ToArray()),
+            Buildings = new(),
+            UnlockedStages = new List<Stage>() { GameData.defaultStage }
+        };
+    }
+
     public void LoadFile()
     {
         Inventory.playerInventory = PlayerInventory;

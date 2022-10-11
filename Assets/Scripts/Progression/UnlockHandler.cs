@@ -6,8 +6,6 @@ public class UnlockHandler : MonoBehaviour
 {
     public static UnlockHandler instance;
 
-    [SerializeField] private Stage defaultStage;
-
     private HashSet<Stage> lockedStages;
     private HashSet<ItemType> unlockedItems = new();
     private HashSet<Recipe> unlockedRecipes = new();
@@ -19,7 +17,6 @@ public class UnlockHandler : MonoBehaviour
 
     private void Start()
     {
-        lockedStages = new(GameData.allStages);
         Inventory.playerInventory.ItemAdded += OnPlayerInventoryItemAdded;
     }
 
@@ -40,26 +37,21 @@ public class UnlockHandler : MonoBehaviour
 
     public List<Stage> GetUnlockedStages()
     {
-        return GameData.allStages.Except(lockedStages).ToList();
+        return GameData.allStages.Except(GetLockedStages()).ToList();
     }
 
     public void UnlockStage(Stage stage)
     {
-        lockedStages.Remove(stage);
+        GetLockedStages().Remove(stage);
         unlockedItems.UnionWith(stage.GetUnlockedItems());
         UpdateUnlockedRecipes();
         RecipeViewer.instance.ShowItems(unlockedItems.ToList());
         PlayerCrafting.instance.UpdateDisplay();
     }
 
-    public void UnlockDefaultStage()
-    {
-        UnlockStage(defaultStage);
-    }
-
     private void OnPlayerInventoryItemAdded(ItemType itemType)
     {
-        lockedStages.ToList().FindAll(x => x.GetRequiredItem() == itemType).ForEach(UnlockStage);
+        GetLockedStages().ToList().FindAll(x => x.GetRequiredItem() == itemType).ForEach(UnlockStage);
     }
 
     private void UpdateUnlockedRecipes()
@@ -70,5 +62,11 @@ public class UnlockHandler : MonoBehaviour
     private bool IsRecipeUnlocked(Recipe recipe)
     {
         return recipe.GetRequiredItems().IsSubsetOf(unlockedItems);
+    }
+
+    private HashSet<Stage> GetLockedStages()
+    {
+        lockedStages ??= new(GameData.allStages);
+        return lockedStages;
     }
 }
