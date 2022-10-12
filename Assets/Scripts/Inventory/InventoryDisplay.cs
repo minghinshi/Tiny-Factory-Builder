@@ -1,19 +1,25 @@
-using UnityEngine;
+using System;
+using System.Collections.Generic;
 
-public class InventoryDisplay : ItemLabelGrid<ItemStack>
+public class InventoryDisplay : ItemLabelDisplay
 {
     private Inventory targetInventory;
-
-    public InventoryDisplay(Transform transform) : base(transform) { }
+    private Func<ItemStack, ItemLabel> buildFunc;
 
     public void SetTargetInventory(Inventory inventory)
     {
         DisconnectFromInventory();
         ConnectToInventory(inventory);
-        DisplayInventory();
+        DisplayItemLabels();
     }
 
-    protected override void Destroy()
+    public void SetBuildFunc(Func<ItemStack, ItemLabel> buildFunc)
+    {
+        this.buildFunc = buildFunc;
+        SetBuildFunc(BuildItemLabels);
+    }
+
+    private void OnDestroy()
     {
         DisconnectFromInventory();
     }
@@ -21,16 +27,16 @@ public class InventoryDisplay : ItemLabelGrid<ItemStack>
     private void ConnectToInventory(Inventory inventory)
     {
         targetInventory = inventory;
-        inventory.Updated += DisplayInventory;
+        inventory.Updated += DisplayItemLabels;
     }
 
     private void DisconnectFromInventory()
     {
-        if (targetInventory != null) targetInventory.Updated -= DisplayInventory;
+        if (targetInventory != null) targetInventory.Updated -= DisplayItemLabels;
     }
 
-    private void DisplayInventory()
+    private List<ItemLabel> BuildItemLabels()
     {
-        DisplayItems(targetInventory.GetAllItemStacks());
+        return targetInventory.GetAllItemStacks().ConvertAll(buildFunc.Invoke);
     }
 }

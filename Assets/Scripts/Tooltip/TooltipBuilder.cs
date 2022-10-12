@@ -30,9 +30,9 @@ public class TooltipBuilder : MonoBehaviour
 
     public void AddInventoryDisplay(Inventory target)
     {
-        InventoryDisplay display = new(Instantiate(Prefabs.inventoryDisplay, transform));
-        display.SetCreateLabelFunc(BuildItemLabel);
+        InventoryDisplay display = Instantiate(Prefabs.inventoryDisplay, transform).GetComponent<InventoryDisplay>();
         display.SetTargetInventory(target);
+        display.SetBuildFunc(BuildItemLabel);
     }
 
     public void BuildBuildingTooltip(Building building)

@@ -43,8 +43,8 @@ public class UnlockHandler : MonoBehaviour
     public void UnlockStage(Stage stage)
     {
         GetLockedStages().Remove(stage);
-        unlockedItems.UnionWith(stage.GetUnlockedItems());
-        UpdateUnlockedRecipes();
+        UnlockItems(stage);
+        UnlockRecipes();
         RecipeViewer.instance.ShowItems(unlockedItems.ToList());
         PlayerCrafting.instance.UpdateDisplay();
     }
@@ -54,7 +54,11 @@ public class UnlockHandler : MonoBehaviour
         GetLockedStages().ToList().FindAll(x => x.GetRequiredItem() == itemType).ForEach(UnlockStage);
     }
 
-    private void UpdateUnlockedRecipes()
+    private void UnlockItems(Stage stage) {
+        unlockedItems.UnionWith(stage.GetUnlockedItems());
+    }
+
+    private void UnlockRecipes()
     {
         unlockedRecipes.UnionWith(GameData.allRecipes.FindAll(IsRecipeUnlocked));
     }

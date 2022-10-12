@@ -1,10 +1,17 @@
+using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(InventoryDisplay))]
 public class PlayerInventory : MonoBehaviour
 {
     [SerializeField] private VisibilityHandler visibilityHandler;
     [SerializeField] private PanelSwitcher panelSwitcher;
     private InventoryDisplay inventoryDisplay;
+
+    private void Awake()
+    {
+        inventoryDisplay = GetComponent<InventoryDisplay>();
+    }
 
     private void Start()
     {
@@ -13,12 +20,11 @@ public class PlayerInventory : MonoBehaviour
 
     private void InitializeInventoryPanel()
     {
-        inventoryDisplay = new InventoryDisplay(transform);
-        inventoryDisplay.SetCreateLabelFunc(CreateItemButton);
         inventoryDisplay.SetTargetInventory(Inventory.playerInventory);
+        inventoryDisplay.SetBuildFunc(BuildItemButton);
     }
 
-    private ItemLabel CreateItemButton(ItemStack itemStack)
+    private ItemLabel BuildItemButton(ItemStack itemStack)
     {
         ItemLabelBuilder.instance.BuildGenericButton(itemStack, () => OnItemButtonPressed(itemStack.GetItemType()));
         return ItemLabelBuilder.instance.GetFinishedLabel();

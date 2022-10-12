@@ -1,29 +1,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(ItemLabelDisplay))]
 public class PlayerCrafting : MonoBehaviour
 {
     public static PlayerCrafting instance;
-
-    private ItemLabelGrid<Process> itemDisplay;
+    private ItemLabelDisplay itemDisplay;
 
     private void Awake()
     {
         instance = this;
+        itemDisplay = GetComponent<ItemLabelDisplay>();
     }
 
     private void Start()
     {
-        itemDisplay = new ItemLabelGrid<Process>(transform);
-        itemDisplay.SetCreateLabelFunc(GenerateCraftingButton);
+        itemDisplay.SetBuildFunc(BuildCraftingButtons);
     }
 
     public void UpdateDisplay()
     {
-        itemDisplay.DisplayItems(GetProcesses());
+        itemDisplay.DisplayItemLabels();
     }
 
-    private ItemLabel GenerateCraftingButton(Process process)
+    private List<ItemLabel> BuildCraftingButtons() {
+        return GetProcesses().ConvertAll(BuildCraftingButton);
+    }
+
+    private ItemLabel BuildCraftingButton(Process process)
     {
         ItemLabelBuilder.instance.BuildCraftingButton(process, () => OnCraftingRequest(process));
         return ItemLabelBuilder.instance.GetFinishedLabel();
