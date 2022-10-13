@@ -13,17 +13,14 @@ public class PlayerCrafting : MonoBehaviour
         itemDisplay = GetComponent<ItemLabelDisplay>();
     }
 
-    private void Start()
+    public void Initialize()
     {
         itemDisplay.SetBuildFunc(BuildCraftingButtons);
+        UnlockHandler.UnlockedStage += itemDisplay.DisplayItemLabels;
     }
 
-    public void UpdateDisplay()
+    private List<ItemLabel> BuildCraftingButtons()
     {
-        itemDisplay.DisplayItemLabels();
-    }
-
-    private List<ItemLabel> BuildCraftingButtons() {
         return GetProcesses().ConvertAll(BuildCraftingButton);
     }
 

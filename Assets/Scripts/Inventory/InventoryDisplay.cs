@@ -10,7 +10,6 @@ public class InventoryDisplay : ItemLabelDisplay
     {
         DisconnectFromInventory();
         ConnectToInventory(inventory);
-        DisplayItemLabels();
     }
 
     public void SetBuildFunc(Func<ItemStack, ItemLabel> buildFunc)

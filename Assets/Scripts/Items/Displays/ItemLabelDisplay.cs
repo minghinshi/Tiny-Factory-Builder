@@ -9,10 +9,12 @@ public class ItemLabelDisplay : MonoBehaviour
     public void SetBuildFunc(Func<List<ItemLabel>> buildFunction)
     {
         this.buildFunction = buildFunction;
+        DisplayItemLabels();
     }
 
     public void DisplayItemLabels()
     {
+        if (buildFunction == null) Debug.LogError("Build function has not been set!");
         foreach (Transform child in transform) Destroy(child.gameObject);
         buildFunction.Invoke().ForEach(x => x.transform.SetParent(transform));
     }

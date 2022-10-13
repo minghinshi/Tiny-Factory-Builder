@@ -10,6 +10,7 @@ public class SaveManager : MonoBehaviour
     {
         serializerSettings = GetSerializerSettings();
         LoadGame();
+        LoadGUI();
     }
 
     private void OnApplicationQuit()
@@ -51,5 +52,12 @@ public class SaveManager : MonoBehaviour
         return File.Exists(GetSaveFilePath())
             ? JsonConvert.DeserializeObject<SaveFile>(File.ReadAllText(GetSaveFilePath()), serializerSettings)
             : SaveFile.GetNewData();
+    }
+
+    private void LoadGUI()
+    {
+        PlayerInventory.instance.Initialize();
+        PlayerCrafting.instance.Initialize();
+        RecipeSelection.instance.Initialize();
     }
 }

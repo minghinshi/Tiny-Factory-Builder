@@ -4,17 +4,20 @@ using UnityEngine;
 [RequireComponent(typeof(InventoryDisplay))]
 public class PlayerInventory : MonoBehaviour
 {
+    public static PlayerInventory instance;
+
     [SerializeField] private VisibilityHandler visibilityHandler;
     [SerializeField] private PanelSwitcher panelSwitcher;
     private InventoryDisplay inventoryDisplay;
 
     private void Awake()
     {
-        inventoryDisplay = GetComponent<InventoryDisplay>();
+        instance = this;
     }
 
-    private void Start()
+    public void Initialize()
     {
+        inventoryDisplay = GetComponent<InventoryDisplay>();
         InitializeInventoryPanel();
     }
 

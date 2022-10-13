@@ -29,6 +29,5 @@ public class RecipeDisplay : MonoBehaviour
     private void CreateItemLabelGrid<T>(ItemLabelDisplay grid, Func<T, ItemLabel> buildLabel, List<T> items)
     {
         grid.SetBuildFunc(() => items.ConvertAll(buildLabel.Invoke));
-        grid.DisplayItemLabels();
     }
 }

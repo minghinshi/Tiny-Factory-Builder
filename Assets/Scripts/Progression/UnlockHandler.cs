@@ -10,6 +10,9 @@ public class UnlockHandler : MonoBehaviour
     private HashSet<ItemType> unlockedItems = new();
     private HashSet<Recipe> unlockedRecipes = new();
 
+    public delegate void UnlockedStageHandler();
+    public static event UnlockedStageHandler UnlockedStage;
+
     private void Awake()
     {
         instance = this;
@@ -30,9 +33,9 @@ public class UnlockHandler : MonoBehaviour
         return GameData.allCraftingRecipes.FindAll(x => unlockedRecipes.Contains(x));
     }
 
-    public bool CanProduce(ItemType itemType)
+    public List<ItemType> GetObtainableItems()
     {
-        return !unlockedRecipes.All(x => !x.Produces(itemType));
+        return unlockedItems.Where(CanProduce).ToList();
     }
 
     public List<Stage> GetUnlockedStages()
@@ -45,8 +48,12 @@ public class UnlockHandler : MonoBehaviour
         GetLockedStages().Remove(stage);
         UnlockItems(stage);
         UnlockRecipes();
-        RecipeViewer.instance.ShowItems(unlockedItems.ToList());
-        PlayerCrafting.instance.UpdateDisplay();
+        UnlockedStage?.Invoke();
+    }
+
+    private bool CanProduce(ItemType itemType)
+    {
+        return !unlockedRecipes.All(x => !x.Produces(itemType));
     }
 
     private void OnPlayerInventoryItemAdded(ItemType itemType)
@@ -54,7 +61,8 @@ public class UnlockHandler : MonoBehaviour
         GetLockedStages().ToList().FindAll(x => x.GetRequiredItem() == itemType).ForEach(UnlockStage);
     }
 
-    private void UnlockItems(Stage stage) {
+    private void UnlockItems(Stage stage)
+    {
         unlockedItems.UnionWith(stage.GetUnlockedItems());
     }
 
