@@ -1,10 +1,9 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(InventoryDisplay))]
-public class PlayerInventory : MonoBehaviour
+public class PlayerInventoryDisplay : MonoBehaviour
 {
-    public static PlayerInventory instance;
+    public static PlayerInventoryDisplay instance;
 
     [SerializeField] private VisibilityHandler visibilityHandler;
     [SerializeField] private PanelSwitcher panelSwitcher;

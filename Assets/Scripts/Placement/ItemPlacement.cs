@@ -51,7 +51,7 @@ public class ItemPlacement : Placement
     {
         ItemStack itemToPlace = new(itemType, GetItemCount());
         target.Insert(itemToPlace);
-        Inventory.playerInventory.RemoveCopyOf(itemToPlace);
+        Inventory.playerInventory.RemoveStack(itemToPlace);
         AudioHandler.instance.PlaySound(AudioHandler.instance.placementSound);
     }
 

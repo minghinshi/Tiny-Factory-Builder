@@ -5,7 +5,8 @@ public enum FadeDirection { None, FadeIn, FadeOut }
 [RequireComponent(typeof(CanvasGroup))]
 public class VisibilityHandler : MonoBehaviour
 {
-    private const float FadeSpeed = 10f;
+    private const float FadeInTime = 0.3f;
+    private const float FadeOutTime = 0.25f;
     private bool isVisible;
 
     private FadeDirection fadeDirection;
@@ -69,13 +70,13 @@ public class VisibilityHandler : MonoBehaviour
     private void AnimateFadeIn()
     {
         if (canvasGroup.alpha >= 1) StopFading();
-        else canvasGroup.alpha += Time.deltaTime * FadeSpeed;
+        else canvasGroup.alpha += Time.deltaTime / FadeInTime;
     }
 
     private void AnimateFadeOut()
     {
         if (canvasGroup.alpha <= 0) StopFading();
-        else canvasGroup.alpha -= Time.deltaTime * FadeSpeed;
+        else canvasGroup.alpha -= Time.deltaTime / FadeOutTime;
     }
 
     private void StopFading()

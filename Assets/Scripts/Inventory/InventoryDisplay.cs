@@ -26,12 +26,12 @@ public class InventoryDisplay : ItemLabelDisplay
     private void ConnectToInventory(Inventory inventory)
     {
         targetInventory = inventory;
-        inventory.Updated += DisplayItemLabels;
+        inventory.Changed += DisplayItemLabels;
     }
 
     private void DisconnectFromInventory()
     {
-        if (targetInventory != null) targetInventory.Updated -= DisplayItemLabels;
+        if (targetInventory != null) targetInventory.Changed -= DisplayItemLabels;
     }
 
     private List<ItemLabel> BuildItemLabels()

@@ -34,7 +34,7 @@ public class Conveyor : Building
 
     public override void Destroy()
     {
-        if (storedItem) Inventory.playerInventory.Store(storedItem, 1);
+        if (storedItem) Inventory.playerInventory.StoreSingle(storedItem);
         DisconnectEvents();
         base.Destroy();
     }

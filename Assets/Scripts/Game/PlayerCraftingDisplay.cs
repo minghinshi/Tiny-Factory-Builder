@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(ItemLabelDisplay))]
-public class PlayerCrafting : MonoBehaviour
+public class PlayerCraftingDisplay : MonoBehaviour
 {
-    public static PlayerCrafting instance;
+    public static PlayerCraftingDisplay instance;
     private ItemLabelDisplay itemDisplay;
 
     private void Awake()

@@ -56,8 +56,8 @@ public class SaveManager : MonoBehaviour
 
     private void LoadGUI()
     {
-        PlayerInventory.instance.Initialize();
-        PlayerCrafting.instance.Initialize();
+        PlayerInventoryDisplay.instance.Initialize();
+        PlayerCraftingDisplay.instance.Initialize();
         RecipeSelection.instance.Initialize();
     }
 }

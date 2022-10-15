@@ -27,8 +27,8 @@ public abstract class Producer : Building
 
     public override ItemStack Extract()
     {
-        ItemStack itemStack = new ItemStack(outputInventory.GetFirstItemType(), 1);
-        outputInventory.RemoveCopyOf(itemStack);
+        ItemStack itemStack = new(outputInventory.GetFirstItemType(), 1);
+        outputInventory.RemoveStack(itemStack);
         return itemStack;
     }
 

@@ -14,7 +14,8 @@ public class ItemStack : ICountableItem
         this.count = count;
     }
 
-    public ItemStack() : this(null, 0) { }
+    //Required for JSON serialization
+    public ItemStack() { }
 
     public ItemStack GetItemStack()
     {

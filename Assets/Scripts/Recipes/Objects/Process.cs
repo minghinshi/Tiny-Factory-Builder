@@ -81,8 +81,8 @@ public class Process
 
     private void Craft(List<ItemStack> inputs, List<ItemStack> outputs)
     {
-        outputs.ForEach(x => output.StoreCopyOf(x));
-        inputs.ForEach(x => input.RemoveCopyOf(x));
+        outputs.ForEach(x => output.StoreStack(x));
+        inputs.ForEach(x => input.RemoveStack(x));
     }
 
     private List<ItemStack> GetNextBatchInput()
