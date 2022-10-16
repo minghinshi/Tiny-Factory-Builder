@@ -14,7 +14,7 @@ public abstract class Producer : Building
     {
         timer.Destroy();
         timer.TimerEnded -= OnTimerEnded;
-        outputInventory.TransferTo(Inventory.playerInventory);
+        outputInventory.TransferTo(PlayerInventory.instance);
         base.Destroy();
     }
 
@@ -71,7 +71,7 @@ public abstract class Producer : Building
 
     private void GiveOutputsToPlayer()
     {
-        outputInventory.TransferTo(Inventory.playerInventory);
+        outputInventory.TransferTo(PlayerInventory.instance);
         AudioHandler.instance.PlaySound(AudioHandler.instance.pickUpSound);
     }
 }

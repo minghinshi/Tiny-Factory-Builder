@@ -38,7 +38,7 @@ public abstract class BuildingType : ItemType
         {
             CreateBuilding(position, direction).Initialize();
             AudioHandler.instance.PlaySound(AudioHandler.instance.placementSound);
-            Inventory.playerInventory.RemoveSingle(this);
+            PlayerInventory.instance.RemoveSingle(this);
         }
     }
 }

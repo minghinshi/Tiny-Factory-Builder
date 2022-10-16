@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 public class SaveFile
 {
-    public Inventory PlayerInventory { get; set; }
+    public PlayerInventory PlayerInventory { get; set; }
     public List<Building> Buildings { get; set; }
     public List<Stage> UnlockedStages { get; set; }
 
@@ -10,7 +10,7 @@ public class SaveFile
     {
         return new()
         {
-            PlayerInventory = Inventory.playerInventory,
+            PlayerInventory = PlayerInventory.instance,
             Buildings = GridSystem.instance.GetBuildings(),
             UnlockedStages = UnlockHandler.instance.GetUnlockedStages()
         };
@@ -28,7 +28,7 @@ public class SaveFile
 
     public void LoadFile()
     {
-        Inventory.playerInventory = PlayerInventory;
+        PlayerInventory.instance = PlayerInventory;
         Buildings.ForEach(x => x.Initialize());
         UnlockedStages.ForEach(UnlockHandler.instance.UnlockStage);
     }

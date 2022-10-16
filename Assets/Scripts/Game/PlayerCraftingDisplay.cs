@@ -50,6 +50,6 @@ public class PlayerCraftingDisplay : MonoBehaviour
     private List<Process> GetProcesses()
     {
         List<Recipe> recipes = UnlockHandler.instance.GetUnlockedCraftingRecipes();
-        return recipes.ConvertAll(x => new Process(x, Inventory.playerInventory, Inventory.playerInventory));
+        return recipes.ConvertAll(x => new Process(x, PlayerInventory.instance, PlayerInventory.instance));
     }
 }

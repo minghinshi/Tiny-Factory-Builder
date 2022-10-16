@@ -3,9 +3,7 @@ using System.Collections.Generic;
 
 public class Inventory
 {
-    public static Inventory playerInventory;
-
-    [JsonProperty] private List<ItemStack> itemStacks;
+    [JsonProperty] protected List<ItemStack> itemStacks = new();
 
     public delegate void InventoryChangedHandler();
     public event InventoryChangedHandler Changed;
@@ -13,11 +11,6 @@ public class Inventory
     public delegate void ItemTypesChangedHandler(ItemType itemType);
     public event ItemTypesChangedHandler ItemAdded;
     public event ItemTypesChangedHandler ItemRemoved;
-
-    public Inventory(params ItemStack[] itemStacks)
-    {
-        this.itemStacks = new List<ItemStack>(itemStacks);
-    }
 
     public void StoreSingle(ItemType itemType)
     {

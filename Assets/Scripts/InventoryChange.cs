@@ -21,4 +21,9 @@ public struct InventoryChange
     {
         return delta < 0;
     }
+
+    public override string ToString()
+    {
+        return string.Format("{0:+#;-#;0} ({1})", delta, PlayerInventory.instance.GetItemCount(ItemType));
+    }
 }

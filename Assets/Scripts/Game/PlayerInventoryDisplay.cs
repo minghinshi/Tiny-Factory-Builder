@@ -22,7 +22,7 @@ public class PlayerInventoryDisplay : MonoBehaviour
 
     private void InitializeInventoryPanel()
     {
-        inventoryDisplay.SetTargetInventory(Inventory.playerInventory);
+        inventoryDisplay.SetTargetInventory(PlayerInventory.instance);
         inventoryDisplay.SetBuildFunc(BuildItemButton);
     }
 

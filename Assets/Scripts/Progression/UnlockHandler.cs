@@ -20,7 +20,7 @@ public class UnlockHandler : MonoBehaviour
 
     private void Start()
     {
-        Inventory.playerInventory.ItemAdded += OnPlayerInventoryItemAdded;
+        PlayerInventory.instance.ItemAdded += OnPlayerInventoryItemAdded;
     }
 
     public List<Recipe> GetUnlockedRecipesFor(ItemType itemType)

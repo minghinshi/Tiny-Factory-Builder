@@ -58,7 +58,7 @@ public abstract class Building
 
     public virtual void Destroy()
     {
-        Inventory.playerInventory.StoreSingle(GetBuildingType());
+        PlayerInventory.instance.StoreSingle(GetBuildingType());
         GetVisuals().Destroy();
     }
 

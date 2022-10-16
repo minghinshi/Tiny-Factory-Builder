@@ -21,7 +21,7 @@ public class Machine : Producer
 
     public override void Destroy()
     {
-        inputInventory.TransferTo(Inventory.playerInventory);
+        inputInventory.TransferTo(PlayerInventory.instance);
         inputInventory.Changed -= OnInputInventoryUpdated;
         base.Destroy();
     }
@@ -92,7 +92,7 @@ public class Machine : Producer
 
     private void GiveInputsToPlayer()
     {
-        inputInventory.TransferTo(Inventory.playerInventory);
+        inputInventory.TransferTo(PlayerInventory.instance);
         AudioHandler.instance.PlaySound(AudioHandler.instance.pickUpSound);
     }
 }
