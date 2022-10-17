@@ -3,7 +3,11 @@ using UnityEngine;
 
 public class InventoryChangeDisplay : ItemLabelDisplay
 {
+    private const float TimeToLive = 0.65f;
     private static InventoryChangeDisplay currentDisplay;
+
+    private float timeElapsed;
+    private CanvasGroup canvasGroup;
     private readonly List<InventoryChange> changes = new();
 
     public static void DisplayChange(InventoryChange inventoryChange)
@@ -13,9 +17,16 @@ public class InventoryChangeDisplay : ItemLabelDisplay
 
     private void Start()
     {
+        canvasGroup = GetComponent<CanvasGroup>();
         SetBuildFunc(BuildLabels);
         currentDisplay = null;
-        Destroy(gameObject, 0.5f);
+    }
+
+    private void Update()
+    {
+        timeElapsed += Time.deltaTime;
+        if (timeElapsed >= TimeToLive) Destroy(gameObject);
+        else canvasGroup.alpha = 1 - Mathf.Pow(timeElapsed / TimeToLive, 2);
     }
 
     private static InventoryChangeDisplay GetCurrentDisplay()
