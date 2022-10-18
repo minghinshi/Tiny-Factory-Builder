@@ -5,24 +5,16 @@ using UnityEngine.UI;
 public abstract class Producer : Building
 {
     [JsonProperty] protected Inventory outputInventory = new();
-
     protected Timer timer;
+    private ProducerVisual visual;
 
     protected Producer(Vector2Int gridPosition, Direction direction) : base(gridPosition, direction) { }
-
-    public override void Initialize()
-    {
-        base.Initialize();
-        timer = GetNewTimer();
-        timer.TimerEnded += OnTimerEnded;
-        AddProgressBar();
-    }
 
     public override void Destroy()
     {
         timer.Destroy();
         timer.TimerEnded -= OnTimerEnded;
-        outputInventory.TransferTo(Inventory.playerInventory);
+        outputInventory.TransferTo(PlayerInventory.instance);
         base.Destroy();
     }
 
@@ -35,15 +27,9 @@ public abstract class Producer : Building
 
     public override ItemStack Extract()
     {
-        ItemStack itemStack = new ItemStack(outputInventory.GetFirstItemType(), 1);
-        outputInventory.RemoveCopyOf(itemStack);
+        ItemStack itemStack = new(outputInventory.GetFirstItemType(), 1);
+        outputInventory.RemoveStack(itemStack);
         return itemStack;
-    }
-
-    public void AddProgressBar()
-    {
-        Transform progressBar = Object.Instantiate(PrefabLoader.progressBar, transform);
-        timer.SetSlider(progressBar.GetComponent<Slider>());
     }
 
     public Inventory GetOutputInventory()
@@ -51,8 +37,31 @@ public abstract class Producer : Building
         return outputInventory;
     }
 
+    public Timer GetTimer()
+    {
+        return timer;
+    }
+
     protected abstract Timer GetNewTimer();
     protected abstract void ProduceOutputs();
+
+    protected override void InitializeData()
+    {
+        base.InitializeData();
+        timer = GetNewTimer();
+        timer.TimerEnded += OnTimerEnded;
+    }
+
+    protected override void CreateVisuals()
+    {
+        visual = ProducerVisual.Create();
+        visual.Initialize(this);
+    }
+
+    protected override BuildingVisual GetVisuals()
+    {
+        return visual;
+    }
 
     private void OnTimerEnded()
     {
@@ -62,7 +71,7 @@ public abstract class Producer : Building
 
     private void GiveOutputsToPlayer()
     {
-        outputInventory.TransferTo(Inventory.playerInventory);
+        outputInventory.TransferTo(PlayerInventory.instance);
         AudioHandler.instance.PlaySound(AudioHandler.instance.pickUpSound);
     }
 }

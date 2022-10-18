@@ -47,10 +47,11 @@ public class ItemPlacement : Placement
         if (target != null && target.CanInsertByPlayer()) PlaceItem(target);
     }
 
-    private void PlaceItem(Building target) {
+    private void PlaceItem(Building target)
+    {
         ItemStack itemToPlace = new(itemType, GetItemCount());
         target.Insert(itemToPlace);
-        Inventory.playerInventory.RemoveCopyOf(itemToPlace);
+        PlayerInventory.instance.RemoveStack(itemToPlace);
         AudioHandler.instance.PlaySound(AudioHandler.instance.placementSound);
     }
 
@@ -59,6 +60,6 @@ public class ItemPlacement : Placement
         int count = 1;
         if (Input.GetKey(KeyCode.LeftShift)) count *= 10;
         if (Input.GetKey(KeyCode.LeftControl)) count *= 100;
-        return Mathf.Min(count, Inventory.playerInventory.GetItemCount(itemType));
+        return Mathf.Min(count, PlayerInventory.instance.GetItemCount(itemType));
     }
 }

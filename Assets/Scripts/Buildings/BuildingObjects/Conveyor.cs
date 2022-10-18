@@ -10,9 +10,10 @@ public class Conveyor : Building
     private int currentOutput = 0;
     private bool itemInsertedThisTick = false;
 
-    private SpriteRenderer itemRenderer;
     private List<Vector2Int> inputPositions;
     private List<Vector2Int> outputPositions;
+
+    private ConveyorVisual visual;
 
     public Conveyor(Vector2Int gridPosition, Direction direction, ConveyorType conveyorType) : base(gridPosition, direction)
     {
@@ -31,18 +32,9 @@ public class Conveyor : Building
         itemInsertedThisTick = true;
     }
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SetInputCells(conveyorType.GetInputPositions());
-        SetOutputCells(conveyorType.GetOutputPositions());
-        CreateItemRenderer();
-        ConnectEvents();
-    }
-
     public override void Destroy()
     {
-        if (storedItem) Inventory.playerInventory.Store(storedItem, 1);
+        if (storedItem) PlayerInventory.instance.StoreSingle(storedItem);
         DisconnectEvents();
         base.Destroy();
     }
@@ -52,35 +44,34 @@ public class Conveyor : Building
         return conveyorType;
     }
 
-    private void SetInputCells(List<Vector2Int> relativePositions)
+    protected override void InitializeData()
     {
-        inputPositions = relativePositions.ConvertAll(RelativeToAbsolute);
+        base.InitializeData();
+        CalculateCells(inputPositions, conveyorType.GetInputPositions());
+        CalculateCells(outputPositions, conveyorType.GetOutputPositions());
+        ConnectEvents();
     }
 
-    private void SetOutputCells(List<Vector2Int> relativePositions)
+    protected override void CreateVisuals()
     {
-        outputPositions = relativePositions.ConvertAll(RelativeToAbsolute);
+        visual = ConveyorVisual.Create();
+        visual.Initialize(this);
     }
 
-    private void CreateItemRenderer()
+    protected override BuildingVisual GetVisuals()
     {
-        Transform rendererTransform = new GameObject("ItemDisplay", typeof(SpriteRenderer)).transform;
-        rendererTransform.SetParent(transform);
-        rendererTransform.position = transform.position;
-        itemRenderer = rendererTransform.GetComponent<SpriteRenderer>();
-        itemRenderer.sortingOrder = 1;
+        return visual;
+    }
+
+    private void CalculateCells(List<Vector2Int> absolute, List<Vector2Int> relative)
+    {
+        absolute = relative.ConvertAll(RelativeToAbsolute);
     }
 
     private void SetStoredItem(ItemType item)
     {
         storedItem = item;
-        itemRenderer.sprite = item.GetSprite();
-    }
-
-    private void RemoveStoredItem()
-    {
-        storedItem = null;
-        itemRenderer.sprite = null;
+        visual.RenderItem(item);
     }
 
     private void OnPretick()
@@ -110,11 +101,16 @@ public class Conveyor : Building
     {
         for (int i = 0; i < outputPositions.Count; i++)
         {
-            Building building = GridSystem.instance.GetBuildingAt(outputPositions[currentOutput]);
-            currentOutput = (currentOutput + 1) % outputPositions.Count;
+            Building building = GetNextOutput();
             if (building != null && building.CanInsert()) return building;
         }
         return null;
+    }
+
+    private Building GetNextOutput()
+    {
+        currentOutput = (currentOutput + 1) % outputPositions.Count;
+        return GridSystem.instance.GetBuildingAt(outputPositions[currentOutput]);
     }
 
     private Building GetExtractionTarget()
@@ -130,7 +126,7 @@ public class Conveyor : Building
     private void InsertTo(Building target)
     {
         target.Insert(new ItemStack(storedItem, 1));
-        RemoveStoredItem();
+        SetStoredItem(null);
     }
 
     private void ExtractFrom(Building target)

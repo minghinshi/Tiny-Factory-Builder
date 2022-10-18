@@ -1,5 +1,6 @@
 using JsonSubTypes;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using UnityEngine;
 
 [JsonConverter(typeof(JsonSubtypes))]
@@ -10,7 +11,6 @@ public abstract class Building
 {
     [JsonProperty] protected Vector2Int gridPosition;
     [JsonProperty] protected Direction direction;
-    protected Transform transform;
 
     public Building(Vector2Int gridPosition, Direction direction)
     {
@@ -24,10 +24,16 @@ public abstract class Building
     public abstract bool CanExtract();
     public abstract void Insert(ItemStack itemStack);
     public abstract ItemStack Extract();
+    public abstract BuildingType GetBuildingType();
 
     public Vector2Int GetGridPosition()
     {
         return gridPosition;
+    }
+
+    public Direction GetDirection()
+    {
+        return direction;
     }
 
     public Vector2Int GetSize()
@@ -35,18 +41,33 @@ public abstract class Building
         return GetBuildingType().GetTransformedSize(direction);
     }
 
-    public abstract BuildingType GetBuildingType();
-
-    public virtual void Initialize()
+    public List<Vector2Int> GetContainedCells()
     {
-        transform = GetBuildingType().GetNewBuildingTransform(gridPosition, direction);
-        GridSystem.instance.AddBuilding(this);
+        List<Vector2Int> cells = new();
+        Vector2Int size = GetSize();
+        for (int i = gridPosition.x; i < gridPosition.x + size.x; i++)
+            for (int j = gridPosition.y; j < gridPosition.y + size.y; j++)
+                cells.Add(new Vector2Int(i, j));
+        return cells;
+    }
+
+    public void Initialize() {
+        InitializeData();
+        CreateVisuals();
     }
 
     public virtual void Destroy()
     {
-        Inventory.playerInventory.Store(GetBuildingType(), 1);
-        Object.Destroy(transform.gameObject);
+        PlayerInventory.instance.StoreSingle(GetBuildingType());
+        GetVisuals().Destroy();
+    }
+
+    protected abstract void CreateVisuals();
+    protected abstract BuildingVisual GetVisuals();
+
+    protected virtual void InitializeData()
+    {
+        GridSystem.instance.AddBuilding(this);
     }
 
     protected Vector2Int RelativeToAbsolute(Vector2Int relativePosition)

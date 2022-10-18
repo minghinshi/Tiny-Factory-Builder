@@ -1,64 +1,35 @@
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 
 public class Inventory
 {
-    public static Inventory playerInventory = new(ScriptableObjectLoader.starterMachines.ConvertAll(x => new ItemStack(x, 1)).ToArray());
+    [JsonProperty] protected List<ItemStack> itemStacks = new();
 
-    [JsonProperty] private List<ItemStack> itemStacks;
+    public delegate void InventoryChangedHandler();
+    public event InventoryChangedHandler Changed;
 
-    public delegate void InventoryUpdatedHandler();
-    public event InventoryUpdatedHandler Updated;
+    public delegate void ItemTypesChangedHandler(ItemType itemType);
+    public event ItemTypesChangedHandler ItemAdded;
+    public event ItemTypesChangedHandler ItemRemoved;
 
-    public delegate void OutOfStockHandler(ItemType itemType);
-    public event OutOfStockHandler OutOfStock;
-
-    public Inventory(params ItemStack[] itemStacks)
+    public void StoreSingle(ItemType itemType)
     {
-        this.itemStacks = new List<ItemStack>(itemStacks);
+        Store(itemType, 1);
     }
 
-    public void Store(ItemType itemType, int count)
+    public void RemoveSingle(ItemType itemType)
     {
-        ItemStack itemStack = GetItemStack(itemType) ?? AddItemStack(itemType);
-        itemStack.Store(count);
-        NotifyUpdate();
+        Remove(itemType, 1);
     }
 
-    public void StoreCopyOf(ItemStack itemStack)
+    public void StoreStack(ItemStack itemStack)
     {
-        StoreCopiesOf(itemStack, 1);
+        Store(itemStack.GetItemType(), itemStack.GetCount());
     }
 
-    public void StoreCopiesOf(ItemStack itemStack, int numberOfCopies)
+    public void RemoveStack(ItemStack itemStack)
     {
-        Store(itemStack.GetItemType(), itemStack.GetCount() * numberOfCopies);
-    }
-
-    public void Remove(ItemType itemType, int count)
-    {
-        if (count > GetItemCount(itemType)) throw new InvalidOperationException();
-        ItemStack itemStack = GetItemStack(itemType);
-        itemStack.Remove(count);
-        if (itemStack.GetCount() == 0) RemoveItemStack(itemStack);
-        NotifyUpdate();
-    }
-
-    public void RemoveCopyOf(ItemStack itemStack)
-    {
-        RemoveCopiesOf(itemStack, 1);
-    }
-
-    public void RemoveCopiesOf(ItemStack itemStack, int numberOfCopies)
-    {
-        Remove(itemStack.GetItemType(), itemStack.GetCount() * numberOfCopies);
-    }
-
-    public void Empty()
-    {
-        itemStacks.Clear();
-        NotifyUpdate();
+        Remove(itemStack.GetItemType(), itemStack.GetCount());
     }
 
     public int GetItemCount(ItemType itemType)
@@ -70,11 +41,6 @@ public class Inventory
     public bool HasItems()
     {
         return itemStacks.Count != 0;
-    }
-
-    public bool Contains(ItemType itemType)
-    {
-        return GetItemStack(itemType) != null;
     }
 
     public bool Contains(ItemStack itemStack)
@@ -95,14 +61,36 @@ public class Inventory
 
     public void TransferTo(Inventory inventory)
     {
-        itemStacks.ForEach(x => inventory.StoreCopyOf(x));
+        itemStacks.ForEach(x => inventory.StoreStack(x));
         Empty();
+    }
+
+    protected virtual void Store(ItemType itemType, int count)
+    {
+        ItemStack itemStack = GetItemStack(itemType) ?? AddItemStack(itemType);
+        itemStack.Store(count);
+        NotifyUpdate();
+    }
+
+    protected virtual void Remove(ItemType itemType, int count)
+    {
+        ItemStack itemStack = GetItemStack(itemType);
+        if (itemStack.GetCount() == count) RemoveItemStack(itemStack);
+        else itemStack.Remove(count);
+        NotifyUpdate();
+    }
+
+    private void Empty()
+    {
+        itemStacks.Clear();
+        NotifyUpdate();
     }
 
     private ItemStack AddItemStack(ItemType itemType)
     {
         ItemStack itemStack = new(itemType, 0);
         itemStacks.Add(itemStack);
+        ItemAdded?.Invoke(itemType);
         return itemStack;
     }
 
@@ -114,11 +102,11 @@ public class Inventory
     private void RemoveItemStack(ItemStack itemStack)
     {
         itemStacks.Remove(itemStack);
-        OutOfStock?.Invoke(itemStack.GetItemType());
+        ItemRemoved?.Invoke(itemStack.GetItemType());
     }
 
     private void NotifyUpdate()
     {
-        Updated?.Invoke();
+        Changed?.Invoke();
     }
 }

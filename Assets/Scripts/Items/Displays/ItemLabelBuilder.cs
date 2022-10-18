@@ -27,7 +27,7 @@ public class ItemLabelBuilder
     public void BuildLabelWithCounter(ICountableItem countableItem)
     {
         GetLabel().AddImage(countableItem.GetItemType());
-        GetLabel().GetCounter().ShowCountOf(countableItem);
+        GetLabel().GetCounter().ShowCount(countableItem);
     }
 
     public void BuildCostLabel(ItemStack itemStack, Process process, bool doBatchCraft)
@@ -46,14 +46,30 @@ public class ItemLabelBuilder
     public void BuildGenericButton(ICountableItem countableItem, params UnityAction[] onClick)
     {
         BuildGenericButton(countableItem.GetItemType(), onClick);
-        GetLabel().GetCounter().ShowCountOf(countableItem);
+        GetLabel().GetCounter().ShowCount(countableItem);
     }
 
     public void BuildCraftingButton(Process process, params UnityAction[] onClick)
     {
         BuildGenericButton(process.GetAverageSingleOutput()[0].GetItemType(), onClick);
         GetLabel().AddTooltipBuildingSteps(() => TooltipBuilder.instance.AddCraftingDisplay(process));
+        UpdateTooltipOnClick();
+        UpdateTooltipOnShift();
+    }
+
+    public void BuildChangeDisplayLabel(InventoryChange change)
+    {
+        GetLabel().AddImage(change.ItemType);
+        GetLabel().GetCounter().ShowChange(change);
+    }
+
+    private void UpdateTooltipOnClick()
+    {
         GetLabel().AddButtonAction(GetLabel().UpdateTooltip);
+    }
+
+    private void UpdateTooltipOnShift()
+    {
         KeyboardHandler.instance.ShiftPressed += GetLabel().UpdateTooltip;
         KeyboardHandler.instance.ShiftReleased += GetLabel().UpdateTooltip;
     }

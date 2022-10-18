@@ -9,7 +9,8 @@ public class SaveManager : MonoBehaviour
     private void Start()
     {
         serializerSettings = GetSerializerSettings();
-        if (File.Exists(GetSaveFilePath())) LoadGame();
+        LoadGame();
+        LoadGUI();
     }
 
     private void OnApplicationQuit()
@@ -20,7 +21,7 @@ public class SaveManager : MonoBehaviour
     private JsonSerializerSettings GetSerializerSettings()
     {
         JsonSerializerSettings settings = new();
-        settings.Converters.Add(new ItemTypeConverter());
+        settings.Converters.Add(new ScriptableObjectConverter());
         settings.Converters.Add(new Vector2IntConverter());
         return settings;
     }
@@ -37,15 +38,26 @@ public class SaveManager : MonoBehaviour
 
     private void LoadGame()
     {
-        string json = File.ReadAllText(GetSaveFilePath());
-        JsonConvert.DeserializeObject<SaveFile>(json, serializerSettings).LoadFile();
-        Debug.Log("Loading game...");
+        GetSaveFile().LoadFile();
     }
 
     private void SaveGame()
     {
         string json = JsonConvert.SerializeObject(SaveFile.GetCurrentData(), serializerSettings);
         File.WriteAllText(GetSaveFilePath(), json);
-        Debug.Log("Saving game...");
+    }
+
+    private SaveFile GetSaveFile()
+    {
+        return File.Exists(GetSaveFilePath())
+            ? JsonConvert.DeserializeObject<SaveFile>(File.ReadAllText(GetSaveFilePath()), serializerSettings)
+            : SaveFile.GetNewData();
+    }
+
+    private void LoadGUI()
+    {
+        PlayerInventoryDisplay.instance.Initialize();
+        PlayerCraftingDisplay.instance.Initialize();
+        RecipeSelection.instance.Initialize();
     }
 }

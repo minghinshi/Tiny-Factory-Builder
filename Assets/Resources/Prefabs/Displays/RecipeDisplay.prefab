@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8121506775543786244}
   - component: {fileID: 2788701908179269246}
+  - component: {fileID: 4405499691995059644}
   m_Layer: 5
   m_Name: Inputs
   m_TagString: Untagged
@@ -63,6 +64,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &4405499691995059644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186912120148965383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27e00c716fb43f9458452cead108d598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &577639454110550212
 GameObject:
   m_ObjectHideFlags: 0
@@ -75,6 +88,7 @@ GameObject:
   - component: {fileID: 577639454110550219}
   - component: {fileID: 577639454110550218}
   - component: {fileID: 1827736848219654338}
+  - component: {fileID: 6087221827189068072}
   m_Layer: 5
   m_Name: RecipeDisplay
   m_TagString: Untagged
@@ -97,7 +111,7 @@ RectTransform:
   - {fileID: 6334965710179727973}
   - {fileID: 1956502560144853815}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -168,6 +182,21 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &6087221827189068072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577639454110550212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4bd9145265cde841a5ceba34ce5034d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputGrid: {fileID: 4405499691995059644}
+  outputGrid: {fileID: 3097812165077574877}
+  machineGrid: {fileID: 8504381651224154564}
 --- !u!1 &2541375299798903529
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,6 +207,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1318761410975746903}
   - component: {fileID: 4036067862493125764}
+  - component: {fileID: 3097812165077574877}
   m_Layer: 5
   m_Name: Outputs
   m_TagString: Untagged
@@ -231,6 +261,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &3097812165077574877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2541375299798903529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27e00c716fb43f9458452cead108d598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2916669179824861524
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,6 +349,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1956502560144853815}
   - component: {fileID: 2513706741438216047}
+  - component: {fileID: 8504381651224154564}
   m_Layer: 5
   m_Name: Machines
   m_TagString: Untagged
@@ -360,6 +403,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &8504381651224154564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7136962258272310644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27e00c716fb43f9458452cead108d598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7880894380775070435
 GameObject:
   m_ObjectHideFlags: 0

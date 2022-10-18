@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Machine : Producer
 {
-    [JsonProperty] private MachineType machineType;
-    [JsonProperty] private Inventory inputInventory = new();
+    [JsonProperty] private readonly MachineType machineType;
+    [JsonProperty] private readonly Inventory inputInventory = new();
 
     private Process currentProcess;
 
@@ -19,17 +19,10 @@ public class Machine : Producer
         if (Input.GetKey(KeyCode.LeftShift) && inputInventory.HasItems()) GiveInputsToPlayer();
     }
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        OnInputInventoryUpdated();
-        inputInventory.Updated += OnInputInventoryUpdated;
-    }
-
     public override void Destroy()
     {
-        inputInventory.TransferTo(Inventory.playerInventory);
-        inputInventory.Updated -= OnInputInventoryUpdated;
+        inputInventory.TransferTo(PlayerInventory.instance);
+        inputInventory.Changed -= OnInputInventoryUpdated;
         base.Destroy();
     }
 
@@ -39,11 +32,18 @@ public class Machine : Producer
     }
 
     public override bool CanInsert() => true;
-    public override void Insert(ItemStack itemStack) => inputInventory.StoreCopyOf(itemStack);
+    public override void Insert(ItemStack itemStack) => inputInventory.StoreStack(itemStack);
 
     public Inventory GetInputInventory()
     {
         return inputInventory;
+    }
+
+    protected override void InitializeData()
+    {
+        base.InitializeData();
+        OnInputInventoryUpdated();
+        inputInventory.Changed += OnInputInventoryUpdated;
     }
 
     protected override Timer GetNewTimer()
@@ -84,7 +84,7 @@ public class Machine : Producer
     {
         foreach (Recipe recipe in machineType.GetRecipes())
         {
-            Process craftingRequest = new Process(recipe, inputInventory, outputInventory);
+            Process craftingRequest = new(recipe, inputInventory, outputInventory);
             if (craftingRequest.CanCraft()) return craftingRequest;
         }
         return null;
@@ -92,7 +92,7 @@ public class Machine : Producer
 
     private void GiveInputsToPlayer()
     {
-        inputInventory.TransferTo(Inventory.playerInventory);
+        inputInventory.TransferTo(PlayerInventory.instance);
         AudioHandler.instance.PlaySound(AudioHandler.instance.pickUpSound);
     }
 }

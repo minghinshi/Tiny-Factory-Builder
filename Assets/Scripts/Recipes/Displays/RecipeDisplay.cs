@@ -2,45 +2,32 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RecipeDisplay
+public class RecipeDisplay : MonoBehaviour
 {
-    private readonly Transform inputTransform;
-    private readonly Transform outputTransform;
-    private readonly Transform machineTransform;
-
-    private RecipeDisplay(Transform transform)
-    {
-        inputTransform = transform.Find("Materials").Find("Inputs");
-        outputTransform = transform.Find("Materials").Find("Outputs");
-        machineTransform = transform.Find("Machines");
-    }
+    [SerializeField] private ItemLabelDisplay inputGrid, outputGrid, machineGrid;
 
     public static RecipeDisplay Create(Transform parent)
     {
-        Transform transform = UnityEngine.Object.Instantiate(PrefabLoader.recipeDisplay, parent);
-        RecipeDisplay recipeDisplay = new(transform);
-        return recipeDisplay;
+        return Instantiate(Prefabs.recipeDisplay, parent).GetComponent<RecipeDisplay>();
     }
 
     public void ShowInputs(Func<ItemStack, ItemLabel> buildInputLabel, List<ItemStack> inputs)
     {
-        CreateItemLabelGrid(inputTransform, buildInputLabel, inputs);
+        CreateItemLabelGrid(inputGrid, buildInputLabel, inputs);
     }
 
     public void ShowOutputs(Func<ICountableItem, ItemLabel> buildOutputLabel, List<ICountableItem> outputs)
     {
-        CreateItemLabelGrid(outputTransform, buildOutputLabel, outputs);
+        CreateItemLabelGrid(outputGrid, buildOutputLabel, outputs);
     }
 
     public void ShowMachines(Func<MachineType, ItemLabel> buildMachineLabel, List<MachineType> machines)
     {
-        CreateItemLabelGrid(machineTransform, buildMachineLabel, machines);
+        CreateItemLabelGrid(machineGrid, buildMachineLabel, machines);
     }
 
-    private void CreateItemLabelGrid<T>(Transform parent, Func<T, ItemLabel> buildLabel, List<T> items)
+    private void CreateItemLabelGrid<T>(ItemLabelDisplay grid, Func<T, ItemLabel> buildLabel, List<T> items)
     {
-        ItemLabelGrid<T> grid = new(parent);
-        grid.SetCreateLabelFunc(buildLabel);
-        grid.DisplayItems(items);
+        grid.SetBuildFunc(() => items.ConvertAll(buildLabel.Invoke));
     }
 }

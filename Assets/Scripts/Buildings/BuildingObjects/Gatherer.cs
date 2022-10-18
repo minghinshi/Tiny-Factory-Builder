@@ -30,6 +30,6 @@ public class Gatherer : Producer
 
     protected override void ProduceOutputs()
     {
-        outputInventory.Store(gathererType.GetProducedItem(), 1);
+        outputInventory.StoreSingle(gathererType.GetProducedItem());
     }
 }

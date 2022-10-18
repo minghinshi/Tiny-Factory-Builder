@@ -26,7 +26,7 @@ public abstract class BuildingType : ItemType
 
     public Vector3 GetWorldPosition(Vector2Int gridPosition, Direction direction)
     {
-        return GridSystem.instance.GetCentreWorldPosition(gridPosition, GetTransformedSize(direction));
+        return GridSystem.instance.GetWorldPosition(gridPosition, GetTransformedSize(direction));
     }
 
     //Creates a building object.
@@ -38,17 +38,7 @@ public abstract class BuildingType : ItemType
         {
             CreateBuilding(position, direction).Initialize();
             AudioHandler.instance.PlaySound(AudioHandler.instance.placementSound);
-            Inventory.playerInventory.Remove(this, 1);
+            PlayerInventory.instance.RemoveSingle(this);
         }
-    }
-
-    public Transform GetNewBuildingTransform(Vector2Int gridPosition, Direction direction)
-    {
-        Transform transform = CreateTransform();
-        InitializeSpriteRenderer(transform.GetComponent<SpriteRenderer>(), 0);
-        transform.SetPositionAndRotation(GetWorldPosition(gridPosition, direction), direction.GetRotationQuaternion());
-        transform.SetParent(ObjectFinder.worldTransform);
-        transform.localScale = new Vector3(size.x, size.y, 1);
-        return transform;
     }
 }

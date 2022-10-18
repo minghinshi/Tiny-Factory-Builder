@@ -369,8 +369,8 @@ GameObject:
   - component: {fileID: 150844781}
   - component: {fileID: 150844782}
   - component: {fileID: 150844783}
-  - component: {fileID: 150844784}
   - component: {fileID: 150844785}
+  - component: {fileID: 150844786}
   m_Layer: 5
   m_Name: RecipeViewer
   m_TagString: Untagged
@@ -426,25 +426,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c3da5145d42f4e4589d53aeb8c8128e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &150844784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 150844780}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e4a6649022470a4d86391ba59ba5a66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemPage: {fileID: 166143940}
-  recipePage: {fileID: 549989328}
-  tabSwitcher: {fileID: 150844785}
-  panelSwitcher: {fileID: 1906871376}
-  returnButton: {fileID: 1713406304}
-  headerText: {fileID: 250473506}
-  returnText: {fileID: 73193804}
 --- !u!114 &150844785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,6 +439,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   current: {fileID: 166143941}
+--- !u!114 &150844786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150844780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c980ce7efb743545927e83089519c74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  returnButton: {fileID: 1713406304}
+  headerText: {fileID: 250473506}
+  returnText: {fileID: 73193804}
+  tabSwitcher: {fileID: 150844785}
+  panelSwitcher: {fileID: 1906871376}
 --- !u!1 &166143939
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,6 +470,7 @@ GameObject:
   - component: {fileID: 166143943}
   - component: {fileID: 166143942}
   - component: {fileID: 166143941}
+  - component: {fileID: 166143946}
   m_Layer: 5
   m_Name: Items
   m_TagString: Untagged
@@ -585,6 +584,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 166143939}
   m_CullTransparentMesh: 1
+--- !u!114 &166143946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166143939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fe84ab2da1d3614ba489c75a4f9b91f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &250473504
 GameObject:
   m_ObjectHideFlags: 0
@@ -871,6 +882,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
@@ -1130,6 +1142,7 @@ GameObject:
   - component: {fileID: 549989332}
   - component: {fileID: 549989333}
   - component: {fileID: 549989329}
+  - component: {fileID: 549989334}
   m_Layer: 5
   m_Name: Recipes
   m_TagString: Untagged
@@ -1245,6 +1258,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &549989334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549989327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a17a29621a6df214ea9d23998ca7fea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &740890039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1275,7 +1300,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -1734,6 +1758,7 @@ GameObject:
   - component: {fileID: 1469595590}
   - component: {fileID: 1469595589}
   - component: {fileID: 1469595595}
+  - component: {fileID: 1469595596}
   m_Layer: 5
   m_Name: PlayerInventory
   m_TagString: Untagged
@@ -1832,11 +1857,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1469595587}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 239c01711f06f614ca3872ac8b3dec0a, type: 3}
+  m_Script: {fileID: 11500000, guid: 61f75c5ac041f4847a5d6e7900338f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   visibilityHandler: {fileID: 1008683271}
   panelSwitcher: {fileID: 1906871376}
+--- !u!114 &1469595596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469595587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab8abcf8486ed4b4c8edfb7f524bbb1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1713406302
 GameObject:
   m_ObjectHideFlags: 0
@@ -1921,9 +1958,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 150844784}
-        m_TargetAssemblyTypeName: RecipeViewer, Assembly-CSharp
-        m_MethodName: OnReturn
+      - m_Target: {fileID: 150844786}
+        m_TargetAssemblyTypeName: RecipeBook, Assembly-CSharp
+        m_MethodName: OnReturnButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1982,8 +2019,9 @@ GameObject:
   - component: {fileID: 1724250513}
   - component: {fileID: 1724250515}
   - component: {fileID: 1724250514}
-  - component: {fileID: 1724250516}
   - component: {fileID: 1724250517}
+  - component: {fileID: 1724250516}
+  - component: {fileID: 1724250518}
   m_Layer: 5
   m_Name: PlayerCrafting
   m_TagString: Untagged
@@ -2058,7 +2096,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1724250512}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d26bf0da540cfb642a1eeeb6574bb3a4, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a2eae2d2e5d67941962ff23345e74af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1724250517
@@ -2085,6 +2123,18 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &1724250518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1724250512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27e00c716fb43f9458452cead108d598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1806005609
 GameObject:
   m_ObjectHideFlags: 0
@@ -2309,6 +2359,7 @@ GameObject:
   - component: {fileID: 1845851209}
   - component: {fileID: 1845851214}
   - component: {fileID: 1845851215}
+  - component: {fileID: 1845851216}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -2389,6 +2440,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa628a0195015074681d281ac9b12372, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1845851216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1845851207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3127b9a2a934fa54bb1cd10727290335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1886830024
@@ -2549,6 +2612,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
