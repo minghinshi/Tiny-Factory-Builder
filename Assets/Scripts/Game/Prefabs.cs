@@ -2,10 +2,7 @@ using UnityEngine;
 
 public static class Prefabs
 {
-    public static readonly Transform button = GetPrefab("ItemLabel/Button");
-    public static readonly Transform image = GetPrefab("ItemLabel/Image");
-    public static readonly Transform counter = GetPrefab("ItemLabel/Counter");
-    public static readonly Transform emptyLabel = GetPrefab("ItemLabel/ItemLabel");
+    public static readonly Transform itemLabel = GetPrefab("ItemLabel/ItemLabel");
 
     public static readonly Transform tooltipText = GetPrefab("Displays/Text");
     public static readonly Transform inventoryDisplay = GetPrefab("Displays/InventoryDisplay");
