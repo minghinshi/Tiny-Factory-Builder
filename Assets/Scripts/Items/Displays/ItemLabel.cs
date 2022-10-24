@@ -6,28 +6,34 @@ using UnityEngine.UI;
 
 public class ItemLabel : MonoBehaviour
 {
-    private Image image;
-    private Counter counter;
-    private Button button;
+    [SerializeField] private Image image;
+    [SerializeField] private Counter counter;
+    [SerializeField] private Button button;
 
-    private bool generateTooltips = false;
     private bool isHoveredOver = false;
     private readonly List<Action> tooltipBuildingSteps = new();
 
-    private void OnDestroy()
+    public Counter Counter
     {
-        if (IsTooltipActive()) OnPointerExit();
+        get
+        {
+            counter.gameObject.SetActive(true);
+            return counter;
+        }
     }
 
-    public static ItemLabel Create()
+    private void OnDisable()
     {
-        return Instantiate(Prefabs.emptyLabel).GetComponent<ItemLabel>();
+        ResetImage();
+        ResetCounter();
+        ResetButton();
+        ResetTooltips();
     }
 
     public void OnPointerEnter()
     {
         isHoveredOver = true;
-        if (generateTooltips) DisplayTooltip();
+        if (CanGenerateTooltips()) DisplayTooltip();
     }
 
     public void UpdateTooltip()
@@ -38,29 +44,18 @@ public class ItemLabel : MonoBehaviour
     public void OnPointerExit()
     {
         isHoveredOver = false;
-        if (generateTooltips) Tooltip.instance.Hide();
+        if (CanGenerateTooltips()) Tooltip.instance.Hide();
     }
 
     public void AddImage(ItemType itemType)
     {
-        image = Instantiate(Prefabs.image, transform).GetComponent<Image>();
+        image.gameObject.SetActive(true);
         image.sprite = itemType.GetSprite();
-    }
-
-    public Counter GetCounter()
-    {
-        if (counter == null) counter = Instantiate(Prefabs.counter, transform).GetComponent<Counter>();
-        return counter;
-    }
-
-    public void AddButton()
-    {
-        button = Instantiate(Prefabs.button, transform).GetComponent<Button>();
     }
 
     public void AddButton(params UnityAction[] onClick)
     {
-        AddButton();
+        button.gameObject.SetActive(true);
         AddButtonAction(onClick);
     }
 
@@ -71,7 +66,6 @@ public class ItemLabel : MonoBehaviour
 
     public void AddTooltipBuildingSteps(params Action[] actions)
     {
-        generateTooltips = true;
         tooltipBuildingSteps.AddRange(actions);
     }
 
@@ -82,6 +76,34 @@ public class ItemLabel : MonoBehaviour
 
     private bool IsTooltipActive()
     {
-        return isHoveredOver && generateTooltips;
+        return isHoveredOver && CanGenerateTooltips();
+    }
+
+    private bool CanGenerateTooltips()
+    {
+        return tooltipBuildingSteps.Count > 0;
+    }
+
+    private void ResetImage()
+    {
+        image.sprite = null;
+        image.gameObject.SetActive(false);
+    }
+
+    private void ResetCounter()
+    {
+        counter.gameObject.SetActive(false);
+    }
+
+    private void ResetButton()
+    {
+        button.onClick.RemoveAllListeners();
+        button.gameObject.SetActive(false);
+    }
+
+    private void ResetTooltips()
+    {
+        if (IsTooltipActive()) OnPointerExit();
+        tooltipBuildingSteps.Clear();
     }
 }

@@ -6,10 +6,13 @@ public class ItemLabelBuilder
 
     private ItemLabel label;
 
-    private ItemLabel GetLabel()
+    private ItemLabel Label
     {
-        if (label == null) label = ItemLabel.Create();
-        return label;
+        get
+        {
+            if (label == null) label = ItemLabelPool.pool.Get();
+            return label;
+        }
     }
 
     private void RemoveLabel()
@@ -19,58 +22,58 @@ public class ItemLabelBuilder
 
     public ItemLabel GetFinishedLabel()
     {
-        ItemLabel output = GetLabel();
+        ItemLabel output = Label;
         RemoveLabel();
         return output;
     }
 
     public void BuildLabelWithCounter(ICountableItem countableItem)
     {
-        GetLabel().AddImage(countableItem.GetItemType());
-        GetLabel().GetCounter().ShowCount(countableItem);
+        Label.AddImage(countableItem.GetItemType());
+        Label.Counter.ShowCount(countableItem);
     }
 
     public void BuildCostLabel(ItemStack itemStack, Process process, bool doBatchCraft)
     {
         BuildLabelWithCounter(itemStack);
-        GetLabel().GetCounter().ShowAvailabilityOf(itemStack, process, doBatchCraft);
+        Label.Counter.ShowAvailabilityOf(itemStack, process, doBatchCraft);
     }
 
     public void BuildGenericButton(ItemType itemType, params UnityAction[] onClick)
     {
-        GetLabel().AddButton(onClick);
-        GetLabel().AddImage(itemType);
-        GetLabel().AddTooltipBuildingSteps(() => TooltipBuilder.instance.AddItemInfo(itemType));
+        Label.AddButton(onClick);
+        Label.AddImage(itemType);
+        Label.AddTooltipBuildingSteps(() => TooltipBuilder.instance.AddItemInfo(itemType));
     }
 
     public void BuildGenericButton(ICountableItem countableItem, params UnityAction[] onClick)
     {
         BuildGenericButton(countableItem.GetItemType(), onClick);
-        GetLabel().GetCounter().ShowCount(countableItem);
+        Label.Counter.ShowCount(countableItem);
     }
 
     public void BuildCraftingButton(Process process, params UnityAction[] onClick)
     {
         BuildGenericButton(process.GetAverageSingleOutput()[0].GetItemType(), onClick);
-        GetLabel().AddTooltipBuildingSteps(() => TooltipBuilder.instance.AddCraftingDisplay(process));
+        Label.AddTooltipBuildingSteps(() => TooltipBuilder.instance.AddCraftingDisplay(process));
         UpdateTooltipOnClick();
         UpdateTooltipOnShift();
     }
 
     public void BuildChangeDisplayLabel(InventoryChange change)
     {
-        GetLabel().AddImage(change.ItemType);
-        GetLabel().GetCounter().ShowChange(change);
+        Label.AddImage(change.ItemType);
+        Label.Counter.ShowChange(change);
     }
 
     private void UpdateTooltipOnClick()
     {
-        GetLabel().AddButtonAction(GetLabel().UpdateTooltip);
+        Label.AddButtonAction(Label.UpdateTooltip);
     }
 
     private void UpdateTooltipOnShift()
     {
-        KeyboardHandler.instance.ShiftPressed += GetLabel().UpdateTooltip;
-        KeyboardHandler.instance.ShiftReleased += GetLabel().UpdateTooltip;
+        KeyboardHandler.instance.ShiftPressed += Label.UpdateTooltip;
+        KeyboardHandler.instance.ShiftReleased += Label.UpdateTooltip;
     }
 }
