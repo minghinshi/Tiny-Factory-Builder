@@ -1,7 +1,7 @@
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
-[RequireComponent(typeof(Text))]
+[RequireComponent(typeof(TMP_Text))]
 public class Counter : MonoBehaviour
 {
     private readonly Color red = new Color32(0xef, 0x9a, 0x9a, 0xff);
@@ -9,12 +9,12 @@ public class Counter : MonoBehaviour
     private readonly Color green = new Color32(0xa5, 0xd6, 0xa7, 0xff);
     private readonly Color white = new(1f, 1f, 1f, 0.87f);
 
-    private Text text;
-    private Text Text
+    private TMP_Text text;
+    private TMP_Text Text
     {
         get
         {
-            if (text == null) text = GetComponent<Text>();
+            if (text == null) text = GetComponent<TMP_Text>();
             return text;
         }
     }

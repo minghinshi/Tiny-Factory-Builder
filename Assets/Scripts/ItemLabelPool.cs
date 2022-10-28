@@ -5,22 +5,23 @@ public class ItemLabelPool
 {
     public static ObjectPool<ItemLabel> pool = new(Create, Get, Release, Destroy);
 
-    public static ItemLabel Create()
+    private static ItemLabel Create()
     {
         return Object.Instantiate(Prefabs.itemLabel).GetComponent<ItemLabel>();
     }
 
-    public static void Get(ItemLabel itemLabel)
+    private static void Get(ItemLabel itemLabel)
     {
         itemLabel.gameObject.SetActive(true);
     }
 
-    public static void Release(ItemLabel itemLabel)
+    private static void Release(ItemLabel itemLabel)
     {
+        itemLabel.transform.SetParent(null);
         itemLabel.gameObject.SetActive(false);
     }
 
-    public static void Destroy(ItemLabel itemLabel)
+    private static void Destroy(ItemLabel itemLabel)
     {
         Object.Destroy(itemLabel.gameObject);
     }

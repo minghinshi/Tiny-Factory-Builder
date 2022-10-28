@@ -15,7 +15,21 @@ public class ItemLabelDisplay : MonoBehaviour
     public void DisplayItemLabels()
     {
         if (buildFunction == null) Debug.LogError("Build function has not been set!");
-        foreach (Transform child in transform) Destroy(child.gameObject);
+        DisableLabels();
+        BuildLabels();
+    }
+
+    private void DisableLabels()
+    {
+        while (transform.childCount > 0)
+        {
+            Transform child = transform.GetChild(0);
+            ItemLabelPool.pool.Release(child.GetComponent<ItemLabel>());
+        }
+    }
+
+    private void BuildLabels()
+    {
         buildFunction.Invoke().ForEach(x => x.transform.SetParent(transform));
     }
 }
