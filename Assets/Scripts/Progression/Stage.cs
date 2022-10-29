@@ -7,6 +7,8 @@ public class Stage : ScriptableObject
 {
     [SerializeField] private ItemType requiredItem;
     [SerializeField] private List<ItemType> unlockedItems;
+    [SerializeField] private List<Guide> unlockedGuides;
+    [SerializeField] private Guide displayedGuide;
 
     public ItemType GetRequiredItem()
     {
