@@ -16,20 +16,17 @@ public class SaveFile
         };
     }
 
-    public static SaveFile GetNewData()
-    {
-        return new()
-        {
-            PlayerInventory = new(GameData.starterMachines.ConvertAll(x => new ItemStack(x, 1)).ToArray()),
-            Buildings = new(),
-            UnlockedStages = new List<Stage>() { GameData.defaultStage }
-        };
-    }
-
     public void LoadFile()
     {
         PlayerInventory.instance = PlayerInventory;
         Buildings.ForEach(x => x.Initialize());
         UnlockedStages.ForEach(UnlockHandler.instance.UnlockStage);
+    }
+
+    public static void LoadNewFile()
+    {
+        PlayerInventory.instance = new(GameData.starterMachines.ConvertAll(x => new ItemStack(x, 1)).ToArray());
+        UnlockHandler.instance.UnlockStage(GameData.defaultStage);
+        GuideDisplay.instance.DisplayGuide(GameData.tutorial);
     }
 }

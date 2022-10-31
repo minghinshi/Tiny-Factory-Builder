@@ -38,7 +38,8 @@ public class SaveManager : MonoBehaviour
 
     private void LoadGame()
     {
-        GetSaveFile().LoadFile();
+        if (File.Exists(GetSaveFilePath())) GetSaveFile().LoadFile();
+        else SaveFile.LoadNewFile();
     }
 
     private void SaveGame()
@@ -49,9 +50,7 @@ public class SaveManager : MonoBehaviour
 
     private SaveFile GetSaveFile()
     {
-        return File.Exists(GetSaveFilePath())
-            ? JsonConvert.DeserializeObject<SaveFile>(File.ReadAllText(GetSaveFilePath()), serializerSettings)
-            : SaveFile.GetNewData();
+        return JsonConvert.DeserializeObject<SaveFile>(File.ReadAllText(GetSaveFilePath()), serializerSettings);
     }
 
     private void LoadGUI()

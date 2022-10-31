@@ -13,6 +13,15 @@ public class UnlockHandler : MonoBehaviour
     public delegate void UnlockedStageHandler();
     public static event UnlockedStageHandler UnlockedStage;
 
+    private HashSet<Stage> LockedStages
+    {
+        get
+        {
+            lockedStages ??= new(GameData.allStages);
+            return lockedStages;
+        }
+    }
+
     private void Awake()
     {
         instance = this;
@@ -40,12 +49,12 @@ public class UnlockHandler : MonoBehaviour
 
     public List<Stage> GetUnlockedStages()
     {
-        return GameData.allStages.Except(GetLockedStages()).ToList();
+        return GameData.allStages.Except(LockedStages).ToList();
     }
 
     public void UnlockStage(Stage stage)
     {
-        GetLockedStages().Remove(stage);
+        LockedStages.Remove(stage);
         UnlockItems(stage);
         UnlockRecipes();
         UnlockedStage?.Invoke();
@@ -58,7 +67,7 @@ public class UnlockHandler : MonoBehaviour
 
     private void OnPlayerInventoryItemAdded(ItemType itemType)
     {
-        GetLockedStages().ToList().FindAll(x => x.GetRequiredItem() == itemType).ForEach(UnlockStage);
+        LockedStages.ToList().FindAll(x => x.GetRequiredItem() == itemType).ForEach(UnlockStage);
     }
 
     private void UnlockItems(Stage stage)
@@ -74,11 +83,5 @@ public class UnlockHandler : MonoBehaviour
     private bool IsRecipeUnlocked(Recipe recipe)
     {
         return recipe.GetRequiredItems().IsSubsetOf(unlockedItems);
-    }
-
-    private HashSet<Stage> GetLockedStages()
-    {
-        lockedStages ??= new(GameData.allStages);
-        return lockedStages;
     }
 }

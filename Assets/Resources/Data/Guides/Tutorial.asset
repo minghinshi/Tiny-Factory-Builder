@@ -23,7 +23,7 @@ MonoBehaviour:
   - To kickstart production, you have brought with yourself 4 jars that generate
     classical elements out of nothing.
   - In order to grow your factory, you will be combining items through automated
-    means to unlock new technology and maximize production!
+    means to unlock technology and maximize production!
   - 'You''ll need to place down the jars for them to work.
 
     Click on the briefcase
@@ -41,5 +41,7 @@ MonoBehaviour:
     the jar in your inventory and try again.
   - The jar should be producing elements now. Hover over it to see it in action.
     Left click to harvest the output.
-  - 'Great! You just collected your first batch of elements. You should be able to
-    see it in your inventory. '
+  - 'Great! You just collected your first batch of elements.
+
+    You should be able
+    to see it in your inventory. '

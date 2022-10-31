@@ -11,6 +11,7 @@ public static class GameData
 
     public static readonly List<GathererType> starterMachines = GetObjects<GathererType>("Machines/Starters");
     public static readonly Stage defaultStage = Resources.Load<Stage>("Data/Stages/Default");
+    public static readonly Guide tutorial = Resources.Load<Guide>("Data/Guides/Tutorial");
 
     private static List<T> GetObjects<T>(string path) where T : Object
     {

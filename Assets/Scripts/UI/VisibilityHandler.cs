@@ -12,7 +12,7 @@ public class VisibilityHandler : MonoBehaviour
     private FadeDirection fadeDirection;
     private CanvasGroup canvasGroup;
 
-    private void Start()
+    private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
     }
