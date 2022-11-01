@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum FadeDirection { None, FadeIn, FadeOut }
 
@@ -11,10 +12,12 @@ public class VisibilityHandler : MonoBehaviour
 
     private FadeDirection fadeDirection;
     private CanvasGroup canvasGroup;
+    private LayoutElement layoutElement;
 
     private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
+        layoutElement = GetComponent<LayoutElement>();
     }
 
     private void Update()
@@ -65,6 +68,7 @@ public class VisibilityHandler : MonoBehaviour
         this.isVisible = isVisible;
         canvasGroup.interactable = isVisible;
         canvasGroup.blocksRaycasts = isVisible;
+        if (layoutElement) layoutElement.ignoreLayout = !isVisible;
     }
 
     private void AnimateFadeIn()

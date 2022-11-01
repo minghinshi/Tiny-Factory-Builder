@@ -1,1 +1,1 @@
-{"PlayerInventory":{"itemStacks":[{"itemType":"EarthJar","count":1},{"itemType":"FireJar","count":1},{"itemType":"WaterJar","count":1},{"itemType":"Air","count":3}]},"Buildings":[{"gathererType":"AirJar","outputInventory":{"itemStacks":[]},"gridPosition":{"x":-3,"y":0},"direction":0}],"UnlockedStages":["Default"]}
+{"PlayerInventory":{"itemStacks":[{"itemType":"AirJar","count":1},{"itemType":"EarthJar","count":1},{"itemType":"FireJar","count":1},{"itemType":"WaterJar","count":1}]},"Buildings":[],"UnlockedStages":["Default"]}
