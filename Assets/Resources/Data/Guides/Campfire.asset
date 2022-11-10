@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e11b6f5a347bc04c948bbcb1db0ddfc, type: 3}
+  m_Name: Campfire
+  m_EditorClassIdentifier: 
+  displayedName: Your First Campfire
+  pages:
+  - Finally, a source of heat! This will be crucial to many processes later.
+  - Right now, you can concentrate large amounts of heat into Soil to melt it, and
+    then cool it down to turn it into Stone. With this, you can create sturdy stone
+    tools.
+  - Your first stone tool will be an Axe, which allows you to harvest a Tree instead
+    of a Sapling, giving a higher yield of Branches and some Logs.
+  - Collect your first piece of Log to complete this Stage! It will come in handy
+    very soon.

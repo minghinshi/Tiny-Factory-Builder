@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e11b6f5a347bc04c948bbcb1db0ddfc, type: 3}
+  m_Name: Machines
+  m_EditorClassIdentifier: 
+  displayedName: Recipes and Machines
+  pages:
+  - Excellent! You now have a new machine that's ready to produce more materials.
+    You will also notice a few more crafting recipes have been unlocked.
+  - Every time you obtain a key item, your factory advances into the next Stage and
+    you'll gain knowledge of new processes.
+  - The next key item is the Campfire, which will involve growing trees and harvesting
+    Branches in order to create one. Let's take a look at how it can be done.
+  - Click on the recipe book button, which is the singular book on the bottom left.
+    Here, you can view all of the recipes you currently have access to.
+  - Find the Campfire and click on it. Just like in the crafting page, you can see
+    what materials and machines it needs, and what the outputs are.
+  - You can view the recipes of the inputs and machines without going back to the
+    main page! Try clicking on the Branch.
+  - Crafting Branches will require a Sapling processed inside another machine, a
+    Forest, and so on. Keep clicking to see what you'll need to craft in order to
+    progress.
+  - The whole chain starts with the Light Source, which converts anything that's
+    glowing into Light.
+  - The Light can then be crafted into Growth Essence, a resource suitable for photosynthesis.
+    It will help obtain the Branches that you need.
+  - Let's try making Light by placing Fire into the Light Source. Select Fire from
+    your inventory.
+  - When you click on something in your inventory that's not a building, you'll enter
+    item placing mode. Here, click on the Light Source to insert 1 Fire into it.
+  - The Light Source will start processing Fire into Light. You may also want to
+    insert more than 1 Fire; hold Shift to insert 10, Ctrl to insert 100 and both
+    to insert 1,000.
+  - When you're done, press Q to exit item placement. Just like from Jars, you can
+    retrieve finished products from the Light Source by clicking it.
+  - If you inserted unwanted items by accident, you may hold Shift and click on the
+    machine to retrieve both inputs and outputs.
+  - Now that you know how to make things from buildings, craft your way to the Campfire!
+    Your next focus should be to grow some Saplings in a Plantation.
+  - Remember, if you don't know how to craft an item, consult the recipe book. This
+    will be crucial for the rest of the game.
+  - Finally, you can read these guides again by finding them in the Guides menu,
+    which can be accessed by clicking on the button with multiple books.
+  - You can also find other guides that are unlocked but not automatically displayed.
+    1 of them has just been unlocked, so go check it out!
+  - Hope you have a good time building up a tiny factory, and see you again when
+    you craft your first Campfire!

@@ -456,7 +456,7 @@ MonoBehaviour:
   headerText: {fileID: 250473506}
   returnText: {fileID: 73193804}
   tabSwitcher: {fileID: 150844785}
-  panelSwitcher: {fileID: 0}
+  panelSwitcher: {fileID: 216376973}
 --- !u!114 &150844787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -880,10 +880,10 @@ RectTransform:
   m_Father: {fileID: 216376971}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 870, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 610, y: -985}
+  m_SizeDelta: {x: 870, y: 170}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &267346475
 MonoBehaviour:
@@ -975,7 +975,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
+  m_IgnoreLayout: 1
   m_MinWidth: -1
   m_MinHeight: 170
   m_PreferredWidth: -1
@@ -1991,6 +1991,7 @@ GameObject:
   - component: {fileID: 914945257}
   - component: {fileID: 914945256}
   - component: {fileID: 914945255}
+  - component: {fileID: 914945258}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -2031,8 +2032,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 10
-    m_Right: 10
+    m_Left: 100
+    m_Right: 100
     m_Top: 10
     m_Bottom: 10
   m_ChildAlignment: 4
@@ -2082,6 +2083,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 914945253}
   m_CullTransparentMesh: 1
+--- !u!114 &914945258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914945253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5cb132e05ac12e44a853fe77c29c549, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &982204528
 GameObject:
   m_ObjectHideFlags: 0
@@ -2663,8 +2676,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1129206036}
-  - component: {fileID: 1129206037}
   - component: {fileID: 1129206039}
+  - component: {fileID: 1129206037}
   - component: {fileID: 1129206038}
   m_Layer: 5
   m_Name: GuideList
@@ -2735,9 +2748,9 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1129206035}
   m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!1 &1131727202
 GameObject:
@@ -3332,7 +3345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visibilityHandler: {fileID: 1008683271}
-  panelSwitcher: {fileID: 0}
+  panelSwitcher: {fileID: 216376973}
 --- !u!114 &1469595596
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -3,22 +3,9 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "Stage")]
 [DataLoader("Data/Stages")]
-public class Stage : ScriptableObject
+public class StageData : ScriptableObject
 {
-    [SerializeField] private ItemType requiredItem;
-    [SerializeField] private List<ItemType> unlockedItems;
-    [SerializeField] private List<Guide> unlockedGuides;
-    [SerializeField] private Guide displayedGuide;
-
-    public Guide DisplayedGuide { get => displayedGuide; }
-
-    public ItemType GetRequiredItem()
-    {
-        return requiredItem;
-    }
-
-    public List<ItemType> GetUnlockedItems()
-    {
-        return unlockedItems;
-    }
+    public List<ItemStack> requiredItems;
+    public List<ItemType> unlockedItems;
+    [TextArea(3, 20)] public string guide;
 }
