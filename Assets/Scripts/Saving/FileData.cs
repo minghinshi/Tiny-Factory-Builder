@@ -27,6 +27,5 @@ public class SaveFile
     {
         PlayerInventory.instance = new(GameData.starterMachines.ConvertAll(x => new ItemStack(x, 1)).ToArray());
         UnlockHandler.instance.UnlockStage(GameData.defaultStage);
-        GuideDisplay.instance.DisplayGuide(GameData.tutorial);
     }
 }
