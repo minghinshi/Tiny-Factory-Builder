@@ -1,8 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Stage
+[CreateAssetMenu(menuName = "Stage")]
+[DataLoader("Data/Stages")]
+public class StageData : ScriptableObject
 {
-    private readonly StageData data;
+    public List<ItemStack> requiredItems;
+    public List<ItemType> unlockedItems;
+    [TextArea(3, 20)] public string guide;
 }
