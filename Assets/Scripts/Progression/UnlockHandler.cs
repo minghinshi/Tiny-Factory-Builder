@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Serialization;
 using UnityEngine;
 
 public class UnlockHandler : MonoBehaviour
@@ -53,18 +52,12 @@ public class UnlockHandler : MonoBehaviour
         return GameData.allStages.Except(LockedStages).ToList();
     }
 
-    public void AddStage(Stage stage)
+    public void UnlockStage(Stage stage)
     {
         LockedStages.Remove(stage);
         UnlockItems(stage);
         UnlockRecipes();
-        stage.UnlockGuides();
-    }
-
-    private void UnlockStage(Stage stage) {
-        AddStage(stage);
         UnlockedStage?.Invoke();
-        stage.DisplayGuide();
     }
 
     private bool CanProduce(ItemType itemType)

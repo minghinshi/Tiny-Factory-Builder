@@ -20,6 +20,3 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 03af7e846f974f44f8556f5ebf9eeb95, type: 2}
   - {fileID: 11400000, guid: 327ee48be950ea448b8f1b47eae1a104, type: 2}
   - {fileID: 11400000, guid: 84803b6194f2b5f4aace45c7d6fbc564, type: 2}
-  unlockedGuides:
-  - {fileID: 11400000, guid: e4d9e665f0594ff45900db9910110713, type: 2}
-  displayedGuide: {fileID: 11400000, guid: e4d9e665f0594ff45900db9910110713, type: 2}

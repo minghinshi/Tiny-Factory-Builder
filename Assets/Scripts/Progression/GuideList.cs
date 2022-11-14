@@ -1,20 +1,18 @@
-using TMPro;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GuideList : MonoBehaviour
 {
-    public static GuideList instance;
-
-    private void Awake()
+    // Start is called before the first frame update
+    void Start()
     {
-        instance = this;
+        
     }
 
-    public void UnlockGuide(Guide guide)
+    // Update is called once per frame
+    void Update()
     {
-        Transform guideButton = Instantiate(Prefabs.guideButton, transform);
-        guideButton.GetComponentInChildren<TMP_Text>().text = guide.Name;
-        guideButton.GetComponent<Button>().onClick.AddListener(guide.Display);
+        
     }
 }

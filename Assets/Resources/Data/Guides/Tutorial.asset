@@ -45,15 +45,3 @@ MonoBehaviour:
 
     You should be able
     to see it in your inventory. '
-  - 'You''ll need all 4 elements, so place down the other 3 jars.
-
-    If you want
-    to move them, right-click them to pick up the jars and you can place them from
-    the inventory again.'
-  - Eventually, your factory will become too large to fit in this screen. You can
-    press WASD to move around, and scroll to zoom in / out.
-  - Now, let's craft a machine to process these elements into more useful things.
-  - On the right of the inventory display is the crafting display, which lists out
-    things you can craft. Right now, the only craftable item is a Light Source.
-  - Hover over the button to see its cost (4 Fire). When you have gathered enough
-    Fire, click on the button to perform your first craft.
