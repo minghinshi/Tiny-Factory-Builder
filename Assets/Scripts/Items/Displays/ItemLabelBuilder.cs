@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using UnityEngine.Events;
 
 public class ItemLabelBuilder
@@ -56,6 +57,7 @@ public class ItemLabelBuilder
     {
         BuildGenericButton(process.GetAverageSingleOutput()[0].GetItemType(), onClick);
         Label.AddTooltipBuildingSteps(() => TooltipBuilder.instance.AddCraftingDisplay(process));
+        //Label.DisplayCraftable(process);
         UpdateTooltipOnClick();
         UpdateTooltipOnShift();
     }

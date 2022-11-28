@@ -25,7 +25,7 @@ public class SaveFile
 
     public static void LoadNewFile()
     {
-        PlayerInventory.instance = new(GameData.starterMachines.ConvertAll(x => new ItemStack(x, 1)).ToArray());
+        PlayerInventory.instance = new(new ItemStack(GameData.starterMachine, 1));
         UnlockHandler.instance.UnlockStage(GameData.defaultStage);
     }
 }

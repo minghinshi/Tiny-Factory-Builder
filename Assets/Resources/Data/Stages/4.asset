@@ -12,14 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4f575d2b4a092f45bab6c17e468dbf3, type: 3}
   m_Name: 4
   m_EditorClassIdentifier: 
-  requiredItem: {fileID: 11400000, guid: 8ba1ab404439a4d49a6d68871d145af4, type: 2}
+  requiredItem: {fileID: 11400000, guid: 806d32f256ad8f94d86ee6304e56d303, type: 2}
   unlockedItems:
-  - {fileID: 11400000, guid: 334b5e79d43d5cf488bd9fab1ac6ce01, type: 2}
-  - {fileID: 11400000, guid: 60cd5ebf031a0ee488284518d45ab90d, type: 2}
-  - {fileID: 11400000, guid: 68e95119662a05f4ca6686129bfb0b1c, type: 2}
-  - {fileID: 11400000, guid: 24c5c35d6f881fc4b8cf5829120f1e1f, type: 2}
-  - {fileID: 11400000, guid: 389a2b68e9ea103459129e8ea0dfe4eb, type: 2}
-  - {fileID: 11400000, guid: 1b3cf282f0d0a8947b867ee01ed73679, type: 2}
-  - {fileID: 11400000, guid: 04b5782dff987d34383ed42bb8aa367c, type: 2}
-  - {fileID: 11400000, guid: 2e53066d0ec774e4eb530f1b589c6d63, type: 2}
-  - {fileID: 11400000, guid: 34d0c9a07820da449ab47e19cfb192fb, type: 2}
+  - {fileID: 11400000, guid: 7a2bec6b5f8c89144906471061e78c1e, type: 2}
+  - {fileID: 11400000, guid: f0b2162ea2530df4486a5295d534a008, type: 2}
+  - {fileID: 11400000, guid: 53799bb3c1cb47244a05528ccb690cce, type: 2}
+  - {fileID: 11400000, guid: 25d9cbcb6de0a5541a4a19eafd7259ee, type: 2}
+  - {fileID: 11400000, guid: 7314e3cb59e2e3149ab0c0fb98b43868, type: 2}
+  rewards:
+  - itemType: {fileID: 11400000, guid: 7a2bec6b5f8c89144906471061e78c1e, type: 2}
+    count: 1

@@ -12,13 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4f575d2b4a092f45bab6c17e468dbf3, type: 3}
   m_Name: 1
   m_EditorClassIdentifier: 
-  requiredItem: {fileID: 11400000, guid: 53799bb3c1cb47244a05528ccb690cce, type: 2}
+  requiredItem: {fileID: 11400000, guid: 2f32fb8086d3bb74683ef1d3b8589bb6, type: 2}
   unlockedItems:
-  - {fileID: 11400000, guid: 3c562272fbfbd7f46bac160323ac4154, type: 2}
   - {fileID: 11400000, guid: 7c2c051f23cd1db4b9f85cf655981ab9, type: 2}
-  - {fileID: 11400000, guid: aad9f9bc2dc24d64da88d2fd82ce0840, type: 2}
-  - {fileID: 11400000, guid: 82400f5133c1ac74c8a528163f0d667c, type: 2}
-  - {fileID: 11400000, guid: 7314e3cb59e2e3149ab0c0fb98b43868, type: 2}
-  - {fileID: 11400000, guid: 806d32f256ad8f94d86ee6304e56d303, type: 2}
-  - {fileID: 11400000, guid: 243f14518b0b9be47a1baaa8596774b9, type: 2}
-  - {fileID: 11400000, guid: 25d9cbcb6de0a5541a4a19eafd7259ee, type: 2}

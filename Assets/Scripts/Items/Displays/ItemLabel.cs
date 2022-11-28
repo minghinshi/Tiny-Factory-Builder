@@ -64,6 +64,16 @@ public class ItemLabel : MonoBehaviour
         foreach (UnityAction action in onClick) button.onClick.AddListener(action);
     }
 
+    public void DisplayCraftable(Process process)
+    {
+        PlayerInventory.instance.Changed += () => SetButtonInteractable(process.CanCraft());
+    }
+
+    public void SetButtonInteractable(bool isInteractable)
+    {
+        button.interactable = isInteractable;
+    }
+
     public void AddTooltipBuildingSteps(params Action[] actions)
     {
         tooltipBuildingSteps.AddRange(actions);

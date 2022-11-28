@@ -21,11 +21,7 @@ public class ItemLabelDisplay : MonoBehaviour
 
     private void DisableLabels()
     {
-        while (transform.childCount > 0)
-        {
-            Transform child = transform.GetChild(0);
-            ItemLabelPool.pool.Release(child.GetComponent<ItemLabel>());
-        }
+        foreach (Transform child in transform) Destroy(child.gameObject);
     }
 
     private void BuildLabels()

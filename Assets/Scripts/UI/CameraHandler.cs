@@ -21,10 +21,14 @@ public class CameraHandler : MonoBehaviour
 
     private void MoveCamera()
     {
-        if (Input.GetKey(KeyCode.W)) transform.Translate(Vector3.up * GetMovementVelocity());
-        if (Input.GetKey(KeyCode.A)) transform.Translate(Vector3.left * GetMovementVelocity());
-        if (Input.GetKey(KeyCode.S)) transform.Translate(Vector3.down * GetMovementVelocity());
-        if (Input.GetKey(KeyCode.D)) transform.Translate(Vector3.right * GetMovementVelocity());
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) 
+            transform.Translate(Vector3.up * GetMovementVelocity());
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))  
+            transform.Translate(Vector3.left * GetMovementVelocity());
+        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) 
+            transform.Translate(Vector3.down * GetMovementVelocity());
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) 
+            transform.Translate(Vector3.right * GetMovementVelocity());
     }
 
     private float GetMovementVelocity()

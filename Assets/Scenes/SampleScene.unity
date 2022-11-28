@@ -454,7 +454,7 @@ MonoBehaviour:
   headerText: {fileID: 250473506}
   returnText: {fileID: 73193804}
   tabSwitcher: {fileID: 150844785}
-  panelSwitcher: {fileID: 0}
+  panelSwitcher: {fileID: 216376973}
 --- !u!114 &150844787
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ public static class GameData
     public static readonly List<Recipe> allCraftingRecipes = GetObjects<Recipe>("Recipes/Crafting");
     public static readonly List<Stage> allStages = GetObjects<Stage>("Stages");
 
-    public static readonly List<GathererType> starterMachines = GetObjects<GathererType>("Machines/Starters");
+    public static readonly GathererType starterMachine = Resources.Load<GathererType>("Data/Machines/Starters/FireJar");
     public static readonly Stage defaultStage = Resources.Load<Stage>("Data/Stages/Default");
 
     private static List<T> GetObjects<T>(string path) where T : Object
