@@ -15,3 +15,5 @@ MonoBehaviour:
   requiredItem: {fileID: 11400000, guid: 7c2c051f23cd1db4b9f85cf655981ab9, type: 2}
   unlockedItems:
   - {fileID: 11400000, guid: 243f14518b0b9be47a1baaa8596774b9, type: 2}
+  rewards: []
+  revealedElements: 01000000

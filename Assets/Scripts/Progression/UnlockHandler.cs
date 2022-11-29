@@ -10,6 +10,8 @@ public class UnlockHandler : MonoBehaviour
     private HashSet<ItemType> unlockedItems = new();
     private HashSet<Recipe> unlockedRecipes = new();
 
+    [SerializeField] private List<VisibilityHandler> hiddenElements;
+
     public delegate void UnlockedStageHandler();
     public static event UnlockedStageHandler UnlockedStage;
 
@@ -58,6 +60,7 @@ public class UnlockHandler : MonoBehaviour
         UnlockItems(stage);
         UnlockRecipes();
         RewardItems(stage);
+        RevealElements(stage);
         UnlockedStage?.Invoke();
     }
 
@@ -89,5 +92,10 @@ public class UnlockHandler : MonoBehaviour
     private void RewardItems(Stage stage)
     {
         stage.rewards.ForEach(x => PlayerInventory.instance.StoreStack(x));
+    }
+
+    private void RevealElements(Stage stage)
+    {
+        stage.revealedElements.ForEach(x => hiddenElements[x].SetVisibleImmediately());
     }
 }
