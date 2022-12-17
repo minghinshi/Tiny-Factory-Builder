@@ -56,12 +56,17 @@ public class UnlockHandler : MonoBehaviour
 
     public void UnlockStage(Stage stage)
     {
+        AddStage(stage);
+        RewardItems(stage);
+        UnlockedStage?.Invoke();
+    }
+
+    public void AddStage(Stage stage)
+    {
         LockedStages.Remove(stage);
         UnlockItems(stage);
         UnlockRecipes();
-        RewardItems(stage);
         RevealElements(stage);
-        UnlockedStage?.Invoke();
     }
 
     private bool CanProduce(ItemType itemType)

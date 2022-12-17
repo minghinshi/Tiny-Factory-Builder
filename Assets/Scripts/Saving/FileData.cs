@@ -20,12 +20,12 @@ public class SaveFile
     {
         PlayerInventory.instance = PlayerInventory;
         Buildings.ForEach(x => x.Initialize());
-        UnlockedStages.ForEach(UnlockHandler.instance.UnlockStage);
+        UnlockedStages.ForEach(UnlockHandler.instance.AddStage);
     }
 
     public static void LoadNewFile()
     {
         PlayerInventory.instance = new(new ItemStack(GameData.starterMachine, 1));
-        UnlockHandler.instance.UnlockStage(GameData.defaultStage);
+        UnlockHandler.instance.AddStage(GameData.defaultStage);
     }
 }

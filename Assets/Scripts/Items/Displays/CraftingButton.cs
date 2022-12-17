@@ -4,5 +4,10 @@ using UnityEngine;
 
 public class CraftingButton : ItemLabel
 {
+    private Process process;
 
+    public CraftingButton(Process process) {
+        this.process = process;
+        
+    }
 }

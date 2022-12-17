@@ -1,1 +1,1 @@
-{"PlayerInventory":{"itemStacks":[{"itemType":"LightSource","count":1},{"itemType":"Fire","count":16}]},"Buildings":[{"gathererType":"FireJar","outputInventory":{"itemStacks":[{"itemType":"Fire","count":1}]},"gridPosition":{"x":-1,"y":-1},"direction":0}],"UnlockedStages":["1","2","Default"]}
+{"PlayerInventory":{"itemStacks":[{"itemType":"Fire","count":1}]},"Buildings":[{"gathererType":"FireJar","outputInventory":{"itemStacks":[{"itemType":"Fire","count":4}]},"gridPosition":{"x":-2,"y":-1},"direction":0}],"UnlockedStages":["1","Default"]}
