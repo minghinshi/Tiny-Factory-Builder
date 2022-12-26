@@ -3318,7 +3318,7 @@ MonoBehaviour:
   - Scroll - Zoom In / Out
   takeOutputs: L-Click - Take Outputs
   takeAllItems: L-Click + Shift - Take All
-  removeBuilding: R-Click - Remove
+  removeBuilding: R-Click - Store Building
   placeBuilding: []
   placeItem: []
   craftItem: []

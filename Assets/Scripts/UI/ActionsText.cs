@@ -20,6 +20,7 @@ public class ActionsText : MonoBehaviour
     public string[] placingItemActions;
 
     private TMP_Text text;
+    private List<string> currentActions = new();
 
     private void Awake()
     {
@@ -27,20 +28,30 @@ public class ActionsText : MonoBehaviour
         text = GetComponent<TMP_Text>();
     }
 
-    private void Start()
+    private void Update()
     {
         UpdateText();
     }
 
     public void UpdateText()
     {
-        text.text = string.Join("\n", GetActions());
+        UpdateActions();
+        text.text = string.Join("\n", currentActions);
     }
 
-    private List<string> GetActions()
+    private void UpdateActions()
     {
-        List<string> actions = new();
-        actions.AddRange(basicActions);
-        return actions;
+        currentActions.Clear();
+        currentActions.AddRange(basicActions);
+        if (Mouse.instance.GetTargetBuilding() != null)
+            AddBuildingActions();
+    }
+
+    private void AddBuildingActions()
+    {
+        Building building = Mouse.instance.GetTargetBuilding();
+        if (building is Producer) currentActions.Add(takeOutputs);
+        if (building is Machine) currentActions.Add(takeAllItems);
+        currentActions.Add(removeBuilding);
     }
 }
