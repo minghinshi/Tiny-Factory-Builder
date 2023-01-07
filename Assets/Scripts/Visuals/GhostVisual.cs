@@ -19,6 +19,7 @@ public class GhostVisual : BuildingVisual
     {
         this.placement = placement;
         Initialize();
+        spriteRenderer.sortingOrder = 1;
     }
 
     protected override BuildingType GetBuildingType()

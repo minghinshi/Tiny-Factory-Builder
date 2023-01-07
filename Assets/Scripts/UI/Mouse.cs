@@ -9,6 +9,7 @@ public class Mouse : MonoBehaviour
     private Vector2 worldPosition;
     private Vector2Int gridPosition;
     private Building targetBuilding;
+    private ItemLabel targetItemLabel;
 
     public delegate void ValueChangedHandler<T>(T newValue);
     public event ValueChangedHandler<Building> BuildingChanged;

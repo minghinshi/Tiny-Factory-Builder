@@ -12,6 +12,7 @@ public class ItemPlacement : Placement
         previewTransform = itemType.GetNewItemTransform(Mouse.instance.GetWorldPosition());
         spriteRenderer = previewTransform.GetComponent<SpriteRenderer>();
         spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+        spriteRenderer.sortingOrder = 1;
     }
 
     public override void Update()

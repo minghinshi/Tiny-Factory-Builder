@@ -45,6 +45,10 @@ public class ActionsText : MonoBehaviour
         currentActions.AddRange(basicActions);
         if (Mouse.instance.GetTargetBuilding() != null)
             AddBuildingActions();
+        if (PlacementContext.instance.GetPlacement() is BuildingPlacement)
+            currentActions.AddRange(placingBuildingActions);
+        else if (PlacementContext.instance.GetPlacement() is ItemPlacement)
+            currentActions.AddRange(placingItemActions);
     }
 
     private void AddBuildingActions()

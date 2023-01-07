@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class InventoryChangeDisplay : ItemLabelDisplay
 {
-    private const float TimeToLive = 0.65f;
+    private const float TimeToLive = 1f;
     private static InventoryChangeDisplay currentDisplay;
 
     private float timeElapsed;

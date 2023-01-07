@@ -21,6 +21,11 @@ public class PlacementContext : MonoBehaviour
         else placement.Update();
     }
 
+    public Placement GetPlacement()
+    {
+        return placement;
+    }
+
     public void SetPlacement(Placement newPlacement)
     {
         placement.Destroy();
