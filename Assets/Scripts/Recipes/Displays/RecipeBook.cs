@@ -20,14 +20,12 @@ public class RecipeBook : MonoBehaviour
 
     public ItemLabel BuildItemButton(ItemType itemType)
     {
-        ItemLabelBuilder.instance.BuildGenericButton(itemType, () => ViewRecipes(itemType));
-        return ItemLabelBuilder.instance.GetFinishedLabel();
+        return new ItemLabelBuilder().BuildGenericButton(itemType, () => ViewRecipes(itemType)).Build();
     }
 
     public ItemLabel BuildItemButton(ICountableItem item)
     {
-        ItemLabelBuilder.instance.BuildGenericButton(item, () => ViewRecipes(item.GetItemType()));
-        return ItemLabelBuilder.instance.GetFinishedLabel();
+        return new ItemLabelBuilder().BuildGenericButton(item, () => ViewRecipes(item.GetItemType())).Build();
     }
 
     public void OnReturnButtonClicked()

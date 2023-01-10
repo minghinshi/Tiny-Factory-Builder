@@ -3190,9 +3190,14 @@ MonoBehaviour:
   takeOutputs: L-Click - Take Outputs
   takeAllItems: L-Click + Shift - Take All
   removeBuilding: R-Click - Store Building
-  placeBuilding: []
-  placeItem: []
-  craftItem: []
+  placeBuilding:
+  - L-Click - Place Building
+  - L-Click + Shift - Place As Item
+  placeItem:
+  - L-Click - Place Item
+  craftItem:
+  - L-Click - Craft Once
+  - L-Click + Shift - Craft All
   placingBuildingActions:
   - L-Click - Place
   - R - Rotate

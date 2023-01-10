@@ -28,8 +28,7 @@ public class PlayerInventoryDisplay : MonoBehaviour
 
     private ItemLabel BuildItemButton(ItemStack itemStack)
     {
-        ItemLabelBuilder.instance.BuildGenericButton(itemStack, () => OnItemButtonPressed(itemStack.GetItemType()));
-        return ItemLabelBuilder.instance.GetFinishedLabel();
+        return new ItemLabelBuilder().BuildGenericButton(itemStack, () => OnItemButtonPressed(itemStack.GetItemType())).Build();
     }
 
     private void OnItemButtonPressed(ItemType itemType)

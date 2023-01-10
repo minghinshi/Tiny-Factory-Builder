@@ -1,82 +1,70 @@
-using System.Diagnostics;
 using UnityEngine.Events;
 
 public class ItemLabelBuilder
 {
-    public static ItemLabelBuilder instance = new();
+    private ItemLabel label = ItemLabelPool.pool.Get();
 
-    private ItemLabel label;
-
-    private ItemLabel Label
+    public ItemLabel Build()
     {
-        get
-        {
-            if (label == null) label = ItemLabelPool.pool.Get();
-            return label;
-        }
+        return label;
     }
 
-    private void RemoveLabel()
+    public ItemLabelBuilder BuildLabelWithCounter(ICountableItem countableItem)
     {
-        label = null;
+        label.AddImage(countableItem.GetItemType());
+        label.Counter.ShowCount(countableItem);
+        return this;
     }
 
-    public ItemLabel GetFinishedLabel()
-    {
-        ItemLabel output = Label;
-        RemoveLabel();
-        return output;
-    }
-
-    public void BuildLabelWithCounter(ICountableItem countableItem)
-    {
-        Label.AddImage(countableItem.GetItemType());
-        Label.Counter.ShowCount(countableItem);
-    }
-
-    public void BuildCostLabel(ItemStack itemStack, Process process, bool doBatchCraft)
+    public ItemLabelBuilder BuildCostLabel(ItemStack itemStack, Process process, bool doBatchCraft)
     {
         BuildLabelWithCounter(itemStack);
-        Label.Counter.ShowAvailabilityOf(itemStack, process, doBatchCraft);
+        label.Counter.ShowAvailabilityOf(itemStack, process, doBatchCraft);
+        return this;
     }
 
-    public void BuildGenericButton(ItemType itemType, params UnityAction[] onClick)
+    public ItemLabelBuilder BuildGenericButton(ItemType itemType, params UnityAction[] onClick)
     {
-        Label.AddButton(onClick);
-        Label.AddImage(itemType);
-        Label.AddTooltipBuildingSteps(() => TooltipBuilder.instance.AddItemInfo(itemType));
+        label.AddButton(onClick);
+        label.AddImage(itemType);
+        label.AddTooltipBuildingSteps(() => TooltipBuilder.instance.AddItemInfo(itemType));
+        return this;
     }
 
-    public void BuildGenericButton(ICountableItem countableItem, params UnityAction[] onClick)
+    public ItemLabelBuilder BuildGenericButton(ICountableItem countableItem, params UnityAction[] onClick)
     {
         BuildGenericButton(countableItem.GetItemType(), onClick);
-        Label.Counter.ShowCount(countableItem);
+        label.Counter.ShowCount(countableItem);
+        return this;
     }
 
-    public void BuildCraftingButton(Process process, params UnityAction[] onClick)
+    public ItemLabelBuilder BuildCraftingButton(Process process, params UnityAction[] onClick)
     {
         BuildGenericButton(process.GetAverageSingleOutput()[0].GetItemType(), onClick);
-        Label.AddTooltipBuildingSteps(() => TooltipBuilder.instance.AddCraftingDisplay(process));
-        Label.DisplayCraftable(process);
-        Label.AddDisplayedAction(ActionsText.instance.craftItem);
+        label.AddTooltipBuildingSteps(() => TooltipBuilder.instance.AddCraftingDisplay(process));
+        label.DisplayCraftable(process);
         UpdateTooltipOnClick();
         UpdateTooltipOnShift();
+        return this;
     }
 
-    public void BuildChangeDisplayLabel(InventoryChange change)
+    public ItemLabelBuilder BuildChangeDisplayLabel(InventoryChange change)
     {
-        Label.AddImage(change.ItemType);
-        Label.Counter.ShowChange(change);
+        label.AddImage(change.ItemType);
+        label.Counter.ShowChange(change);
+        return this;
     }
 
-    private void UpdateTooltipOnClick()
+    private ItemLabelBuilder UpdateTooltipOnClick()
     {
-        Label.AddButtonAction(Label.UpdateTooltip);
+        label.AddButtonAction(label.UpdateTooltip);
+        return this;
     }
 
-    private void UpdateTooltipOnShift()
+    private ItemLabelBuilder UpdateTooltipOnShift()
     {
-        KeyboardHandler.instance.ShiftPressed += Label.UpdateTooltip;
-        KeyboardHandler.instance.ShiftReleased += Label.UpdateTooltip;
+        KeyboardHandler.instance.ShiftPressed += label.UpdateTooltip;
+        KeyboardHandler.instance.ShiftReleased += label.UpdateTooltip;
+        return this;
     }
 }

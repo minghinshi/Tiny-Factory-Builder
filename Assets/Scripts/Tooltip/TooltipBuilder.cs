@@ -86,13 +86,11 @@ public class TooltipBuilder : MonoBehaviour
 
     private ItemLabel BuildItemLabel(ICountableItem recipeOutput)
     {
-        ItemLabelBuilder.instance.BuildLabelWithCounter(recipeOutput);
-        return ItemLabelBuilder.instance.GetFinishedLabel();
+        return new ItemLabelBuilder().BuildLabelWithCounter(recipeOutput).Build();
     }
 
     private ItemLabel BuildCostLabel(ItemStack itemStack, Process process, bool showBatchCraft)
     {
-        ItemLabelBuilder.instance.BuildCostLabel(itemStack, process, showBatchCraft);
-        return ItemLabelBuilder.instance.GetFinishedLabel();
+        return new ItemLabelBuilder().BuildCostLabel(itemStack, process, showBatchCraft).Build();
     }
 }

@@ -26,8 +26,7 @@ public class PlayerCraftingDisplay : MonoBehaviour
 
     private ItemLabel BuildCraftingButton(Process process)
     {
-        ItemLabelBuilder.instance.BuildCraftingButton(process, () => OnCraftingRequest(process));
-        return ItemLabelBuilder.instance.GetFinishedLabel();
+        return new ItemLabelBuilder().BuildCraftingButton(process, () => OnCraftingRequest(process)).Build();
     }
 
     private void OnCraftingRequest(Process process)

@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CraftingButton : ItemLabel
+public class CraftingButton : MonoBehaviour
 {
+    private ItemLabel itemLabel;
     private Process process;
 
-    private void InitializeButton() { 
+    /*public static CraftingButton Create(Process process) { 
         
-    }
+    }*/
 }

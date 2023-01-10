@@ -12,7 +12,6 @@ public class ItemLabel : MonoBehaviour
 
     private bool isHoveredOver = false;
     private readonly List<Action> tooltipBuildingSteps = new();
-    private string[] displayedActions;
 
     public Counter Counter
     {
@@ -34,6 +33,7 @@ public class ItemLabel : MonoBehaviour
     public void OnPointerEnter()
     {
         isHoveredOver = true;
+        Mouse.instance.TargetItemLabel = this;
         if (CanGenerateTooltips()) DisplayTooltip();
     }
 
@@ -45,6 +45,7 @@ public class ItemLabel : MonoBehaviour
     public void OnPointerExit()
     {
         isHoveredOver = false;
+        Mouse.instance.TargetItemLabel = null;
         if (CanGenerateTooltips()) Tooltip.instance.Hide();
     }
 
@@ -79,11 +80,6 @@ public class ItemLabel : MonoBehaviour
     public void AddTooltipBuildingSteps(params Action[] actions)
     {
         tooltipBuildingSteps.AddRange(actions);
-    }
-
-    public void AddDisplayedAction(string[] actions)
-    {
-        displayedActions = actions;
     }
 
     private void DisplayTooltip()
