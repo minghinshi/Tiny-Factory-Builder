@@ -2,7 +2,7 @@ using UnityEngine.Events;
 
 public class ItemLabelBuilder
 {
-    private ItemLabel label = ItemLabelPool.pool.Get();
+    private readonly ItemLabel label = ItemLabelPool.pool.Get();
 
     public ItemLabel Build()
     {
@@ -55,16 +55,14 @@ public class ItemLabelBuilder
         return this;
     }
 
-    private ItemLabelBuilder UpdateTooltipOnClick()
+    private void UpdateTooltipOnClick()
     {
         label.AddButtonAction(label.UpdateTooltip);
-        return this;
     }
 
-    private ItemLabelBuilder UpdateTooltipOnShift()
+    private void UpdateTooltipOnShift()
     {
         KeyboardHandler.instance.ShiftPressed += label.UpdateTooltip;
         KeyboardHandler.instance.ShiftReleased += label.UpdateTooltip;
-        return this;
     }
 }

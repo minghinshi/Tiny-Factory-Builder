@@ -47,6 +47,7 @@ public class ActionsText : MonoBehaviour
             currentActions.AddRange(placingBuildingActions);
         else if (PlacementContext.instance.GetPlacement() is ItemPlacement)
             currentActions.AddRange(placingItemActions);
+        AddButtonActions();
         if (Mouse.instance.GetTargetBuilding() != null)
             AddBuildingActions();
     }
@@ -60,5 +61,17 @@ public class ActionsText : MonoBehaviour
             if (building is Machine) currentActions.Add(takeAllItems);
         }
         currentActions.Add(removeBuilding);
+    }
+
+    private void AddButtonActions()
+    {
+        ItemLabel label = Mouse.instance.TargetItemLabel;
+        if (label != null)
+        {
+            if (label.GetComponent<InventoryItemButton>() != null)
+                currentActions.AddRange(placeBuilding);
+            else if (label.GetComponent<CraftingButton>() != null)
+                currentActions.AddRange(craftItem);
+        }
     }
 }
