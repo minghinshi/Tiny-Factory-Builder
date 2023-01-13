@@ -54,6 +54,6 @@ public class InventoryChangeDisplay : ItemLabelDisplay
 
     private ItemLabel BuildLabel(InventoryChange inventoryChange)
     {
-        return new ItemLabelBuilder().BuildChangeDisplayLabel(inventoryChange).Build();
+        return new ItemLabel.Builder().BuildChangeDisplayLabel(inventoryChange).Build();
     }
 }

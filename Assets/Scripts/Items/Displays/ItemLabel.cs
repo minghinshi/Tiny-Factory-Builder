@@ -6,6 +6,78 @@ using UnityEngine.UI;
 
 public class ItemLabel : MonoBehaviour
 {
+    public class Builder
+    {
+        private readonly ItemLabel label = ItemLabelPool.pool.Get();
+        public Builder() => label = ItemLabelPool.pool.Get();
+        public Builder(ItemLabel label) => this.label = label;
+        public ItemLabel Build() => label;
+
+        public Builder BuildLabelWithCounter(ICountableItem countableItem)
+        {
+            label.AddImage(countableItem.GetItemType());
+            label.Counter.ShowCount(countableItem);
+            return this;
+        }
+
+        public Builder BuildCostLabel(ItemStack itemStack, Process process, bool doBatchCraft)
+        {
+            BuildLabelWithCounter(itemStack);
+            label.Counter.ShowAvailabilityOf(itemStack, process, doBatchCraft);
+            return this;
+        }
+
+        public Builder BuildGenericButton(ItemType itemType, params UnityAction[] onClick)
+        {
+            label.AddButton(onClick);
+            label.AddImage(itemType);
+            AddTooltipBuildingSteps(() => TooltipBuilder.instance.AddItemInfo(itemType));
+            return this;
+        }
+
+        public Builder BuildGenericButton(ICountableItem countableItem, params UnityAction[] onClick)
+        {
+            BuildGenericButton(countableItem.GetItemType(), onClick);
+            label.Counter.ShowCount(countableItem);
+            return this;
+        }
+
+        public Builder BuildCraftingButton(Process process, params UnityAction[] onClick)
+        {
+            BuildGenericButton(process.GetAverageSingleOutput()[0].GetItemType(), onClick);
+            AddTooltipBuildingSteps(() => TooltipBuilder.instance.AddCraftingDisplay(process));
+            UpdateTooltipOnClick();
+            UpdateTooltipOnShift();
+            return this;
+        }
+
+        public Builder BuildChangeDisplayLabel(InventoryChange change)
+        {
+            label.AddImage(change.ItemType);
+            label.Counter.ShowChange(change);
+            return this;
+        }
+
+        public Builder AddTooltipBuildingSteps(params Action[] actions)
+        {
+            label.tooltipBuildingSteps.AddRange(actions);
+            return this;
+        }
+
+        public Builder UpdateTooltipOnClick()
+        {
+            label.AddButtonAction(label.UpdateTooltip);
+            return this;
+        }
+
+        public Builder UpdateTooltipOnShift()
+        {
+            KeyboardHandler.instance.ShiftPressed += label.UpdateTooltip;
+            KeyboardHandler.instance.ShiftReleased += label.UpdateTooltip;
+            return this;
+        }
+    }
+
     [SerializeField] private Image image;
     [SerializeField] private Counter counter;
     [SerializeField] private Button button;
@@ -66,20 +138,9 @@ public class ItemLabel : MonoBehaviour
         foreach (UnityAction action in onClick) button.onClick.AddListener(action);
     }
 
-    public void DisplayCraftable(Process process)
-    {
-        SetButtonInteractable(process.CanCraft());
-        PlayerInventory.instance.Changed += () => SetButtonInteractable(process.CanCraft());
-    }
-
     public void SetButtonInteractable(bool isInteractable)
     {
         button.interactable = isInteractable;
-    }
-
-    public void AddTooltipBuildingSteps(params Action[] actions)
-    {
-        tooltipBuildingSteps.AddRange(actions);
     }
 
     private void DisplayTooltip()

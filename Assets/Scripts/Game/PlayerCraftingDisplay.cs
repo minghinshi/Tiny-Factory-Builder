@@ -26,24 +26,7 @@ public class PlayerCraftingDisplay : MonoBehaviour
 
     private ItemLabel BuildCraftingButton(Process process)
     {
-        return new ItemLabelBuilder().BuildCraftingButton(process, () => OnCraftingRequest(process)).Build();
-    }
-
-    private void OnCraftingRequest(Process process)
-    {
-        if (process.CanCraft()) Craft(process);
-        else WarnCraftingFailed();
-    }
-
-    private void WarnCraftingFailed()
-    {
-        AudioHandler.instance.PlaySound(AudioHandler.instance.errorSound, false);
-    }
-
-    private void Craft(Process process)
-    {
-        if (Input.GetKey(KeyCode.LeftShift)) process.BatchCraft(); else process.CraftOnce();
-        AudioHandler.instance.PlaySound(AudioHandler.instance.craftingSound, false);
+        return CraftingButton.Create(process).GetItemLabel();
     }
 
     private List<Process> GetProcesses()
