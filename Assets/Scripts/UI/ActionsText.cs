@@ -43,10 +43,7 @@ public class ActionsText : MonoBehaviour
     {
         currentActions.Clear();
         currentActions.AddRange(basicActions);
-        if (PlacementContext.instance.GetPlacement() is BuildingPlacement)
-            currentActions.AddRange(placingBuildingActions);
-        else if (PlacementContext.instance.GetPlacement() is ItemPlacement)
-            currentActions.AddRange(placingItemActions);
+        AddPlacementActions();
         AddButtonActions();
         if (Mouse.instance.GetTargetBuilding() != null)
             AddBuildingActions();
@@ -63,13 +60,20 @@ public class ActionsText : MonoBehaviour
         currentActions.Add(removeBuilding);
     }
 
+    private void AddPlacementActions() {
+        if (PlacementContext.instance.GetPlacement() is BuildingPlacement)
+            currentActions.AddRange(placingBuildingActions);
+        else if (PlacementContext.instance.GetPlacement() is ItemPlacement)
+            currentActions.AddRange(placingItemActions);
+    }
+
     private void AddButtonActions()
     {
         ItemLabel label = Mouse.instance.TargetItemLabel;
         if (label != null)
         {
-            if (label.GetComponent<InventoryItemButton>() != null)
-                currentActions.AddRange(placeBuilding);
+            if (label.TryGetComponent(out InventoryButton button))
+                currentActions.AddRange(button.IsBuilding ? placeBuilding : placeItem);
             else if (label.GetComponent<CraftingButton>() != null)
                 currentActions.AddRange(craftItem);
         }

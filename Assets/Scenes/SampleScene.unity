@@ -3200,6 +3200,7 @@ MonoBehaviour:
   - L-Click + Shift - Craft All
   placingBuildingActions:
   - L-Click - Place
+  - L-Click + Drag - Place Multiple
   - R - Rotate
   - Q - Stop Placing
   placingItemActions:

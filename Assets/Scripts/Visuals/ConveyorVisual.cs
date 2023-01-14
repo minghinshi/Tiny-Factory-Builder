@@ -12,7 +12,7 @@ public class ConveyorVisual : PlacedVisual
     public void Initialize(Conveyor conveyor)
     {
         base.Initialize(conveyor);
-        itemRenderer = GetComponentInChildren<SpriteRenderer>();
+        itemRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
 
     public void RenderItem(ItemType itemType)

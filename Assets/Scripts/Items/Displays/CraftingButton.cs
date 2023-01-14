@@ -5,6 +5,8 @@ public class CraftingButton : MonoBehaviour
     private ItemLabel itemLabel;
     private Process process;
 
+    public ItemLabel ItemLabel => itemLabel;
+
     public static CraftingButton Create(Process process)
     {
         ItemLabel itemLabel = ItemLabelPool.pool.Get();
@@ -13,11 +15,6 @@ public class CraftingButton : MonoBehaviour
         craftingButton.process = process;
         craftingButton.Initialize();
         return craftingButton;
-    }
-
-    public ItemLabel GetItemLabel()
-    {
-        return itemLabel;
     }
 
     private void Initialize()

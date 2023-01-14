@@ -20,6 +20,11 @@ public class PlayerInventoryDisplay : MonoBehaviour
         InitializeInventoryPanel();
     }
 
+    public void ToggleDisplay()
+    {
+        panelSwitcher.TogglePanel(visibilityHandler);
+    }
+
     private void InitializeInventoryPanel()
     {
         inventoryDisplay.SetTargetInventory(PlayerInventory.instance);
@@ -28,28 +33,6 @@ public class PlayerInventoryDisplay : MonoBehaviour
 
     private ItemLabel BuildItemButton(ItemStack itemStack)
     {
-        return new ItemLabel.Builder().BuildGenericButton(itemStack, () => OnItemButtonPressed(itemStack.GetItemType())).Build();
-    }
-
-    private void OnItemButtonPressed(ItemType itemType)
-    {
-        if (itemType is BuildingType buildingType && !OverrideControls()) StartPlacingBuilding(buildingType);
-        else StartPlacingItem(itemType);
-        panelSwitcher.TogglePanel(visibilityHandler);
-    }
-
-    private void StartPlacingItem(ItemType itemType)
-    {
-        PlacementContext.instance.SetPlacement(new ItemPlacement(itemType));
-    }
-
-    private void StartPlacingBuilding(BuildingType buildingType)
-    {
-        PlacementContext.instance.SetPlacement(new BuildingPlacement(buildingType));
-    }
-
-    private bool OverrideControls()
-    {
-        return Input.GetKey(KeyCode.LeftShift);
+        return InventoryButton.Create(itemStack).ItemLabel;
     }
 }

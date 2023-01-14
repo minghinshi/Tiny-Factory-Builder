@@ -47,8 +47,8 @@ public class Conveyor : Building
     protected override void InitializeData()
     {
         base.InitializeData();
-        CalculateCells(inputPositions, conveyorType.GetInputPositions());
-        CalculateCells(outputPositions, conveyorType.GetOutputPositions());
+        inputPositions = conveyorType.GetInputPositions().ConvertAll(RelativeToAbsolute);
+        outputPositions = conveyorType.GetOutputPositions().ConvertAll(RelativeToAbsolute);
         ConnectEvents();
     }
 
@@ -56,16 +56,12 @@ public class Conveyor : Building
     {
         visual = ConveyorVisual.Create();
         visual.Initialize(this);
+        visual.RenderItem(storedItem);
     }
 
     protected override BuildingVisual GetVisuals()
     {
         return visual;
-    }
-
-    private void CalculateCells(List<Vector2Int> absolute, List<Vector2Int> relative)
-    {
-        absolute = relative.ConvertAll(RelativeToAbsolute);
     }
 
     private void SetStoredItem(ItemType item)
