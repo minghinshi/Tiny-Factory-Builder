@@ -13,7 +13,7 @@ public class InventoryButton : MonoBehaviour
     public static InventoryButton Create(ItemStack itemStack)
     {
         ItemLabel itemLabel = ItemLabelPool.pool.Get();
-        InventoryButton inventoryButton = itemLabel.gameObject.AddComponent<InventoryButton>();
+        InventoryButton inventoryButton = itemLabel.CreateComponent<InventoryButton>();
         inventoryButton.itemLabel = itemLabel;
         inventoryButton.itemStack = itemStack;
         inventoryButton.Initialize();

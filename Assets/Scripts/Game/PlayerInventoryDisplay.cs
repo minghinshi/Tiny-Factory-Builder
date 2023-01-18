@@ -27,8 +27,8 @@ public class PlayerInventoryDisplay : MonoBehaviour
 
     private void InitializeInventoryPanel()
     {
-        inventoryDisplay.SetTargetInventory(PlayerInventory.instance);
         inventoryDisplay.SetBuildFunc(BuildItemButton);
+        inventoryDisplay.SetTargetInventory(PlayerInventory.instance);
     }
 
     private ItemLabel BuildItemButton(ItemStack itemStack)

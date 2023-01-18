@@ -10,7 +10,7 @@ public class CraftingButton : MonoBehaviour
     public static CraftingButton Create(Process process)
     {
         ItemLabel itemLabel = ItemLabelPool.pool.Get();
-        CraftingButton craftingButton = itemLabel.gameObject.AddComponent<CraftingButton>();
+        CraftingButton craftingButton = itemLabel.CreateComponent<CraftingButton>();
         craftingButton.itemLabel = itemLabel;
         craftingButton.process = process;
         craftingButton.Initialize();
@@ -26,6 +26,11 @@ public class CraftingButton : MonoBehaviour
             .UpdateTooltipOnShift()
             .Build();
         DisplayCraftable();
+    }
+
+    private void OnDisable()
+    {
+        PlayerInventory.instance.Changed -= UpdateCraftable;
     }
 
     private void DisplayCraftable()

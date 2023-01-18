@@ -7,6 +7,7 @@ public class Inventory
 
     public delegate void InventoryChangedHandler();
     public event InventoryChangedHandler Changed;
+    public event InventoryChangedHandler Cleared;
 
     public delegate void ItemTypesChangedHandler(ItemType itemType);
     public event ItemTypesChangedHandler ItemAdded;
@@ -54,6 +55,11 @@ public class Inventory
         else return null;
     }
 
+    public ItemStack GetItemStack(ItemType itemType)
+    {
+        return itemStacks.Find(x => x.GetItemType() == itemType);
+    }
+
     public List<ItemStack> GetAllItemStacks()
     {
         return itemStacks;
@@ -84,6 +90,7 @@ public class Inventory
     {
         itemStacks.Clear();
         NotifyUpdate();
+        Cleared?.Invoke();
     }
 
     private ItemStack AddItemStack(ItemType itemType)
@@ -92,11 +99,6 @@ public class Inventory
         itemStacks.Add(itemStack);
         ItemAdded?.Invoke(itemType);
         return itemStack;
-    }
-
-    private ItemStack GetItemStack(ItemType itemType)
-    {
-        return itemStacks.Find(x => x.GetItemType() == itemType);
     }
 
     private void RemoveItemStack(ItemStack itemStack)

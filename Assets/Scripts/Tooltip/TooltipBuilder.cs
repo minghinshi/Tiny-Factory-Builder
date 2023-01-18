@@ -31,8 +31,8 @@ public class TooltipBuilder : MonoBehaviour
     public void AddInventoryDisplay(Inventory target)
     {
         InventoryDisplay display = Instantiate(Prefabs.inventoryDisplay, transform).GetComponent<InventoryDisplay>();
-        display.SetTargetInventory(target);
         display.SetBuildFunc(BuildItemLabel);
+        display.SetTargetInventory(target);
     }
 
     public void BuildBuildingTooltip(Building building)
@@ -84,9 +84,9 @@ public class TooltipBuilder : MonoBehaviour
         display.ShowOutputs(BuildItemLabel, process.GetAverageBatchOutput());
     }
 
-    private ItemLabel BuildItemLabel(ICountableItem recipeOutput)
+    private ItemLabel BuildItemLabel(ICountableItem countableItem)
     {
-        return new ItemLabel.Builder().BuildLabelWithCounter(recipeOutput).Build();
+        return new ItemLabel.Builder().BuildLabelWithCounter(countableItem).Build();
     }
 
     private ItemLabel BuildCostLabel(ItemStack itemStack, Process process, bool showBatchCraft)

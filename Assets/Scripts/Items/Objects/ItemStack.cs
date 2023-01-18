@@ -8,6 +8,9 @@ public class ItemStack : ICountableItem
     [SerializeField, JsonProperty] private ItemType itemType;
     [SerializeField, JsonProperty] private int count;
 
+    public delegate void CountChangedHandler();
+    public event CountChangedHandler CountChanged;
+
     public ItemStack(ItemType itemType, int count)
     {
         this.itemType = itemType;
@@ -40,12 +43,15 @@ public class ItemStack : ICountableItem
     public void Store(int amountToStore)
     {
         count += amountToStore;
+        CountChanged?.Invoke();
     }
 
     public void Remove(int amountToRemove)
     {
-        if (amountToRemove > count) throw new InvalidOperationException();
+        if (amountToRemove > count) 
+            throw new InvalidOperationException();
         count -= amountToRemove;
+        CountChanged?.Invoke();
     }
 
     public ICountableItem MultiplyBy(int multiplier)

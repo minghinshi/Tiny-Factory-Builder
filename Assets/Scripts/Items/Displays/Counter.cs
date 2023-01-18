@@ -1,5 +1,5 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 [RequireComponent(typeof(TMP_Text))]
 public class Counter : MonoBehaviour
@@ -8,6 +8,8 @@ public class Counter : MonoBehaviour
     private readonly Color yellow = new(241f / 255, 196f / 255, 15f / 255);
     private readonly Color green = new Color32(0xa5, 0xd6, 0xa7, 0xff);
     private readonly Color white = new(1f, 1f, 1f, 0.87f);
+
+    private ItemStack boundItemStack;
 
     private TMP_Text text;
     private TMP_Text Text
@@ -23,12 +25,19 @@ public class Counter : MonoBehaviour
     {
         Text.text = "";
         SetColor(white);
+        if (boundItemStack != null) UnbindItemStack();
     }
 
     public void ShowCount(ICountableItem countableItem)
     {
         Text.text = countableItem.GetCountAsString();
         if (countableItem is ChanceOutput) SetColor(yellow);
+    }
+
+    public void BindToItemStack(ItemStack itemStack)
+    {
+        boundItemStack = itemStack;
+        itemStack.CountChanged += UpdateCount;
     }
 
     public void ShowChange(InventoryChange inventoryChange)
@@ -41,6 +50,11 @@ public class Counter : MonoBehaviour
     {
         if (doBatchCraft) ColorLimitingItem(itemStack, process);
         else ColorMissingItem(itemStack, process);
+    }
+
+    private void UpdateCount()
+    {
+        ShowCount(boundItemStack);
     }
 
     private void SetColor(Color color)
@@ -56,5 +70,11 @@ public class Counter : MonoBehaviour
     private void ColorMissingItem(ItemStack itemStack, Process process)
     {
         if (process.IsMissing(itemStack.GetItemType())) SetColor(red);
+    }
+
+    private void UnbindItemStack()
+    {
+        boundItemStack.CountChanged -= UpdateCount;
+        boundItemStack = null;
     }
 }

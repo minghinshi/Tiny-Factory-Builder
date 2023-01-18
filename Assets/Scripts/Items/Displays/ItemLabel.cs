@@ -8,7 +8,7 @@ public class ItemLabel : MonoBehaviour
 {
     public class Builder
     {
-        private readonly ItemLabel label = ItemLabelPool.pool.Get();
+        private readonly ItemLabel label;
         public Builder() => label = ItemLabelPool.pool.Get();
         public Builder(ItemLabel label) => this.label = label;
         public ItemLabel Build() => label;
@@ -94,14 +94,6 @@ public class ItemLabel : MonoBehaviour
         }
     }
 
-    private void OnDisable()
-    {
-        ResetImage();
-        ResetCounter();
-        ResetButton();
-        ResetTooltips();
-    }
-
     public void OnPointerEnter()
     {
         isHoveredOver = true;
@@ -143,6 +135,16 @@ public class ItemLabel : MonoBehaviour
         button.interactable = isInteractable;
     }
 
+    public T CreateComponent<T>() where T : MonoBehaviour
+    {
+        if (TryGetComponent(out T component))
+        {
+            component.enabled = true;
+            return component;
+        }
+        return gameObject.AddComponent<T>();
+    }
+
     private void DisplayTooltip()
     {
         Tooltip.instance.Show(tooltipBuildingSteps.ToArray());
@@ -156,6 +158,16 @@ public class ItemLabel : MonoBehaviour
     private bool CanGenerateTooltips()
     {
         return tooltipBuildingSteps.Count > 0;
+    }
+
+    private void OnDisable()
+    {
+        ResetImage();
+        ResetCounter();
+        ResetButton();
+        ResetTooltips();
+        ResetComponent<CraftingButton>();
+        ResetComponent<InventoryButton>();
     }
 
     private void ResetImage()
@@ -179,5 +191,10 @@ public class ItemLabel : MonoBehaviour
     {
         if (IsTooltipActive()) OnPointerExit();
         tooltipBuildingSteps.Clear();
+    }
+
+    private void ResetComponent<T>() where T : MonoBehaviour
+    {
+        if (TryGetComponent(out T component)) component.enabled = false;
     }
 }
