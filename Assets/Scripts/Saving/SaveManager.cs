@@ -33,7 +33,7 @@ public class SaveManager : MonoBehaviour
 
     private string GetDataPath()
     {
-        return Application.isEditor ? Application.dataPath + "/Tests" : Application.persistentDataPath;
+        return Application.isEditor ? Application.dataPath + "/TestSaves" : Application.persistentDataPath;
     }
 
     private void LoadGame()

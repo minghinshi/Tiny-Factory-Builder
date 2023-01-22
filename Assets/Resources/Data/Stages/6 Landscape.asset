@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4f575d2b4a092f45bab6c17e468dbf3, type: 3}
-  m_Name: 6
+  m_Name: 6 Landscape
   m_EditorClassIdentifier: 
   requiredItem: {fileID: 11400000, guid: 3c562272fbfbd7f46bac160323ac4154, type: 2}
   unlockedItems:
@@ -20,3 +20,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 03af7e846f974f44f8556f5ebf9eeb95, type: 2}
   - {fileID: 11400000, guid: 327ee48be950ea448b8f1b47eae1a104, type: 2}
   - {fileID: 11400000, guid: 84803b6194f2b5f4aace45c7d6fbc564, type: 2}
+  - {fileID: 11400000, guid: bfefe63b5d5b12c4e87ed3b5446ef5c7, type: 2}
+  rewards: []
+  revealedElements: 
+  unlockedStages:
+  - {fileID: 11400000, guid: c93a94b5266d68e42b089f66576bc0fb, type: 2}

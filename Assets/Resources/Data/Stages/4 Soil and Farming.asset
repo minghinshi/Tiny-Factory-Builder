@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4f575d2b4a092f45bab6c17e468dbf3, type: 3}
-  m_Name: 4
+  m_Name: 4 Soil and Farming
   m_EditorClassIdentifier: 
   requiredItem: {fileID: 11400000, guid: 806d32f256ad8f94d86ee6304e56d303, type: 2}
   unlockedItems:
@@ -22,3 +22,6 @@ MonoBehaviour:
   rewards:
   - itemType: {fileID: 11400000, guid: 7a2bec6b5f8c89144906471061e78c1e, type: 2}
     count: 1
+  revealedElements: 
+  unlockedStages:
+  - {fileID: 11400000, guid: c065d2e239386a4469b56010475a0454, type: 2}

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4f575d2b4a092f45bab6c17e468dbf3, type: 3}
-  m_Name: 3
+  m_Name: 3 Water And Air
   m_EditorClassIdentifier: 
   requiredItem: {fileID: 11400000, guid: 243f14518b0b9be47a1baaa8596774b9, type: 2}
   unlockedItems:
@@ -24,3 +24,6 @@ MonoBehaviour:
     count: 1
   - itemType: {fileID: 11400000, guid: a91c52e6d0ac34346bb2b9c8c655ba99, type: 2}
     count: 1
+  revealedElements: 
+  unlockedStages:
+  - {fileID: 11400000, guid: 4ff7f97bbc901ae41a912dac50d09537, type: 2}

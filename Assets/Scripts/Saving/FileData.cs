@@ -26,6 +26,6 @@ public class SaveFile
     public static void LoadNewFile()
     {
         PlayerInventory.instance = new(new ItemStack(GameData.starterMachine, 1));
-        UnlockHandler.instance.AddStage(GameData.defaultStage);
+        GameData.allStages.FindAll(x => x.requiredItem is null).ForEach(UnlockHandler.instance.AddStage);
     }
 }

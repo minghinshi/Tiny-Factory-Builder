@@ -10,7 +10,7 @@ public static class GameData
     public static readonly List<Stage> allStages = GetObjects<Stage>("Stages");
 
     public static readonly GathererType starterMachine = Resources.Load<GathererType>("Data/Machines/Starters/FireJar");
-    public static readonly Stage defaultStage = Resources.Load<Stage>("Data/Stages/Default");
+    public static readonly Stage rootStage = Resources.Load<Stage>("Data/Stages/Root");
 
     private static List<T> GetObjects<T>(string path) where T : Object
     {

@@ -10,10 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4f575d2b4a092f45bab6c17e468dbf3, type: 3}
-  m_Name: 1
+  m_Name: 8 Primitive Conveyors
   m_EditorClassIdentifier: 
-  requiredItem: {fileID: 11400000, guid: 2f32fb8086d3bb74683ef1d3b8589bb6, type: 2}
+  requiredItem: {fileID: 11400000, guid: d0ddabd51f4cb384eb5b6c6d923ad381, type: 2}
   unlockedItems:
-  - {fileID: 11400000, guid: 7c2c051f23cd1db4b9f85cf655981ab9, type: 2}
+  - {fileID: 11400000, guid: 1562bf37f0b582e4f9bf147f05fc5e31, type: 2}
+  - {fileID: 11400000, guid: 8ba1ab404439a4d49a6d68871d145af4, type: 2}
+  - {fileID: 11400000, guid: 37d63a57c91b53149b23c3bdf701ba9f, type: 2}
   rewards: []
-  revealedElements: 00000000
+  revealedElements: 
+  unlockedStages: []

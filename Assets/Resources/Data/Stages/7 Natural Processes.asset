@@ -10,16 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4f575d2b4a092f45bab6c17e468dbf3, type: 3}
-  m_Name: 8
+  m_Name: 7 Natural Processes
   m_EditorClassIdentifier: 
-  requiredItem: {fileID: 11400000, guid: 8ba1ab404439a4d49a6d68871d145af4, type: 2}
+  requiredItem: {fileID: 11400000, guid: bfefe63b5d5b12c4e87ed3b5446ef5c7, type: 2}
   unlockedItems:
+  - {fileID: 11400000, guid: fd7b93c227f68ce49b64fdc98ddfafec, type: 2}
+  - {fileID: 11400000, guid: d0ddabd51f4cb384eb5b6c6d923ad381, type: 2}
+  - {fileID: 11400000, guid: fd2ff64896651d449b01349125b9ba1b, type: 2}
+  - {fileID: 11400000, guid: 6b980fefbfa9ae4488350d401073d362, type: 2}
   - {fileID: 11400000, guid: 334b5e79d43d5cf488bd9fab1ac6ce01, type: 2}
   - {fileID: 11400000, guid: 60cd5ebf031a0ee488284518d45ab90d, type: 2}
   - {fileID: 11400000, guid: 68e95119662a05f4ca6686129bfb0b1c, type: 2}
-  - {fileID: 11400000, guid: 24c5c35d6f881fc4b8cf5829120f1e1f, type: 2}
-  - {fileID: 11400000, guid: 389a2b68e9ea103459129e8ea0dfe4eb, type: 2}
-  - {fileID: 11400000, guid: 1b3cf282f0d0a8947b867ee01ed73679, type: 2}
-  - {fileID: 11400000, guid: 04b5782dff987d34383ed42bb8aa367c, type: 2}
-  - {fileID: 11400000, guid: 2e53066d0ec774e4eb530f1b589c6d63, type: 2}
-  - {fileID: 11400000, guid: 34d0c9a07820da449ab47e19cfb192fb, type: 2}
+  rewards: []
+  revealedElements: 
+  unlockedStages:
+  - {fileID: 11400000, guid: 10c3862f9d0738644934ebe7db7eaf66, type: 2}
+  - {fileID: 11400000, guid: 4cafc5a551f7cc1409e6e496a60693a4, type: 2}

@@ -10,11 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4f575d2b4a092f45bab6c17e468dbf3, type: 3}
-  m_Name: Default
+  m_Name: 5 Campfire
   m_EditorClassIdentifier: 
-  requiredItem: {fileID: 0}
+  requiredItem: {fileID: 11400000, guid: 25d9cbcb6de0a5541a4a19eafd7259ee, type: 2}
   unlockedItems:
-  - {fileID: 11400000, guid: c1a24a65d932fb342be104f15f3db30b, type: 2}
-  - {fileID: 11400000, guid: 2f32fb8086d3bb74683ef1d3b8589bb6, type: 2}
+  - {fileID: 11400000, guid: aad9f9bc2dc24d64da88d2fd82ce0840, type: 2}
+  - {fileID: 11400000, guid: 82400f5133c1ac74c8a528163f0d667c, type: 2}
+  - {fileID: 11400000, guid: 3c562272fbfbd7f46bac160323ac4154, type: 2}
   rewards: []
   revealedElements: 
+  unlockedStages:
+  - {fileID: 11400000, guid: aea38e931fb17254f8e7cc42ec0b2a38, type: 2}
