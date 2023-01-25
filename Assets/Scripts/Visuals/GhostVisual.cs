@@ -7,9 +7,6 @@ public class GhostVisual : BuildingVisual
     private Vector3 targetPosition;
     private float targetRotation;
 
-    private readonly Color canPlaceColor = new(130 / 255f, 224 / 255f, 170 / 255f, .75f);
-    private readonly Color cannotPlaceColor = new(241 / 255f, 148 / 255f, 138 / 255f, .75f);
-
     public static GhostVisual Create()
     {
         return Instantiate(Prefabs.ghostVisuals, Transforms.worldTransform).GetComponent<GhostVisual>();
@@ -45,7 +42,7 @@ public class GhostVisual : BuildingVisual
 
     public void SetColor(bool canPlace)
     {
-        spriteRenderer.color = canPlace ? canPlaceColor : cannotPlaceColor;
+        spriteRenderer.color = canPlace ? Palette.ValidPlacement : Palette.InvalidPlacement;
     }
 
     public void UpdateTarget(Vector2Int gridPosition, Direction direction)

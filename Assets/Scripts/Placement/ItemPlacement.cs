@@ -11,7 +11,7 @@ public class ItemPlacement : Placement
         this.itemType = itemType;
         previewTransform = itemType.GetNewItemTransform(Mouse.instance.GetWorldPosition());
         spriteRenderer = previewTransform.GetComponent<SpriteRenderer>();
-        spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+        spriteRenderer.color = Palette.Transparent;
         spriteRenderer.sortingOrder = 1;
     }
 

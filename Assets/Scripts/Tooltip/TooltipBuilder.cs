@@ -15,12 +15,15 @@ public class TooltipBuilder : MonoBehaviour
         foreach (Transform child in transform) Destroy(child.gameObject);
     }
 
-    public Text AddText(string str)
+    public Text AddText(string str, Color color)
     {
         Text text = Instantiate(Prefabs.tooltipText, transform).GetComponent<Text>();
         text.text = str;
+        text.color = color;
         return text;
     }
+
+    public Text AddText(string str) => AddText(str, Palette.PrimaryText);
 
     public void AddItemInfo(ItemType itemType)
     {
@@ -44,7 +47,7 @@ public class TooltipBuilder : MonoBehaviour
 
     private void BuildInventoryTooltip(Inventory inventory, string inventoryName)
     {
-        AddSecondaryText(inventoryName + ":");
+        AddText(inventoryName + ":", Palette.SecondaryText);
         AddInventoryDisplay(inventory);
     }
 
@@ -57,12 +60,7 @@ public class TooltipBuilder : MonoBehaviour
     private void AddDescription(ItemType itemType)
     {
         if (itemType.GetDescription() == "") return;
-        AddSecondaryText(itemType.GetDescription());
-    }
-
-    private void AddSecondaryText(string str)
-    {
-        AddText(str).color = new(1f, 1f, 1f, 0.6f);
+        AddText(itemType.GetDescription(), Palette.SecondaryText);
     }
 
     private bool ShowBatchCraft(Process process)

@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(ItemLabel))]
 public class InventoryButton : MonoBehaviour
 {
     private ItemLabel itemLabel;

@@ -9,6 +9,7 @@ public class UnlockHandler : MonoBehaviour
     private HashSet<Stage> lockedStages;
     private HashSet<ItemType> unlockedItems = new();
     private HashSet<Recipe> unlockedRecipes = new();
+    private HashSet<ItemType> targetItems;
 
     [SerializeField] private List<VisibilityHandler> hiddenElements;
 
@@ -54,6 +55,11 @@ public class UnlockHandler : MonoBehaviour
         return GameData.allStages.Except(LockedStages).ToList();
     }
 
+    public bool IsTargetItem(ItemType itemType)
+    {
+        return targetItems.Contains(itemType);
+    }
+
     public void UnlockStage(Stage stage)
     {
         AddStage(stage);
@@ -65,6 +71,7 @@ public class UnlockHandler : MonoBehaviour
     {
         LockedStages.Remove(stage);
         UnlockItems(stage);
+        UpdateTargetItems();
         UnlockRecipes();
         RevealElements(stage);
     }
@@ -82,6 +89,11 @@ public class UnlockHandler : MonoBehaviour
     private void UnlockItems(Stage stage)
     {
         unlockedItems.UnionWith(stage.unlockedItems);
+    }
+
+    private void UpdateTargetItems()
+    {
+        targetItems = LockedStages.ToList().ConvertAll(x => x.requiredItem).FindAll(unlockedItems.Contains).ToHashSet();
     }
 
     private void UnlockRecipes()

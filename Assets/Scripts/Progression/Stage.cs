@@ -10,5 +10,4 @@ public class Stage : ScriptableObject
     public List<ItemType> unlockedItems;
     public List<ItemStack> rewards;
     public List<int> revealedElements;
-    public List<Stage> unlockedStages;
 }

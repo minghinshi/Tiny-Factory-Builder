@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4f575d2b4a092f45bab6c17e468dbf3, type: 3}
   m_Name: 9 Mudbricks
   m_EditorClassIdentifier: 
-  requiredItem: {fileID: 11400000, guid: 8ba1ab404439a4d49a6d68871d145af4, type: 2}
+  requiredItem: {fileID: 11400000, guid: 60cd5ebf031a0ee488284518d45ab90d, type: 2}
   unlockedItems:
   - {fileID: 11400000, guid: 24c5c35d6f881fc4b8cf5829120f1e1f, type: 2}
   - {fileID: 11400000, guid: 389a2b68e9ea103459129e8ea0dfe4eb, type: 2}
@@ -20,5 +20,3 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2e53066d0ec774e4eb530f1b589c6d63, type: 2}
   rewards: []
   revealedElements: 
-  unlockedStages:
-  - {fileID: 11400000, guid: 4074473aeac501240b3ef1a81bd535e0, type: 2}

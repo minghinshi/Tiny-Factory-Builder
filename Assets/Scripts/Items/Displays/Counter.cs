@@ -4,11 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(TMP_Text))]
 public class Counter : MonoBehaviour
 {
-    private readonly Color red = new Color32(0xef, 0x9a, 0x9a, 0xff);
-    private readonly Color yellow = new(241f / 255, 196f / 255, 15f / 255);
-    private readonly Color green = new Color32(0xa5, 0xd6, 0xa7, 0xff);
-    private readonly Color white = new(1f, 1f, 1f, 0.87f);
-
     private ItemStack boundItemStack;
 
     private TMP_Text text;
@@ -24,14 +19,14 @@ public class Counter : MonoBehaviour
     private void OnDisable()
     {
         Text.text = "";
-        SetColor(white);
+        SetColor(Palette.PrimaryText);
         if (boundItemStack != null) UnbindItemStack();
     }
 
     public void ShowCount(ICountableItem countableItem)
     {
         Text.text = countableItem.GetCountAsString();
-        if (countableItem is ChanceOutput) SetColor(yellow);
+        if (countableItem is ChanceOutput) SetColor(Palette.Yellow);
     }
 
     public void BindToItemStack(ItemStack itemStack)
@@ -43,7 +38,7 @@ public class Counter : MonoBehaviour
     public void ShowChange(InventoryChange inventoryChange)
     {
         Text.text = inventoryChange.ToString();
-        SetColor(inventoryChange.IsStoring() ? green : red);
+        SetColor(inventoryChange.IsStoring() ? Palette.Green : Palette.Red);
     }
 
     public void ShowAvailabilityOf(ItemStack itemStack, Process process, bool doBatchCraft)
@@ -64,12 +59,12 @@ public class Counter : MonoBehaviour
 
     private void ColorLimitingItem(ItemStack itemStack, Process process)
     {
-        if (process.IsLimiting(itemStack.GetItemType())) SetColor(yellow);
+        if (process.IsLimiting(itemStack.GetItemType())) SetColor(Palette.Yellow);
     }
 
     private void ColorMissingItem(ItemStack itemStack, Process process)
     {
-        if (process.IsMissing(itemStack.GetItemType())) SetColor(red);
+        if (process.IsMissing(itemStack.GetItemType())) SetColor(Palette.Red);
     }
 
     private void UnbindItemStack()

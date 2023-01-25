@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(ItemLabel))]
 public class CraftingButton : MonoBehaviour
 {
     private ItemLabel itemLabel;
@@ -21,7 +22,7 @@ public class CraftingButton : MonoBehaviour
     {
         itemLabel = new ItemLabel.Builder(itemLabel)
             .BuildGenericButton(GetDisplayedItem(), OnCraftingRequest)
-            .AddTooltipBuildingSteps(() => TooltipBuilder.instance.AddCraftingDisplay(process))
+            .AddTooltipBuildingStep(() => TooltipBuilder.instance.AddCraftingDisplay(process))
             .UpdateTooltipOnClick()
             .UpdateTooltipOnShift()
             .Build();

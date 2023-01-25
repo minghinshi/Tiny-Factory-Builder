@@ -31,7 +31,8 @@ public class ItemLabel : MonoBehaviour
         {
             label.AddButton(onClick);
             label.AddImage(itemType);
-            AddTooltipBuildingSteps(() => TooltipBuilder.instance.AddItemInfo(itemType));
+            AddTooltipBuildingStep(() => TooltipBuilder.instance.AddItemInfo(itemType));
+            if (UnlockHandler.instance.IsTargetItem(itemType)) DisplayAsTargetItem();
             return this;
         }
 
@@ -42,15 +43,6 @@ public class ItemLabel : MonoBehaviour
             return this;
         }
 
-        public Builder BuildCraftingButton(Process process, params UnityAction[] onClick)
-        {
-            BuildGenericButton(process.GetAverageSingleOutput()[0].GetItemType(), onClick);
-            AddTooltipBuildingSteps(() => TooltipBuilder.instance.AddCraftingDisplay(process));
-            UpdateTooltipOnClick();
-            UpdateTooltipOnShift();
-            return this;
-        }
-
         public Builder BuildChangeDisplayLabel(InventoryChange change)
         {
             label.AddImage(change.ItemType);
@@ -58,9 +50,9 @@ public class ItemLabel : MonoBehaviour
             return this;
         }
 
-        public Builder AddTooltipBuildingSteps(params Action[] actions)
+        public Builder AddTooltipBuildingStep(Action action)
         {
-            label.tooltipBuildingSteps.AddRange(actions);
+            label.tooltipBuildingSteps.Add(action);
             return this;
         }
 
@@ -75,6 +67,13 @@ public class ItemLabel : MonoBehaviour
             KeyboardHandler.instance.ShiftPressed += label.UpdateTooltip;
             KeyboardHandler.instance.ShiftReleased += label.UpdateTooltip;
             return this;
+        }
+
+        private void DisplayAsTargetItem()
+        {
+            string textToDisplay = "Craft this to unlock new technologies.";
+            label.button.image.color = Palette.Yellow;
+            AddTooltipBuildingStep(() => TooltipBuilder.instance.AddText(textToDisplay, Palette.Yellow));
         }
     }
 
@@ -184,6 +183,7 @@ public class ItemLabel : MonoBehaviour
     private void ResetButton()
     {
         button.onClick.RemoveAllListeners();
+        button.image.color = Color.white;
         button.gameObject.SetActive(false);
     }
 
