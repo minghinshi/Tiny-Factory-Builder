@@ -22,10 +22,10 @@ public class CraftingButton : MonoBehaviour
     {
         itemLabel = new ItemLabel.Builder(itemLabel)
             .BuildGenericButton(GetDisplayedItem(), OnCraftingRequest)
-            .AddTooltipBuildingStep(() => TooltipBuilder.instance.AddCraftingDisplay(process))
             .UpdateTooltipOnClick()
             .UpdateTooltipOnShift()
             .Build();
+        itemLabel.AddTooltipBuildingStep(() => TooltipBuilder.instance.AddCraftingDisplay(process));
         DisplayCraftable();
     }
 

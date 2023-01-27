@@ -31,8 +31,8 @@ public class ItemLabel : MonoBehaviour
         {
             label.AddButton(onClick);
             label.AddImage(itemType);
-            AddTooltipBuildingStep(() => TooltipBuilder.instance.AddItemInfo(itemType));
-            if (UnlockHandler.instance.IsTargetItem(itemType)) DisplayAsTargetItem();
+            label.AddTooltipBuildingStep(() => TooltipBuilder.instance.AddItemInfo(itemType));
+            label.CreateComponent<TargetDisplay>().Initialize(itemType);
             return this;
         }
 
@@ -50,12 +50,6 @@ public class ItemLabel : MonoBehaviour
             return this;
         }
 
-        public Builder AddTooltipBuildingStep(Action action)
-        {
-            label.tooltipBuildingSteps.Add(action);
-            return this;
-        }
-
         public Builder UpdateTooltipOnClick()
         {
             label.AddButtonAction(label.UpdateTooltip);
@@ -67,13 +61,6 @@ public class ItemLabel : MonoBehaviour
             KeyboardHandler.instance.ShiftPressed += label.UpdateTooltip;
             KeyboardHandler.instance.ShiftReleased += label.UpdateTooltip;
             return this;
-        }
-
-        private void DisplayAsTargetItem()
-        {
-            string textToDisplay = "Craft this to unlock new technologies.";
-            label.button.image.color = Palette.Yellow;
-            AddTooltipBuildingStep(() => TooltipBuilder.instance.AddText(textToDisplay, Palette.Yellow));
         }
     }
 
@@ -134,6 +121,21 @@ public class ItemLabel : MonoBehaviour
         button.interactable = isInteractable;
     }
 
+    public void SetButtonColor(Color color)
+    {
+        button.image.color = color;
+    }
+
+    public void AddTooltipBuildingStep(Action action)
+    {
+        tooltipBuildingSteps.Add(action);
+    }
+
+    public void RemoveTooltipBuildingStep(Action action)
+    {
+        tooltipBuildingSteps.Remove(action);
+    }
+
     public T CreateComponent<T>() where T : MonoBehaviour
     {
         if (TryGetComponent(out T component))
@@ -165,8 +167,7 @@ public class ItemLabel : MonoBehaviour
         ResetCounter();
         ResetButton();
         ResetTooltips();
-        ResetComponent<CraftingButton>();
-        ResetComponent<InventoryButton>();
+        ResetComponents();
     }
 
     private void ResetImage()
@@ -183,7 +184,7 @@ public class ItemLabel : MonoBehaviour
     private void ResetButton()
     {
         button.onClick.RemoveAllListeners();
-        button.image.color = Color.white;
+        button.image.color = Palette.Button;
         button.gameObject.SetActive(false);
     }
 
@@ -191,6 +192,12 @@ public class ItemLabel : MonoBehaviour
     {
         if (IsTooltipActive()) OnPointerExit();
         tooltipBuildingSteps.Clear();
+    }
+
+    private void ResetComponents() {
+        ResetComponent<TargetDisplay>();
+        ResetComponent<CraftingButton>();
+        ResetComponent<InventoryButton>();
     }
 
     private void ResetComponent<T>() where T : MonoBehaviour
