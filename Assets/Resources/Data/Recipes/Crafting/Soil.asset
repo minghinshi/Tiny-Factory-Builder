@@ -26,4 +26,4 @@ MonoBehaviour:
       type: {class: ItemStack, ns: , asm: Assembly-CSharp}
       data:
         itemType: {fileID: 11400000, guid: f0b2162ea2530df4486a5295d534a008, type: 2}
-        count: 16
+        count: 20

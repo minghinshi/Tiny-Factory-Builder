@@ -16,8 +16,8 @@ MonoBehaviour:
   - itemType: {fileID: 11400000, guid: 7314e3cb59e2e3149ab0c0fb98b43868, type: 2}
     count: 1
   outputs:
-  - rid: 3275671836004974605
   - rid: 3275671836004974606
+  - rid: 3275671836004974605
   references:
     version: 2
     RefIds:

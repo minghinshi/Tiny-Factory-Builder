@@ -32,4 +32,4 @@ MonoBehaviour:
       type: {class: ItemStack, ns: , asm: Assembly-CSharp}
       data:
         itemType: {fileID: 11400000, guid: 327ee48be950ea448b8f1b47eae1a104, type: 2}
-        count: 4
+        count: 8
