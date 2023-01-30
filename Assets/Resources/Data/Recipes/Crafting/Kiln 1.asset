@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputs:
   - itemType: {fileID: 11400000, guid: 2e53066d0ec774e4eb530f1b589c6d63, type: 2}
-    count: 250
+    count: 128
   outputs:
   - rid: 3275671836004974595
   references:
