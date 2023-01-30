@@ -23,7 +23,6 @@ public class SaveManager : MonoBehaviour
         JsonSerializerSettings settings = new();
         settings.Converters.Add(new ScriptableObjectConverter());
         settings.Converters.Add(new Vector2IntConverter());
-        settings.NullValueHandling = NullValueHandling.Ignore;
         return settings;
     }
 

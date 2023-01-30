@@ -15,6 +15,7 @@ public class DataLoaderAttribute : Attribute
 
     public ScriptableObject GetObject(string objectName)
     {
+        if (objectName == null) return null;
         return GetObjects().GetValueOrDefault(objectName);
     }
 
