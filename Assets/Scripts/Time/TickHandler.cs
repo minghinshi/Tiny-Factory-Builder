@@ -19,7 +19,7 @@ public class TickHandler : MonoBehaviour
 
     private void Start()
     {
-        conveyorTimer = new Timer(20, true);
+        conveyorTimer = new Timer(10, true);
         conveyorTimer.TimerEnded += OnConveyorTimerEnded;
     }
 
