@@ -747,7 +747,7 @@ GameObject:
   - component: {fileID: 257767326}
   - component: {fileID: 257767327}
   m_Layer: 5
-  m_Name: Buttons
+  m_Name: TabButtons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3208,6 +3208,7 @@ MonoBehaviour:
   - L-Click + Shift - Insert 10
   - L-Click + Ctrl - Insert 100
   - L-Click + Shift + Ctrl - Insert 1,000
+  - Q - Stop Placing
 --- !u!1 &2139425517
 GameObject:
   m_ObjectHideFlags: 0

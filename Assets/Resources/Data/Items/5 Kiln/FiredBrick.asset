@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e23fa960d528a4643ba5deef74c098b0, type: 3}
   m_Name: FiredBrick
   m_EditorClassIdentifier: 
-  itemName: Fired Brick
+  itemName: Fired Mudbrick
+  itemDescription: 
   itemSprite: {fileID: 21300000, guid: fa75c4329123b3d4cb722774973dac36, type: 3}

@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Kiln
   m_EditorClassIdentifier: 
   itemName: Kiln
-  itemDescription: Provides an enclosed environment for advanced recipes that require
-    fire.
+  itemDescription: Provides an enclosed environment for heating.
   itemSprite: {fileID: 21300000, guid: b56b2388fd4a14a42a12e30aaa256296, type: 3}
   size: {x: 3, y: 3}
   recipes:
