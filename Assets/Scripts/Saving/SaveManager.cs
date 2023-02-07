@@ -5,12 +5,16 @@ using UnityEngine;
 public class SaveManager : MonoBehaviour
 {
     private JsonSerializerSettings serializerSettings;
+    private const float SaveInterval = 60f;
+    private bool inWebGL;
 
     private void Start()
     {
+        inWebGL = Application.platform == RuntimePlatform.WebGLPlayer;
         serializerSettings = GetSerializerSettings();
         LoadGame();
         LoadGUI();
+        InvokeRepeating(nameof(SaveGame), 0, SaveInterval);
     }
 
     private void OnApplicationQuit()
@@ -38,19 +42,31 @@ public class SaveManager : MonoBehaviour
 
     private void LoadGame()
     {
-        if (File.Exists(GetSaveFilePath())) GetSaveFile().LoadFile();
+        if (HasSaveFile()) GetSaveFile().LoadFile();
         else SaveFile.LoadNewFile();
     }
 
     private void SaveGame()
     {
         string json = JsonConvert.SerializeObject(SaveFile.GetCurrentData(), serializerSettings);
-        File.WriteAllText(GetSaveFilePath(), json);
+        if (inWebGL) PlayerPrefs.SetString("Save", json);
+        else File.WriteAllText(GetSaveFilePath(), json);
+        print("Game saved!");
     }
 
     private SaveFile GetSaveFile()
     {
-        return JsonConvert.DeserializeObject<SaveFile>(File.ReadAllText(GetSaveFilePath()), serializerSettings);
+        return JsonConvert.DeserializeObject<SaveFile>(GetSavedJson(), serializerSettings);
+    }
+
+    private string GetSavedJson()
+    {
+        if (inWebGL) return PlayerPrefs.GetString("Save");
+        return File.ReadAllText(GetSaveFilePath());
+    }
+
+    private bool HasSaveFile() {
+        return (inWebGL && PlayerPrefs.HasKey("Save")) || (!inWebGL && File.Exists(GetSaveFilePath()));
     }
 
     private void LoadGUI()
