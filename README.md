@@ -15,7 +15,7 @@ To install TFB in your computer:
 - Scroll down and click on the .zip file that starts with "TFB" to download it.	
 - Unzip the file, find the application called "Tiny Factory Builder" inside it, and the run the game.  
 
-The PC version saves as soon as you quit the game, and has an ulimited save file size.
+The PC version saves as soon as you quit the game, and has an unlimited save file size.
 
 ## Acknowledgements  
 
