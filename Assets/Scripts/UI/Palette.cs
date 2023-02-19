@@ -3,7 +3,7 @@ using UnityEngine;
 public static class Palette
 {
     public static readonly Color Red = new Color32(0xef, 0x9a, 0x9a, 0xff);
-    public static readonly Color Yellow = new Color32(0xff, 0xeb, 0x3b, 0xff);
+    public static readonly Color Yellow = new Color32(0xff, 0xfe, 0xac, 0xff);
     public static readonly Color Green = new Color32(0xa5, 0xd6, 0xa7, 0xff);
     public static readonly Color Button = new Color32(0xd0, 0xd3, 0xd4, 0xff);
 

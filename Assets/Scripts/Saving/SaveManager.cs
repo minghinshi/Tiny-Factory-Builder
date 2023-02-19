@@ -5,7 +5,7 @@ using UnityEngine;
 public class SaveManager : MonoBehaviour
 {
     private JsonSerializerSettings serializerSettings;
-    private const float SaveInterval = 60f;
+    private const float SaveInterval = 30f;
     private bool inWebGL;
 
     private void Start()
@@ -15,6 +15,7 @@ public class SaveManager : MonoBehaviour
         LoadGame();
         LoadGUI();
         InvokeRepeating(nameof(SaveGame), 0, SaveInterval);
+        new ItemLabel.Builder().Build();
     }
 
     private void OnApplicationQuit()
@@ -51,7 +52,6 @@ public class SaveManager : MonoBehaviour
         string json = JsonConvert.SerializeObject(SaveFile.GetCurrentData(), serializerSettings);
         if (inWebGL) PlayerPrefs.SetString("Save", json);
         else File.WriteAllText(GetSaveFilePath(), json);
-        print("Game saved!");
     }
 
     private SaveFile GetSaveFile()

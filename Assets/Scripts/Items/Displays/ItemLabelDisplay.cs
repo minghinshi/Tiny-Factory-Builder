@@ -26,6 +26,6 @@ public class ItemLabelDisplay : MonoBehaviour
 
     private void BuildLabels()
     {
-        buildFunction.Invoke().ForEach(x => x.transform.SetParent(transform));
+        buildFunction.Invoke().ForEach(x => x.transform.SetParent(transform, false));
     }
 }

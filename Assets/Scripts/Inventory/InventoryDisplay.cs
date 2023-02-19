@@ -48,7 +48,7 @@ public class InventoryDisplay : MonoBehaviour
         ItemStack itemStack = targetInventory.GetItemStack(itemType);
         ItemLabel label = buildFunc.Invoke(itemStack);
         label.Counter.BindToItemStack(itemStack);
-        label.transform.SetParent(transform);
+        label.transform.SetParent(transform, false);
         return label;
     }
 
